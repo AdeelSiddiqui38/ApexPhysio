@@ -2,12 +2,12 @@
 (function () {
   const shell = document.getElementById('bookingShell');
   const SVCS = [
-    { nm: 'Physiotherapy — Initial Assessment', dt: '60 min · $120' },
-    { nm: 'Physiotherapy — Follow-Up', dt: '45 min · $95' },
-    { nm: 'Massage Therapy', dt: '60 min · $110' },
-    { nm: 'Chiropractic Adjustment', dt: '30 min · $75' },
+    { nm: 'Physiotherapy — Initial Assessment', dt: '60 min' },
+    { nm: 'Physiotherapy — Follow-Up', dt: '45 min' },
+    { nm: 'Massage Therapy', dt: '60 min' },
+    { nm: 'Chiropractic Adjustment', dt: '30 min' },
     { nm: 'MVA / WCB Intake', dt: '60 min · Direct billed' },
-    { nm: 'Acupuncture / IMS', dt: '45 min · $90' },
+    { nm: 'Acupuncture / IMS', dt: '45 min' },
   ];
   const DAYS = (() => {
     const out = [], dw = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];

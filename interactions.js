@@ -1,241 +1,186 @@
-// Three.js Hero Section 3D Model Setup
-let heroScene, heroCamera, heroRenderer, heroModel;
-const heroCanvas = document.getElementById('canvas');
+/* Interactions: progress bar, scroll reveals, services, body map, quiz,
+   recovery slider, exercise library, chat bubble, service modal. */
 
-function initHeroScene() {
-  // Scene setup
-  heroScene = new THREE.Scene();
-  heroScene.background = new THREE.Color(0x0a0e27);
-  
-  // Camera setup
-  heroCamera = new THREE.PerspectiveCamera(75, heroCanvas.clientWidth / heroCanvas.clientHeight, 0.1, 1000);
-  heroCamera.position.z = 3;
-  
-  // Renderer setup
-  heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
-  heroRenderer.setSize(heroCanvas.clientWidth, heroCanvas.clientHeight);
-  heroRenderer.setPixelRatio(window.devicePixelRatio);
-  heroRenderer.shadowMap.enabled = true;
-  heroRenderer.shadowMap.type = THREE.PCFShadowShadowMap;
-  
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-  heroScene.add(ambientLight);
-  
-  const directionalLight = new THREE.DirectionalLight(0x0066ff, 1);
-  directionalLight.position.set(5, 5, 5);
-  directionalLight.castShadow = true;
-  directionalLight.shadow.mapSize.width = 2048;
-  directionalLight.shadow.mapSize.height = 2048;
-  heroScene.add(directionalLight);
-  
-  const pointLight = new THREE.PointLight(0x00d4ff, 0.8);
-  pointLight.position.set(-5, 3, 3);
-  heroScene.add(pointLight);
-  
-  // Create 3D Body Model (stylized)
-  createBodyModel();
-  
-  // Mouse movement for dynamic lighting
-  document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth) * 2 - 1;
-    const y = -(e.clientY / window.innerHeight) * 2 + 1;
-    directionalLight.position.x = x * 8;
-    directionalLight.position.y = y * 8 + 5;
+/* ── scroll progress + reveals ── */
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+});
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+}), { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── services ── */
+const SERVICES = [
+  { icon: '🦴', name: 'Physiotherapy', desc: 'Back/neck pain, whiplash, shoulder injuries and post-surgical rehab.', body: 'Hands-on manual therapy, exercise prescription and education — one-on-one, full sessions with the same physiotherapist every visit.' },
+  { icon: '💆', name: 'Massage Therapy', desc: 'Deep tissue, sports, therapeutic and relaxation massage.', body: 'Registered massage therapists targeting muscle tension, recovery and stress — direct billing available.' },
+  { icon: '🩻', name: 'Chiropractic', desc: 'Spinal adjustments, joint mobilization and posture correction.', body: 'Evidence-based chiropractic care coordinated with your physio plan for faster results.' },
+  { icon: '🏃', name: 'Kinesiology', desc: 'Active rehab, exercise therapy and return-to-work conditioning.', body: 'Movement specialists building strength and function after injury, MVA or surgery.' },
+  { icon: '📌', name: 'Acupuncture & IMS', desc: 'Dry needling and acupuncture for pain and muscle release.', body: 'Certified practitioners using needling techniques to release trigger points and calm chronic pain.' },
+  { icon: '🚗', name: 'MVA Rehab', desc: 'Motor vehicle accident recovery with direct insurer billing.', body: 'We handle the paperwork with your insurer under Alberta DTPR — you focus on recovery.' },
+  { icon: '👷', name: 'WCB Injuries', desc: 'Workplace injury rehab and return-to-work programs.', body: 'WCB-authorized treatment with progress reporting and modified-duty planning.' },
+  { icon: '🧘', name: 'Wellness Programs', desc: 'Posture clinics, ergonomics and injury prevention.', body: 'Stay at your peak — preventative programs for desk workers, athletes and seniors.' },
+];
+document.getElementById('servicesGrid').innerHTML = SERVICES.map((s, i) => `
+  <div class="service-card reveal d${(i % 6) + 1}" data-svc="${i}">
+    <div class="s-icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p>
+    <div class="learn-more">Explore →</div>
+  </div>`).join('');
+document.querySelectorAll('.service-card').forEach(el => {
+  io.observe(el);
+  el.addEventListener('click', () => {
+    const s = SERVICES[+el.dataset.svc];
+    document.getElementById('modalTitle').textContent = s.icon + ' ' + s.name;
+    document.getElementById('modalBody').textContent = s.body;
+    document.getElementById('modalBack').classList.add('open');
   });
-  
-  // Animation loop
-  function animate() {
-    requestAnimationFrame(animate);
-    
-    if (heroModel) {
-      heroModel.rotation.y += 0.004;
-      heroModel.position.y = Math.sin(Date.now() * 0.0005) * 0.3;
-    }
-    
-    heroRenderer.render(heroScene, heroCamera);
+});
+document.getElementById('modalX').onclick = () => document.getElementById('modalBack').classList.remove('open');
+document.getElementById('modalBack').addEventListener('click', e => {
+  if (e.target.id === 'modalBack') e.currentTarget.classList.remove('open');
+});
+
+/* ── body map ── */
+const SPOTS = [
+  { x: 120, y: 40, area: 'Head & Jaw', title: 'Headaches · TMJ · Concussion', desc: 'Tension headaches, jaw pain and post-concussion symptoms often trace back to the neck and jaw muscles.', tags: ['Physiotherapy', 'Massage', 'Acupuncture'] },
+  { x: 120, y: 74, area: 'Neck', title: 'Neck Pain & Whiplash', desc: 'Stiff neck, whiplash from an MVA, or "tech neck" from desk work — among the most common issues we treat.', tags: ['Physiotherapy', 'Chiropractic', 'MVA Rehab'] },
+  { x: 78, y: 102, area: 'Shoulder', title: 'Rotator Cuff & Frozen Shoulder', desc: 'Pain reaching overhead, clicking, or post-injury weakness responds well to targeted physio and needling.', tags: ['Physiotherapy', 'IMS / Dry Needling'] },
+  { x: 120, y: 176, area: 'Lower Back', title: 'Low Back Pain & Sciatica', desc: 'Disc irritation, sciatica and chronic stiffness — hands-on treatment plus a progressive exercise plan.', tags: ['Physiotherapy', 'Chiropractic', 'Kinesiology'] },
+  { x: 190, y: 218, area: 'Wrist & Hand', title: 'Carpal Tunnel & Sprains', desc: 'Numb or tingling hands, sport sprains and repetitive-strain injuries of the wrist and elbow.', tags: ['Physiotherapy', 'Ergonomics'] },
+  { x: 96, y: 240, area: 'Hip', title: 'Hip Pain & Bursitis', desc: 'Pinching hips, bursitis and glute weakness that limit walking, squatting and stairs.', tags: ['Physiotherapy', 'Kinesiology'] },
+  { x: 139, y: 344, area: 'Knee', title: 'Knee Injuries & Runner\u2019s Knee', desc: 'ACL/MCL sprains, meniscus irritation and patellofemoral pain from running or sport.', tags: ['Physiotherapy', 'Sports Rehab'] },
+  { x: 100, y: 442, area: 'Ankle & Foot', title: 'Ankle Sprains & Plantar Fasciitis', desc: 'Rolled ankles that never fully healed and heel pain that bites with the first steps of the day.', tags: ['Physiotherapy', 'Massage'] },
+  { x: 0, y: 0, view: 'back', area: 'Glutes & Sciatica', title: 'Glute Pain & Piriformis Syndrome', desc: 'Deep buttock pain, sciatica-like symptoms and hip weakness — often traced to the piriformis or glute tendons.', tags: ['Physiotherapy', 'IMS / Dry Needling'] },
+  { x: 0, y: 0, view: 'back', area: 'Hamstring', title: 'Hamstring Strains', desc: 'Pulled hamstrings from sprinting or sport — progressive loading gets you back without re-injury.', tags: ['Physiotherapy', 'Sports Rehab'] },
+  { x: 0, y: 0, view: 'back', area: 'Calf & Achilles', title: 'Calf Strains & Achilles Pain', desc: 'Tight, torn or aching calves and Achilles tendon pain that flares with running and stairs.', tags: ['Physiotherapy', 'Massage'] },
+];
+/* % positions on the anatomy images (front/back) */
+const SPOT_POS = [
+  { xp: 50, yp: 6, view: 'front' },
+  { xp: 50, yp: 14, view: 'front' },
+  { xp: 32, yp: 20, view: 'front' },
+  { xp: 50, yp: 40, view: 'back' },
+  { xp: 13, yp: 55, view: 'front' },
+  { xp: 40, yp: 48, view: 'front' },
+  { xp: 58, yp: 67, view: 'front' },
+  { xp: 45, yp: 89, view: 'front' },
+  { xp: 50, yp: 51, view: 'back' },
+  { xp: 41, yp: 64, view: 'back' },
+  { xp: 42, yp: 79, view: 'back' },
+];
+const bmWrap = document.getElementById('bmWrap');
+SPOTS.forEach((s, i) => {
+  const pos = SPOT_POS[i];
+  const b = document.createElement('button');
+  b.className = 'bm-hotspot' + (pos.view !== 'front' ? ' hidden' : '');
+  b.dataset.view = pos.view;
+  b.style.left = pos.xp + '%';
+  b.style.top = pos.yp + '%';
+  b.setAttribute('aria-label', s.area);
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.bm-hotspot').forEach(el => el.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('bmPanel').innerHTML = `
+      <div class="area">${s.area}</div><h3>${s.title}</h3><p>${s.desc}</p>
+      <div class="bm-tags">${s.tags.map(t => `<span class="bm-tag">${t}</span>`).join('')}</div>
+      <a href="#book" class="btn-primary" style="padding:12px 22px;font-size:.9rem">Book an Assessment →</a>`;
+  });
+  bmWrap.appendChild(b);
+});
+document.querySelectorAll('.bm-view-btn').forEach(btn => btn.addEventListener('click', () => {
+  const v = btn.dataset.view;
+  document.querySelectorAll('.bm-view-btn').forEach(x => x.classList.toggle('active', x === btn));
+  document.querySelectorAll('.bm-img').forEach(img => img.classList.toggle('hidden', img.dataset.view !== v));
+  document.querySelectorAll('.bm-hotspot').forEach(h => h.classList.toggle('hidden', h.dataset.view !== v));
+}));
+
+/* ── quiz ── */
+const QUIZ = [
+  { q: 'Where is your main concern?', opts: ['Neck / shoulders', 'Back / hips', 'Knee / ankle', 'General tension or stress'] },
+  { q: 'How did it start?', opts: ['Car accident (MVA)', 'Work injury', 'Sport / exercise', 'Gradually — no clear cause'] },
+  { q: 'How long has it bothered you?', opts: ['Less than 2 weeks', '2–6 weeks', 'Months', 'Years — on and off'] },
+  { q: 'What matters most to you right now?', opts: ['Fast pain relief', 'Getting back to sport/work', 'Fixing the root cause', 'Relaxation & maintenance'] },
+];
+const RESULTS = [
+  { title: 'Physiotherapy Assessment', desc: 'Based on your answers, a one-on-one physiotherapy assessment is the right starting point. Your physiotherapist will diagnose the issue, relieve pain hands-on, and map your recovery plan.' },
+  { title: 'MVA / WCB Rehab Intake', desc: 'Accident- or work-related injuries qualify for direct insurer billing. Start with our MVA/WCB intake — we handle the paperwork, you start treatment right away.' },
+  { title: 'Massage Therapy', desc: 'For tension, stress and maintenance, a registered massage therapy session is the best first step — with physio backup if anything deeper shows up.' },
+];
+let qStep = 0, qAns = [];
+function renderQuiz() {
+  const card = document.getElementById('quizCard');
+  if (qStep < QUIZ.length) {
+    const q = QUIZ[qStep];
+    card.innerHTML = `
+      <div class="quiz-progress"><div style="width:${((qStep) / QUIZ.length) * 100 + 12}%"></div></div>
+      <div class="quiz-q">${qStep + 1}. ${q.q}</div>
+      <div class="quiz-opts">${q.opts.map((o, i) => `<button class="quiz-opt" data-i="${i}">${o}</button>`).join('')}</div>`;
+    card.querySelectorAll('.quiz-opt').forEach(b => b.addEventListener('click', () => {
+      qAns.push(+b.dataset.i); qStep++; renderQuiz();
+    }));
+  } else {
+    const r = qAns[1] <= 1 ? RESULTS[1] : (qAns[3] === 3 ? RESULTS[2] : RESULTS[0]);
+    card.innerHTML = `
+      <div class="quiz-progress"><div style="width:100%"></div></div>
+      <div class="quiz-result">
+        <div style="font-size:2.6rem;margin-bottom:10px">🎯</div>
+        <h3>Recommended: ${r.title}</h3><p>${r.desc}</p>
+        <a href="#book" class="btn-primary" style="padding:13px 26px;font-size:.92rem">Book ${r.title.split(' ')[0]} →</a>
+        <br><button class="quiz-restart">↺ Retake quiz</button>
+      </div>`;
+    card.querySelector('.quiz-restart').onclick = () => { qStep = 0; qAns = []; renderQuiz(); };
   }
-  animate();
-  
-  // Handle resize
-  window.addEventListener('resize', () => {
-    const width = heroCanvas.clientWidth;
-    const height = heroCanvas.clientHeight;
-    heroCamera.aspect = width / height;
-    heroCamera.updateProjectionMatrix();
-    heroRenderer.setSize(width, height);
-  });
 }
+renderQuiz();
 
-function createBodyModel() {
-  const group = new THREE.Group();
-  
-  // Head
-  const headGeom = new THREE.SphereGeometry(0.3, 32, 32);
-  const headMat = new THREE.MeshStandardMaterial({ color: 0xe8c4a0, roughness: 0.5, metalness: 0.1 });
-  const head = new THREE.Mesh(headGeom, headMat);
-  head.position.y = 1.5;
-  head.castShadow = true;
-  group.add(head);
-  
-  // Body/Torso
-  const torsoGeom = new THREE.CylinderGeometry(0.25, 0.25, 0.8, 16, 32);
-  const torsoMat = new THREE.MeshStandardMaterial({ color: 0xff6b6b, roughness: 0.6, metalness: 0.05 });
-  const torso = new THREE.Mesh(torsoGeom, torsoMat);
-  torso.castShadow = true;
-  group.add(torso);
-  
-  // Left Arm
-  const armGeom = new THREE.CylinderGeometry(0.12, 0.12, 0.8, 16, 32);
-  const armMat = new THREE.MeshStandardMaterial({ color: 0xe8c4a0, roughness: 0.5 });
-  
-  const leftArm = new THREE.Mesh(armGeom, armMat);
-  leftArm.position.x = -0.5;
-  leftArm.position.y = 0.5;
-  leftArm.rotation.z = 0.3;
-  leftArm.castShadow = true;
-  group.add(leftArm);
-  
-  // Right Arm
-  const rightArm = new THREE.Mesh(armGeom, armMat);
-  rightArm.position.x = 0.5;
-  rightArm.position.y = 0.5;
-  rightArm.rotation.z = -0.3;
-  rightArm.castShadow = true;
-  group.add(rightArm);
-  
-  // Left Leg
-  const legGeom = new THREE.CylinderGeometry(0.13, 0.13, 1, 16, 32);
-  const legMat = new THREE.MeshStandardMaterial({ color: 0xe8c4a0, roughness: 0.5 });
-  
-  const leftLeg = new THREE.Mesh(legGeom, legMat);
-  leftLeg.position.x = -0.2;
-  leftLeg.position.y = -0.9;
-  leftLeg.castShadow = true;
-  group.add(leftLeg);
-  
-  // Right Leg
-  const rightLeg = new THREE.Mesh(legGeom, legMat);
-  rightLeg.position.x = 0.2;
-  rightLeg.position.y = -0.9;
-  rightLeg.castShadow = true;
-  group.add(rightLeg);
-  
-  // Add glow effect
-  const glowGeom = new THREE.SphereGeometry(2.5, 32, 32);
-  const glowMat = new THREE.MeshBasicMaterial({
-    color: 0x0066ff,
-    transparent: true,
-    opacity: 0.1,
-    side: THREE.BackSide
-  });
-  const glow = new THREE.Mesh(glowGeom, glowMat);
-  group.add(glow);
-  
-  heroScene.add(group);
-  heroModel = group;
-}
+/* ── recovery slider ── */
+const STAGES = [
+  { e: '😣', t: 'Assessment & Pain Relief', d: 'Your first 1-on-1 visit: full assessment, hands-on treatment to calm pain, and a plan built for your body and goals.', f: 12 },
+  { e: '🙂', t: 'Early Wins', d: 'Pain settling, movement returning. Gentle mobility work begins and daily activities get noticeably easier.', f: 35 },
+  { e: '💪', t: 'Rebuilding Strength', d: 'Progressive loading and targeted exercises restore the strength and control the injury took away.', f: 60 },
+  { e: '🏃', t: 'Return to Activity', d: 'Sport-, work- and life-specific training. You test the body under real demands with your clinician watching form.', f: 85 },
+  { e: '🏔️', t: 'Peak Performance', d: 'Discharged with a maintenance plan — stronger than before the injury, with tools to keep it that way.', f: 100 },
+];
+const recRange = document.getElementById('recRange');
+recRange.addEventListener('input', () => {
+  const s = STAGES[+recRange.value];
+  document.getElementById('recEmoji').textContent = s.e;
+  document.getElementById('recTitle').textContent = s.t;
+  document.getElementById('recDesc').textContent = s.d;
+  document.getElementById('recFill').style.width = s.f + '%';
+  document.getElementById('recEmoji').style.transform = 'scale(1.25)';
+  setTimeout(() => document.getElementById('recEmoji').style.transform = '', 200);
+});
 
-// FAQ Accordion
-const faqItems = document.querySelectorAll('.faq-item');
-faqItems.forEach(item => {
-  item.querySelector('.faq-question').addEventListener('click', () => {
-    faqItems.forEach(otherItem => {
-      if (otherItem !== item) {
-        otherItem.classList.remove('active');
-      }
-    });
-    item.classList.toggle('active');
+/* ── exercise library ── */
+const LIB = [
+  { cat: 'Lower Back', name: 'Cat-Cow Mobility Flow', dur: '3:24', icon: '🐱' },
+  { cat: 'Neck', name: 'Desk Worker Neck Reset', dur: '4:10', icon: '💻' },
+  { cat: 'Knee', name: 'Runner\u2019s Knee Strength Set', dur: '6:45', icon: '🏃' },
+  { cat: 'Shoulder', name: 'Rotator Cuff Band Series', dur: '5:02', icon: '💪' },
+  { cat: 'Ankle', name: 'Ankle Sprain Rebuild', dur: '4:38', icon: '🦶' },
+  { cat: 'Posture', name: '5-Minute Posture Break', dur: '5:00', icon: '🧘' },
+];
+document.getElementById('libGrid').innerHTML = LIB.map((v, i) => `
+  <div class="lib-card reveal d${(i % 6) + 1}">
+    <div class="lib-thumb"><div class="bg"></div><span class="ex-icon">${v.icon}</span><div class="play">▶</div><span class="dur">${v.dur}</span></div>
+    <div class="lib-body"><div class="lib-cat">${v.cat}</div><h4>${v.name}</h4></div>
+  </div>`).join('');
+document.querySelectorAll('.lib-card').forEach(el => {
+  io.observe(el);
+  el.addEventListener('click', () => {
+    document.getElementById('modalTitle').textContent = '🎬 Coming with launch';
+    document.getElementById('modalBody').textContent = 'The full exercise video library ships with the live site — filmed with our own clinicians. Every Apex patient gets free access to their personalized program.';
+    document.getElementById('modalBack').classList.add('open');
   });
 });
 
-// Body Part Selection with recommendations
-let selectedBodyPart = null;
-
-const bodyPartData = {
-  neck: {
-    title: 'Neck Pain',
-    symptoms: 'Stiffness, headaches, reduced range of motion. Often caused by posture strain, whiplash, or disc issues.',
-    treatments: ['Physiotherapy', 'Chiropractic', 'Massage Therapy']
-  },
-  shoulder: {
-    title: 'Shoulder Pain',
-    symptoms: 'Pain with overhead movement, weakness, clicking. Common causes: rotator cuff strain, frozen shoulder, impingement.',
-    treatments: ['Physiotherapy', 'Shockwave Therapy', 'Sports Rehab']
-  },
-  back: {
-    title: 'Back Pain',
-    symptoms: 'Lower back ache, sciatica, muscle spasms. Often from disc herniation, poor posture, or lifting injuries.',
-    treatments: ['Chiropractic', 'Physiotherapy', 'Kinesiology']
-  },
-  elbow: {
-    title: 'Elbow Pain',
-    symptoms: 'Pain with gripping, tenderness on the outer/inner elbow. Typically tennis or golfer\'s elbow.',
-    treatments: ['Shockwave Therapy', 'Physiotherapy', 'Massage Therapy']
-  },
-  wrist: {
-    title: 'Wrist Pain',
-    symptoms: 'Numbness, tingling, weakness with gripping. Common causes: carpal tunnel, repetitive strain, sprains.',
-    treatments: ['Physiotherapy', 'Workplace Injury Treatment']
-  },
-  hip: {
-    title: 'Hip Pain',
-    symptoms: 'Groin ache, pain when walking or sitting. Causes include bursitis, arthritis, and labral strain.',
-    treatments: ['Physiotherapy', 'Kinesiology', 'Chronic Pain Management']
-  },
-  knee: {
-    title: 'Knee Pain',
-    symptoms: 'Swelling, instability, pain on stairs. Common: ACL/meniscus injuries, runner\'s knee, arthritis.',
-    treatments: ['Sports Rehab', 'Physiotherapy', 'Shockwave Therapy']
-  },
-  ankle: {
-    title: 'Ankle Pain',
-    symptoms: 'Swelling, instability, pain with weight-bearing. Usually sprains, Achilles strain, or plantar fasciitis.',
-    treatments: ['Physiotherapy', 'Sports Rehab', 'Massage Therapy']
-  }
-};
-
-function selectBodyPart(part) {
-  const buttons = document.querySelectorAll('.body-part-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  if (window.event && window.event.target) window.event.target.classList.add('active');
-  selectedBodyPart = part;
-
-  const data = bodyPartData[part];
-  if (data) {
-    document.getElementById('recTitle').textContent = data.title;
-    document.getElementById('recSymptoms').textContent = data.symptoms;
-    const tags = document.getElementById('recTags');
-    tags.innerHTML = '';
-    data.treatments.forEach(t => {
-      const span = document.createElement('span');
-      span.className = 'recommendation-tag';
-      span.textContent = t;
-      tags.appendChild(span);
-    });
-    document.getElementById('recommendationPanel').classList.add('visible');
-  }
-}
-
-// Cinematic intro overlay
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const overlay = document.getElementById('introOverlay');
-    if (overlay) overlay.classList.add('hidden');
-  }, 1600);
-});
-
-// Scroll reveal
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initHeroScene);
+/* ── chat bubble ── */
+const chatToggle = document.getElementById('chatToggle');
+const chatPanel = document.getElementById('chatPanel');
+chatToggle.addEventListener('click', () => chatPanel.classList.toggle('open'));
+document.querySelectorAll('.chat-act').forEach(b => b.addEventListener('click', () => {
+  window.open('https://wa.me/14030000000?text=' + encodeURIComponent(b.dataset.msg), '_blank');
+}));
