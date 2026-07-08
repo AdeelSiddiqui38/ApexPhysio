@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex At-Home | Virtual Physiotherapy Program | Apex Physio & Wellness Clinic NW Calgary</title>
+<meta name="description" content="Apex At-Home: a physiotherapist-designed home exercise program with virtual check-ins. Recover from home — and connect with a real physio in NW Calgary whenever you need guidance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+/* page-specific — cinematic light luxury, reuses tokens from site.css */
+.ah-hero{position:relative;min-height:78vh;background:linear-gradient(180deg,#FDFEFE,var(--bg));display:flex;align-items:center;padding:70px 5%;overflow:hidden;isolation:isolate}
+.ah-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(253,254,254,.25),rgba(253,254,254,0) 40%,rgba(248,251,252,.85));pointer-events:none}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.step-card{background:var(--card-solid);border:1px solid var(--glass-brd);border-radius:var(--r);padding:30px 24px;position:relative;overflow:hidden;transition:transform .4s var(--ease-out),box-shadow .4s,border-color .4s;box-shadow:var(--shadow-soft)}
+.step-card::before{content:'';position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(14,168,141,.07),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
+.step-card:hover::before{opacity:1}
+.step-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-lift);border-color:rgba(14,168,141,.3)}
+.step-num{font-family:var(--font-ui);font-size:.68rem;font-weight:800;letter-spacing:2px;color:#fff;background:linear-gradient(140deg,var(--teal),var(--teal-deep));display:inline-block;padding:5px 13px;border-radius:100px;margin-bottom:16px;box-shadow:0 4px 14px rgba(14,168,141,.28)}
+.step-card h3{font-family:var(--font-ui);font-size:1.02rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.step-card p{font-size:.84rem;color:var(--muted);line-height:1.65}
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;align-items:stretch}
+.tier{background:var(--card-solid);border:1px solid var(--glass-brd);border-radius:22px;padding:34px 28px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .4s var(--ease-out),box-shadow .4s,border-color .4s;box-shadow:var(--shadow-soft)}
+.tier::before{content:'';position:absolute;inset:0;background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),rgba(14,168,141,.06),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
+.tier:hover::before{opacity:1}
+.tier:hover{transform:translateY(-7px);box-shadow:var(--shadow-lift);border-color:rgba(14,168,141,.3)}
+.tier.featured{border-color:rgba(14,168,141,.4);box-shadow:0 16px 44px rgba(14,168,141,.14);overflow:visible}
+.tier .flag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(140deg,var(--gold-soft),var(--gold-deep));color:#3A2A0E;font-size:.64rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:5px 15px;border-radius:100px;box-shadow:0 6px 18px rgba(217,174,98,.35)}
+.tier h3{font-family:var(--font-display);font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:6px}
+.tier .who{font-size:.8rem;color:var(--muted);margin-bottom:18px;line-height:1.6}
+.tier ul{list-style:none;margin-bottom:24px;flex:1}
+.tier li{font-size:.85rem;color:var(--text);padding:9px 0;border-bottom:1px solid var(--border);display:flex;gap:9px;line-height:1.5}
+.tier li::before{content:'✓';color:var(--teal-deep);font-weight:800}
+.tier .price-note{font-size:.78rem;color:var(--dim);text-align:center;margin-bottom:14px;font-style:italic}
+.tier-btn{display:block;text-align:center;background:linear-gradient(140deg,var(--teal),var(--teal-deep));color:#fff;padding:15px;border-radius:100px;font-weight:800;font-size:.9rem;transition:transform .25s,box-shadow .25s;box-shadow:0 8px 20px rgba(14,168,141,.25)}
+.tier-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(14,168,141,.38)}
+.tier-btn.ghost{background:#fff;border:1px solid var(--glass-brd-hi);color:var(--text);box-shadow:none}
+.tier-btn.ghost:hover{border-color:var(--teal);color:var(--teal-deep);box-shadow:0 6px 20px rgba(14,168,141,.12)}
+.safety{background:radial-gradient(ellipse 70% 90% at 80% 20%,rgba(14,168,141,.06),transparent 55%),radial-gradient(ellipse 50% 60% at 10% 90%,rgba(217,174,98,.06),transparent 60%),linear-gradient(170deg,#FFFFFF,var(--bg-3));position:relative;overflow:hidden}
+.safety::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(16,42,67,.05) 1px,transparent 1px);background-size:36px 36px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black,transparent)}
+.safety .s-title{color:var(--text)}.safety .s-sub{color:var(--muted)}
+.esc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;position:relative}
+.esc-card{background:var(--card);border:1px solid var(--glass-brd);border-radius:22px;padding:30px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);position:relative;overflow:hidden;transition:border-color .35s,transform .4s var(--ease-out),box-shadow .4s;box-shadow:var(--shadow-soft)}
+.esc-card::before{content:'';position:absolute;inset:0;background:radial-gradient(300px circle at var(--mx,50%) var(--my,50%),rgba(14,168,141,.07),transparent 60%);opacity:0;transition:opacity .35s;pointer-events:none}
+.esc-card:hover::before{opacity:1}
+.esc-card:hover{border-color:rgba(14,168,141,.35);transform:translateY(-5px);box-shadow:var(--shadow-lift)}
+.esc-card .ic{font-size:2rem;margin-bottom:12px;filter:drop-shadow(0 4px 10px rgba(14,168,141,.22))}
+.esc-card h3{font-family:var(--font-ui);font-size:1.02rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.esc-card p{font-size:.85rem;color:var(--muted);line-height:1.7}
+.cta-band{background:linear-gradient(150deg,#FFFFFF,var(--bg-2));border:1px solid var(--glass-brd);border-radius:26px;padding:56px 42px;text-align:center;color:var(--text);max-width:900px;margin:0 auto;position:relative;overflow:hidden;box-shadow:var(--shadow-lift)}
+.cta-band::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:80%;height:80%;background:radial-gradient(circle,rgba(14,168,141,.08),transparent 65%);pointer-events:none}
+.cta-band h2{font-family:var(--font-display);font-size:clamp(1.7rem,3vw,2.5rem);font-weight:600;letter-spacing:-.5px;margin-bottom:12px;position:relative}
+.cta-band p{color:var(--muted);font-size:.95rem;margin-bottom:28px;line-height:1.75;position:relative}
+.soon-badge{display:inline-block;background:rgba(217,174,98,.12);border:1px solid rgba(184,135,59,.45);color:var(--amber);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 16px;border-radius:100px;margin-bottom:18px;position:relative}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div id="progress-bar"></div>
+
+<div class="announce">🏠 NEW — Apex At-Home: physiotherapist-guided recovery from your living room &nbsp;|&nbsp; Real physio backup whenever you need it</div>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 26 26" fill="none" width="24" height="24">
+        <path d="M13 4L23 21H3L13 4Z" stroke="#060D14" stroke-width="2" fill="none" stroke-linejoin="round"></path>
+        <line x1="13" y1="13" x2="13" y2="20" stroke="#060D14" stroke-width="2.5" stroke-linecap="round"></line>
+        <line x1="10" y1="17" x2="16" y2="17" stroke="#060D14" stroke-width="2" stroke-linecap="round"></line>
+      </svg>
+    </div>
+    <div class="logo-text"><span class="brand">Apex Physio</span><span class="sub">&amp; Wellness Clinic</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#bodymap">Where It Hurts</a>
+    <a href="at-home.html" style="color:var(--teal)">At-Home Program</a>
+    <a href="index.html#location">Location</a>
+  </div>
+  <a href="index.html#book" class="nav-cta">Book Appointment →</a>
+</nav>
+
+<section class="ah-hero">
+  <canvas id="motionCanvas"></canvas>
+  <div class="hero-inner" style="grid-template-columns:1fr;max-width:860px;text-align:center">
+    <div>
+      <div class="hero-badge"><span class="badge-dot"></span> New Program · Launching Soon</div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2.5rem,4.8vw,4.2rem);font-weight:600;color:var(--text);line-height:1.08;letter-spacing:-1.5px;margin-bottom:22px">
+        Recover From Home.<br>Backed By a <em style="font-style:italic;background:linear-gradient(100deg,var(--teal-deep) 20%,var(--amber) 80%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">Real Physio.</em>
+      </h1>
+      <p class="hero-sub" style="max-width:600px;margin-left:auto;margin-right:auto">
+        Apex At-Home is a self-guided physiotherapy program built for you by a registered physiotherapist — video-guided exercises on your schedule, progress check-ins, and a real clinician one tap away whenever you need hands-on help.
+      </p>
+      <div class="hero-actions" style="justify-content:center">
+        <a href="#plans" class="btn-primary">🏠 See the Program</a>
+        <a href="index.html#book" class="btn-outline">🩺 Prefer In-Clinic? Book a Visit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="t-icon">🩺</span><div><div class="t-val">Physio-Built</div><div class="t-lbl">Every Program</div></div></div>
+  <div class="trust-item"><span class="t-icon">🎥</span><div><div class="t-val">Video-Guided</div><div class="t-lbl">Home Exercises</div></div></div>
+  <div class="trust-item"><span class="t-icon">📈</span><div><div class="t-val">Tracked</div><div class="t-lbl">Weekly Progress</div></div></div>
+  <div class="trust-item"><span class="t-icon">🤝</span><div><div class="t-val">Real Physio</div><div class="t-lbl">On Standby</div></div></div>
+</div>
+
+<section id="how">
+  <div class="container">
+    <p class="s-label reveal">How It Works</p>
+    <h2 class="s-title reveal">From Sign-Up to Recovery, in 4 Steps</h2>
+    <p class="s-sub reveal">No waiting rooms. No guessing which YouTube stretch is safe. A plan made for your body, supervised by a clinician who knows your file.</p>
+    <div class="steps-grid">
+      <div class="step-card reveal d1"><div class="step-num">STEP 1</div><h3>Online Assessment</h3><p>Complete a virtual assessment with a registered physiotherapist — your history, your pain, your goals.</p></div>
+      <div class="step-card reveal d2"><div class="step-num">STEP 2</div><h3>Get Your Program</h3><p>Receive a personalized, video-guided exercise plan you can follow at home, on your schedule.</p></div>
+      <div class="step-card reveal d3"><div class="step-num">STEP 3</div><h3>Train &amp; Track</h3><p>Work through your sessions and log progress. Your physio reviews it and adjusts your plan as your body responds.</p></div>
+      <div class="step-card reveal d4"><div class="step-num">STEP 4</div><h3>Real Help, One Tap Away</h3><p>Stuck, sore, or unsure? Message your physio, book a virtual check-in, or come see us in-clinic at Nolan Ridge.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="services-section" id="plans">
+  <div class="container">
+    <p class="s-label reveal">Choose Your Level of Support</p>
+    <h2 class="s-title reveal">One Program, Three Ways to Do It</h2>
+    <p class="s-sub reveal">Every tier starts with a real physiotherapist assessment — the difference is how much ongoing support you want.</p>
+    <div class="tier-grid">
+      <div class="tier reveal d1">
+        <h3>Self-Guided</h3>
+        <p class="who">For independent movers who want a safe, structured plan without the appointments.</p>
+        <ul>
+          <li>Initial assessment with a registered physiotherapist</li>
+          <li>Personalized video exercise program</li>
+          <li>Full access to the Apex exercise library</li>
+          <li>Progress tracking &amp; program updates</li>
+        </ul>
+        <p class="price-note">Pricing announced at launch</p>
+        <a href="#start" class="tier-btn ghost">Join the Waitlist</a>
+      </div>
+      <div class="tier featured reveal d2">
+        <span class="flag">Most Popular</span>
+        <h3>Guided</h3>
+        <p class="who">Self-guided plus a clinician actively watching your progress and keeping you on track.</p>
+        <ul>
+          <li>Everything in Self-Guided</li>
+          <li>Scheduled virtual check-ins with your physio</li>
+          <li>Direct messaging for questions between sessions</li>
+          <li>Plan adjustments as you improve</li>
+        </ul>
+        <p class="price-note">Pricing announced at launch</p>
+        <a href="#start" class="tier-btn">Join the Waitlist</a>
+      </div>
+      <div class="tier reveal d3">
+        <h3>Hybrid</h3>
+        <p class="who">The best of both: train at home, and get hands-on treatment in-clinic when it matters.</p>
+        <ul>
+          <li>Everything in Guided</li>
+          <li>In-clinic visits at our Nolan Ridge location</li>
+          <li>Hands-on treatment when your physio recommends it</li>
+          <li>Direct billing to most insurers (in-clinic)</li>
+        </ul>
+        <p class="price-note">Pricing announced at launch</p>
+        <a href="#start" class="tier-btn ghost">Join the Waitlist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="safety">
+  <div class="container">
+    <p class="s-label reveal" style="color:var(--amber)">The Apex Difference</p>
+    <h2 class="s-title reveal">An App Can't Feel Your Shoulder.<br>Your Physio Can.</h2>
+    <p class="s-sub reveal">Online-only physio programs stop at the screen. Ours doesn't — because the same clinician behind your home program works in our NW Calgary clinic.</p>
+    <div class="esc-grid">
+      <div class="esc-card reveal d1"><div class="ic">💬</div><h3>Question? Message Us</h3><p>Not sure if that twinge is normal? Ask your physio directly instead of guessing or Googling.</p></div>
+      <div class="esc-card reveal d2"><div class="ic">📹</div><h3>Stuck? Go Virtual</h3><p>Book a video check-in — your physio watches you move, corrects your form, and updates your plan on the spot.</p></div>
+      <div class="esc-card reveal d3"><div class="ic">🏥</div><h3>Need Hands-On? Come In</h3><p>If home exercise isn't enough, transition seamlessly into in-clinic care at Unit 150, 246 Nolanridge Crescent NW — same physio, same file, no starting over.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="container">
+    <div class="cta-band reveal">
+      <span class="soon-badge">Launching Soon</span>
+      <h2>Be First in Line for Apex At-Home</h2>
+      <p>We're putting the finishing touches on the program. Join the waitlist and we'll reach out the moment enrolment opens — founding members get priority booking with our physiotherapists.</p>
+      <div class="hero-actions" style="justify-content:center">
+        <a href="mailto:hello@apexphysio.ca?subject=Apex%20At-Home%20Waitlist" class="btn-primary">✉️ Join the Waitlist</a>
+        <a href="index.html#book" class="btn-outline">Book an In-Clinic Visit Instead</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="foot-brand">
+      <div class="name">Apex Physio &amp; Wellness Clinic</div>
+      <p class="tagline">Rise above pain. Reclaim your peak life. One-on-one multidisciplinary care in Nolan Ridge NW Calgary.</p>
+      <div class="social-row">
+        <a class="soc" href="#" aria-label="Instagram">📷</a>
+        <a class="soc" href="#" aria-label="Facebook">👍</a>
+        <a class="soc" href="#" aria-label="TikTok">🎵</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Services</h5>
+      <a href="index.html#services">Physiotherapy</a><a href="index.html#services">Massage Therapy</a><a href="index.html#services">Chiropractic</a><a href="at-home.html">Apex At-Home</a>
+    </div>
+    <div class="foot-col">
+      <h5>Clinic</h5>
+      <a href="index.html#bodymap">Where It Hurts</a><a href="index.html#quiz">Self-Assessment</a><a href="index.html#library">Exercise Library</a><a href="index.html#location">Location &amp; Hours</a>
+    </div>
+    <div class="foot-col">
+      <h5>Contact</h5>
+      <a href="tel:+14030000000">403-000-0000</a>
+      <a href="mailto:hello@apexphysio.ca">hello@apexphysio.ca</a>
+      <a href="index.html#location">Unit 150, 246 Nolanridge Cres NW</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2026 Apex Physio &amp; Wellness Clinic. All rights reserved.</p>
+    <p>Made in Calgary 🍁</p>
+  </div>
+</footer>
+
+<script src="motion-bg.js"></script>
+<script>
+// reveal-on-scroll + progress bar (standalone for this page)
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  document.getElementById('progress-bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+});
+</script>
+<script src="premium-fx.js"></script>
+</body>
+</html>
