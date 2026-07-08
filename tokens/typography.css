@@ -1,0 +1,39 @@
+/* =========================================================================
+   TYPE TOKENS
+   RemedyPills app: Inter (sans, shadcn default), Georgia (serif, unused in UI),
+   Menlo (mono, unused in UI) — declared in client/src/index.css --font-sans.
+   NBV site: Inter (body) + Poppins 600/700 (headline) via next/font/google,
+   mapped to font-body / font-headline in tailwind.config.ts.
+   Both ship as real Google Fonts here (see fonts.css for @font-face).
+   ========================================================================= */
+
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-headline: 'Poppins', 'Inter', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, 'SF Mono', monospace;
+
+  /* RemedyPills: compact product-UI scale (mobile-first) */
+  --text-xs: 0.6875rem;   /* 11px — nav labels, timestamps */
+  --text-sm: 0.75rem;     /* 12px — captions, meta */
+  --text-base: 0.875rem;  /* 14px — body */
+  --text-md: 1rem;        /* 16px — inputs */
+  --text-lg: 1.125rem;    /* 18px — section title (text-base font-bold in source) */
+  --text-xl: 1.25rem;     /* 20px — TopBar app title */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px — auth hero title */
+
+  /* NBV: marketing-site scale (bigger, editorial) */
+  --nbv-text-body: 1.125rem;    /* 18px, text-lg used pervasively for paragraphs */
+  --nbv-text-h2: 2.25rem;       /* 36px, text-4xl section headings */
+  --nbv-text-h1-sm: 2.25rem;    /* 36px mobile hero */
+  --nbv-text-h1-lg: 3rem;       /* 48px desktop hero, md:text-5xl */
+  --nbv-text-quote: 1.875rem;   /* 30px, blockquote */
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
+
+  --tracking-tight: -0.02em;   /* tracking-tighter/tight on headlines */
+}

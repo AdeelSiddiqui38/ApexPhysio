@@ -1,0 +1,252 @@
+<!-- @dsCard group="Apex Physio" viewport="1280x800" name="Website" subtitle="Full interactive site — body map, quiz, booking mock, recovery slider, exercise library" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Physio & Wellness Clinic | NW Calgary | Unit 150, 246 Nolanridge Crescent NW</title>
+<meta name="description" content="Physiotherapy, Kinesiology, Massage Therapy, Chiropractic & Wellness in Nolan Ridge NW Calgary. Direct billing, same-day booking, one-on-one care.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div class="announce">🎉 Now Open in Nolan Ridge NW Calgary — Unit 150, 246 Nolanridge Crescent NW &nbsp;|&nbsp; Direct Billing &nbsp;|&nbsp; Same-Day Appointments</div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 26 26" fill="none" width="24" height="24">
+        <path d="M13 4L23 21H3L13 4Z" stroke="#060D14" stroke-width="2" fill="none" stroke-linejoin="round"></path>
+        <line x1="13" y1="13" x2="13" y2="20" stroke="#060D14" stroke-width="2.5" stroke-linecap="round"></line>
+        <line x1="10" y1="17" x2="16" y2="17" stroke="#060D14" stroke-width="2" stroke-linecap="round"></line>
+      </svg>
+    </div>
+    <div class="logo-text"><span class="brand">Apex Physio</span><span class="sub">&amp; Wellness Clinic</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#bodymap">Where It Hurts</a>
+    <a href="#quiz">Self-Check</a>
+    <a href="#library">Exercises</a>
+    <a href="#location">Location</a>
+  </div>
+  <a href="#book" class="nav-cta">Book Appointment →</a>
+</nav>
+
+<section class="hero" id="hero">
+  <canvas id="motionCanvas"></canvas>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><span class="badge-dot"></span> Now Open · Nolan Ridge NW Calgary</div>
+      <h1>
+        <span class="line"><span>Rise Above</span></span>
+        <span class="line"><span>Pain. Reclaim</span></span>
+        <span class="line"><span>Your <em>Peak</em> Life.</span></span>
+      </h1>
+      <p class="hero-sub">Expert physiotherapy, massage, chiropractic and wellness — all under one roof. One-on-one care, direct billing, same-day booking in Nolan Ridge NW Calgary.</p>
+      <div class="hero-actions">
+        <a href="#book" class="btn-primary">📅 Book Your Visit</a>
+        <a href="tel:+14030000000" class="btn-outline">📞 Call Us Today</a>
+      </div>
+    </div>
+    <div class="hero-cards">
+      <div class="hero-card"><div class="card-icon">✅</div><div><div class="card-label">Insurance</div><div class="card-value">Direct Billing — WCB, MVA, Benefits</div></div></div>
+      <div class="hero-card"><div class="card-icon">⚡</div><div><div class="card-label">Availability</div><div class="card-value">Same-Day Appointments Available</div></div></div>
+      <div class="hero-card"><div class="card-icon">🏔️</div><div><div class="card-label">Our Promise</div><div class="card-value">Same Clinician Every Single Visit</div></div></div>
+      <div class="hero-card"><div class="card-icon">📍</div><div><div class="card-label">Location</div><div class="card-value">Unit 150 · 246 Nolanridge Crescent NW</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="t-icon">⭐</span><div><div class="t-val">5-Star</div><div class="t-lbl">Google Rated</div></div></div>
+  <div class="trust-item"><span class="t-icon">🏥</span><div><div class="t-val">Registered</div><div class="t-lbl">Clinicians Only</div></div></div>
+  <div class="trust-item"><span class="t-icon">💳</span><div><div class="t-val">Direct Billing</div><div class="t-lbl">MVA · WCB · Benefits</div></div></div>
+  <div class="trust-item"><span class="t-icon">📅</span><div><div class="t-val">Same Day</div><div class="t-lbl">Booking Available</div></div></div>
+  <div class="trust-item"><span class="t-icon">🤝</span><div><div class="t-val">1-on-1</div><div class="t-lbl">Personalised Care</div></div></div>
+</div>
+
+<section class="services-section" id="services">
+  <div class="container">
+    <p class="s-label reveal">What We Offer</p>
+    <h2 class="s-title reveal">Every Service You Need,<br>Under One Roof</h2>
+    <p class="s-sub reveal">Coordinated by clinicians who actually talk to each other — for faster, smarter recovery.</p>
+    <div class="services-grid" id="servicesGrid"></div>
+  </div>
+</section>
+
+<section class="bodymap-section" id="bodymap">
+  <div class="container">
+    <p class="s-label reveal" style="color:var(--amber)">Interactive</p>
+    <h2 class="s-title reveal">Click Where It Hurts</h2>
+    <p class="s-sub reveal">Tap a glowing point on the body to see what might be going on and which of our services can help.</p>
+    <div class="bm-grid">
+      <div class="bm-figure reveal">
+        <svg width="240" height="480" viewBox="0 0 240 480" id="bodySvg">
+          <g stroke="rgba(255,255,255,.5)" stroke-width="2.5" fill="none" stroke-linecap="round">
+            <circle cx="120" cy="50" r="26" fill="rgba(0,229,179,.08)"></circle>
+            <line x1="120" y1="76" x2="120" y2="200"></line>
+            <line x1="120" y1="100" x2="60" y2="170"></line>
+            <line x1="120" y1="100" x2="180" y2="170"></line>
+            <line x1="60" y1="170" x2="50" y2="230"></line>
+            <line x1="180" y1="170" x2="190" y2="230"></line>
+            <line x1="120" y1="200" x2="85" y2="320"></line>
+            <line x1="120" y1="200" x2="155" y2="320"></line>
+            <line x1="85" y1="320" x2="80" y2="440"></line>
+            <line x1="155" y1="320" x2="160" y2="440"></line>
+          </g>
+          <!-- hotspots injected by JS -->
+        </svg>
+      </div>
+      <div class="bm-panel reveal d2" id="bmPanel">
+        <div class="area">Start Here</div>
+        <h3>Select a body area</h3>
+        <p>Click any pulsing dot on the figure — neck, shoulder, lower back, knee and more — to learn about common conditions we treat and the best next step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quiz-section" id="quiz">
+  <div class="container">
+    <p class="s-label reveal">Self-Assessment</p>
+    <h2 class="s-title reveal">Not Sure What You Need?</h2>
+    <p class="s-sub reveal">Answer 4 quick questions and we'll suggest the right starting treatment.</p>
+    <div class="quiz-card reveal" id="quizCard"></div>
+  </div>
+</section>
+
+<section class="recovery-section" id="recovery">
+  <div class="container">
+    <p class="s-label reveal">Your Journey</p>
+    <h2 class="s-title reveal">From First Visit to Full Recovery</h2>
+    <p class="s-sub reveal">Drag the timeline to see how a typical treatment plan progresses week by week.</p>
+    <div class="rec-slider reveal">
+      <div class="rec-weeks"><span>WEEK 0</span><span>WEEK 2</span><span>WEEK 4</span><span>WEEK 6</span><span>WEEK 8+</span></div>
+      <input type="range" class="rec-input" id="recRange" min="0" max="4" step="1" value="0">
+      <div class="rec-stage">
+        <div class="rec-emoji" id="recEmoji">😣</div>
+        <div>
+          <div class="rec-title" id="recTitle">Assessment & Pain Relief</div>
+          <div class="rec-desc" id="recDesc">Your first 1-on-1 visit: full assessment, hands-on treatment to calm pain, and a plan built for your body and goals.</div>
+        </div>
+      </div>
+      <div class="rec-meter">
+        <div class="rec-meter-bar"><div class="rec-meter-fill" id="recFill" style="width:12%"></div></div>
+        <div class="rec-meter-lbl"><span>PAIN</span><span>FUNCTION RESTORED</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="library-section" id="library">
+  <div class="container">
+    <p class="s-label reveal">Free Resources</p>
+    <h2 class="s-title reveal">Exercise Video Library</h2>
+    <p class="s-sub reveal">Clinician-approved home exercises. Full library free for every Apex patient.</p>
+    <div class="lib-grid" id="libGrid"></div>
+  </div>
+</section>
+
+<section class="local-section" id="location">
+  <div class="container">
+    <p class="s-label reveal">Find Us</p>
+    <h2 class="s-title reveal">In the Heart of Nolan Ridge</h2>
+    <div class="loc-grid">
+      <div class="reveal">
+        <p style="color:var(--muted);line-height:1.75">Proudly serving NW Calgary — easy access from Stoney Trail, with free parking at the door.</p>
+        <div class="comm-tags">
+          <span class="comm-tag">Nolan Hill</span><span class="comm-tag">Sage Hill</span><span class="comm-tag">Evanston</span>
+          <span class="comm-tag">Carrington</span><span class="comm-tag">Livingston</span><span class="comm-tag">Sherwood</span>
+          <span class="comm-tag">Kincora</span><span class="comm-tag">Glacier Ridge</span><span class="comm-tag">Ambleton</span>
+        </div>
+        <ul class="hours-list">
+          <li><span class="day">Monday – Friday</span><span class="time">8:00 AM – 8:00 PM</span></li>
+          <li><span class="day">Saturday</span><span class="time">9:00 AM – 4:00 PM</span></li>
+          <li><span class="day">Sunday</span><span class="time">Closed</span></li>
+        </ul>
+      </div>
+      <div class="reveal d2">
+        <div class="map-card">
+          <span class="map-pin">📍</span>
+          <div class="map-addr">Unit 150, 246 Nolanridge Crescent NW</div>
+          <div class="map-city">Calgary, Alberta</div>
+          <a class="map-btn" href="https://maps.google.com/?q=246+Nolanridge+Crescent+NW+Calgary" target="_blank" rel="noopener">Get Directions →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking-section" id="book">
+  <div class="container">
+    <p class="s-label reveal">Book Online</p>
+    <h2 class="s-title reveal">Same-Day Appointments, Booked in 60 Seconds</h2>
+    <p class="s-sub reveal">Pick a service, choose a time, done. Direct billing to most insurers.</p>
+    <div class="booking-shell reveal" id="bookingShell"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="foot-brand">
+      <div class="name">Apex Physio &amp; Wellness Clinic</div>
+      <p class="tagline">Rise above pain. Reclaim your peak life. One-on-one multidisciplinary care in Nolan Ridge NW Calgary.</p>
+      <div class="social-row">
+        <a class="soc" href="#" aria-label="Instagram">📷</a>
+        <a class="soc" href="#" aria-label="Facebook">👍</a>
+        <a class="soc" href="#" aria-label="TikTok">🎵</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h5>Services</h5>
+      <a href="#services">Physiotherapy</a><a href="#services">Massage Therapy</a><a href="#services">Chiropractic</a><a href="#services">Kinesiology</a><a href="#services">Acupuncture</a>
+    </div>
+    <div class="foot-col">
+      <h5>Clinic</h5>
+      <a href="#bodymap">Where It Hurts</a><a href="#quiz">Self-Assessment</a><a href="#library">Exercise Library</a><a href="#location">Location &amp; Hours</a>
+    </div>
+    <div class="foot-col">
+      <h5>Contact</h5>
+      <a href="tel:+14030000000">403-000-0000</a>
+      <a href="mailto:hello@apexphysio.ca">hello@apexphysio.ca</a>
+      <a href="#location">Unit 150, 246 Nolanridge Cres NW</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2026 Apex Physio &amp; Wellness Clinic. All rights reserved.</p>
+    <p>Made in Calgary 🍁</p>
+  </div>
+</footer>
+
+<div class="chat-bubble" id="chatBubble">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-head"><div class="nm">Apex Physio</div><div class="st">Typically replies within minutes</div></div>
+    <div class="chat-msgs"><div class="chat-msg">👋 Hi! How can we help you today?</div></div>
+    <div class="chat-actions">
+      <button class="chat-act" data-msg="I'd like to book an appointment">📅 Book an appointment</button>
+      <button class="chat-act" data-msg="Do you direct bill my insurance?">💳 Ask about direct billing</button>
+      <button class="chat-act" data-msg="I have a question about my injury">🩺 Ask about an injury</button>
+    </div>
+  </div>
+  <button class="chat-toggle" id="chatToggle" aria-label="Chat on WhatsApp">💬</button>
+</div>
+
+<div class="modal-back" id="modalBack">
+  <div class="modal">
+    <button class="modal-x" id="modalX">✕</button>
+    <h3 id="modalTitle"></h3>
+    <p id="modalBody"></p>
+    <a href="#book" class="btn-primary" id="modalCta" style="margin-top:20px;display:inline-flex" onclick="document.getElementById('modalBack').classList.remove('open')">Book This Service →</a>
+  </div>
+</div>
+
+<script src="motion-bg.js"></script>
+<script src="interactions.js"></script>
+<script src="booking.js"></script>
+</body>
+</html>

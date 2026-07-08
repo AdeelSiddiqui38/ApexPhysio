@@ -1,0 +1,8 @@
+/* =========================================================================
+   WEBFONTS
+   No font binaries were included in either repo (both load Inter/Poppins
+   via Google Fonts / next/font at build time). Loaded here from Google
+   Fonts CDN with the same families + weights the source repos use.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap');

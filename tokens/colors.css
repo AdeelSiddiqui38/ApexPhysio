@@ -1,0 +1,108 @@
+/* =========================================================================
+   COLOR TOKENS
+   Two brand scopes coexist in this system:
+   - RemedyPills Pharmacy (teal clinical, warm pastel accents) — default :root
+   - Next Bridge Ventures (deep navy + teal, corporate) — [data-brand="nbv"]
+   Both were lifted verbatim (HSL triples) from each product's own
+   tailwind/shadcn CSS variables — see readme.md for source files.
+   ========================================================================= */
+
+:root {
+  /* ---- RemedyPills Pharmacy: base palette (HSL triples, unitless) ---- */
+  --rp-background: 210 40% 98%; /* @kind color */
+  --rp-foreground: 222 47% 11%; /* @kind color */
+  --rp-border: 215 20% 90%; /* @kind color */
+  --rp-card: 0 0% 100%; /* @kind color */
+  --rp-card-foreground: 222 47% 11%; /* @kind color */
+  --rp-card-border: 215 20% 90%; /* @kind color */
+
+  --rp-primary: 186 86% 30%; /* @kind color */ /* the brand teal, #0e7d85-ish */
+  --rp-primary-foreground: 0 0% 100%; /* @kind color */
+  --rp-secondary: 186 35% 96%; /* @kind color */
+  --rp-secondary-foreground: 222 47% 11%; /* @kind color */
+  --rp-muted: 186 22% 95%; /* @kind color */
+  --rp-muted-foreground: 215 16% 40%; /* @kind color */
+  --rp-accent: 186 90% 38%; /* @kind color */
+  --rp-accent-foreground: 0 0% 100%; /* @kind color */
+  --rp-destructive: 0 84% 56%; /* @kind color */
+  --rp-destructive-foreground: 0 0% 100%; /* @kind color */
+  --rp-input: 214 20% 86%; /* @kind color */
+  --rp-ring: 195 83% 40%; /* @kind color */
+
+  /* Gradient stops used on hero/header surfaces (TopBar, auth landing) */
+  --rp-gradient-from: hsl(186, 86%, 30%);
+  --rp-gradient-via: hsl(186, 76%, 40%);
+  --rp-gradient-to: hsl(176, 70%, 48%);
+
+  /* Quick-action pastel tile backgrounds (bg-*-100 / text-*-600 in source) */
+  --rp-tile-teal-bg: #ccfbf1;   --rp-tile-teal-fg: #0d9488;
+  --rp-tile-amber-bg: #fef3c7;  --rp-tile-amber-fg: #d97706;
+  --rp-tile-blue-bg: #dbeafe;   --rp-tile-blue-fg: #2563eb;
+  --rp-tile-pink-bg: #fce7f3;   --rp-tile-pink-fg: #db2777;
+  --rp-tile-purple-bg: #f3e8ff; --rp-tile-purple-fg: #9333ea;
+  --rp-tile-orange-bg: #ffedd5; --rp-tile-orange-fg: #f97316;
+  --rp-tile-emerald-bg: #d1fae5;--rp-tile-emerald-fg: #059669;
+
+  /* Status pill colors (StatusPill component in pharmacy-app.tsx) */
+  --rp-status-active-bg: rgba(16,185,129,.15);   --rp-status-active-fg: #047857; --rp-status-active-bd:#a7f3d0;
+  --rp-status-processing-bg: rgba(245,158,11,.15); --rp-status-processing-fg:#92400e; --rp-status-processing-bd:#fde68a;
+  --rp-status-ready-bg: rgba(14,165,233,.15);     --rp-status-ready-fg:#075985;   --rp-status-ready-bd:#bae6fd;
+  --rp-status-completed-bg: rgba(113,113,122,.15);--rp-status-completed-fg:#3f3f46; --rp-status-completed-bd:#d4d4d8;
+
+  /* elevate/hover system (from index.css) */
+  --rp-elevate-1: rgba(0,0,0,.03);
+  --rp-elevate-2: rgba(0,0,0,.08);
+
+  --radius: 0.5rem; /* 8px base radius token; app UI mostly overrides to 1rem/1.5rem inline */
+
+  /* ---- Next Bridge Ventures: base palette (HSL triples) ---- */
+  --nbv-background: 0 0% 100%; /* @kind color */
+  --nbv-foreground: 211 62% 15%; /* @kind color */
+  --nbv-card: 0 0% 100%; /* @kind color */
+  --nbv-card-foreground: 211 62% 15%; /* @kind color */
+  --nbv-primary: 211 62% 15%; /* @kind color */ /* deep navy, #0f253e-ish */
+  --nbv-primary-foreground: 0 0% 100%; /* @kind color */
+  --nbv-secondary: 210 20% 96%; /* @kind color */
+  --nbv-secondary-foreground: 211 62% 15%; /* @kind color */
+  --nbv-muted: 210 20% 96%; /* @kind color */
+  --nbv-muted-foreground: 210 10% 45%; /* @kind color */
+  --nbv-accent: 180 100% 35%; /* @kind color */ /* teal accent, #00b2b2 */
+  --nbv-accent-foreground: 0 0% 100%; /* @kind color */
+  --nbv-destructive: 0 84.2% 60.2%; /* @kind color */
+  --nbv-border: 210 10% 89%; /* @kind color */
+  --nbv-input: 210 10% 89%; /* @kind color */
+  --nbv-ring: 180 100% 35%; /* @kind color */
+  --nbv-radius: 0.8rem;
+
+  --nbv-hero-navy: #0f253e; /* literal hex used for hero sections in-repo */
+  --nbv-cta-teal: #00b2b2;  /* literal hex used for CTA band background */
+
+  --nbv-teal-50: #f0fdfa; --nbv-teal-100:#ccfbf1; --nbv-teal-200:#99f6e4;
+  --nbv-teal-400:#2dd4bf; --nbv-teal-500:#14b8a6; --nbv-teal-600:#0d9488;
+  --nbv-teal-700:#0f766e; --nbv-teal-900:#134e4a;
+}
+
+/* Semantic aliases — resolve to the RemedyPills scope by default.
+   Wrap NBV screens in [data-brand="nbv"] to swap these. */
+:root,
+[data-brand="remedypills"] {
+  --surface-page: hsl(var(--rp-background));
+  --surface-card: hsl(var(--rp-card));
+  --surface-muted: hsl(var(--rp-muted));
+  --text-body: hsl(var(--rp-foreground));
+  --text-muted: hsl(var(--rp-muted-foreground));
+  --border-default: hsl(var(--rp-border));
+  --brand-primary: hsl(var(--rp-primary));
+  --brand-accent: hsl(var(--rp-accent));
+}
+
+[data-brand="nbv"] {
+  --surface-page: hsl(var(--nbv-background));
+  --surface-card: hsl(var(--nbv-card));
+  --surface-muted: hsl(var(--nbv-secondary));
+  --text-body: hsl(var(--nbv-foreground));
+  --text-muted: hsl(var(--nbv-muted-foreground));
+  --border-default: hsl(var(--nbv-border));
+  --brand-primary: hsl(var(--nbv-primary));
+  --brand-accent: hsl(var(--nbv-accent));
+}
