@@ -158,3 +158,25 @@ chatToggle.addEventListener('click', () => chatPanel.classList.toggle('open'));
 document.querySelectorAll('.chat-act').forEach(b => b.addEventListener('click', () => {
   window.open('https://wa.me/14030000000?text=' + encodeURIComponent(b.dataset.msg), '_blank');
 }));
+
+/* ── mobile nav ── */
+const hamburger = document.getElementById('navHamburger');
+const mobileNav = document.getElementById('mobileNav');
+const headerNav = document.getElementById('nav');
+if (hamburger && mobileNav) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    if (isOpen && headerNav) mobileNav.style.top = headerNav.getBoundingClientRect().bottom + 'px';
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    mobileNav.setAttribute('aria-hidden', String(!isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }));
+}

@@ -35,6 +35,17 @@
     <a href="#location">Location</a>
   </div>
   <a href="#book" class="nav-cta">Book Appointment →</a>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
+  <a href="#services" class="mnav-link">Services</a>
+  <a href="#bodymap" class="mnav-link">Where It Hurts</a>
+  <a href="#quiz" class="mnav-link">Self-Check</a>
+  <a href="#library" class="mnav-link">Exercises</a>
+  <a href="#location" class="mnav-link">Location &amp; Hours</a>
+  <a href="#book" class="mnav-cta">📅 Book Appointment →</a>
 </nav>
 
 <section class="hero" id="hero">
@@ -63,7 +74,7 @@
 </section>
 
 <div class="trust-bar">
-  <div class="trust-item"><span class="t-icon">⭐</span><div><div class="t-val">5-Star</div><div class="t-lbl">Google Rated</div></div></div>
+  <div class="trust-item"><span class="t-icon">🔬</span><div><div class="t-val">Evidence-Based</div><div class="t-lbl">Treatment Methods</div></div></div>
   <div class="trust-item"><span class="t-icon">🏥</span><div><div class="t-val">Registered</div><div class="t-lbl">Clinicians Only</div></div></div>
   <div class="trust-item"><span class="t-icon">💳</span><div><div class="t-val">Direct Billing</div><div class="t-lbl">MVA · WCB · Benefits</div></div></div>
   <div class="trust-item"><span class="t-icon">📅</span><div><div class="t-val">Same Day</div><div class="t-lbl">Booking Available</div></div></div>
@@ -185,9 +196,65 @@
 <section class="booking-section" id="book">
   <div class="container">
     <p class="s-label reveal">Book Online</p>
-    <h2 class="s-title reveal">Same-Day Appointments, Booked in 60 Seconds</h2>
-    <p class="s-sub reveal">Pick a service, choose a time, done. Direct billing to most insurers.</p>
-    <div class="booking-shell reveal" id="bookingShell"></div>
+    <h2 class="s-title reveal">Request Your Assessment</h2>
+    <p class="s-sub reveal">Fill in the form below and we'll call you back to confirm your appointment — usually within 1 business hour. Direct billing available for most insurers.</p>
+    <div class="booking-shell reveal">
+      <div class="book-contact-bar">
+        <a href="tel:+14030000000" class="book-contact-item">
+          <span class="book-contact-icon">📞</span>
+          <div><div class="book-contact-lbl">Call Us</div><div class="book-contact-val">403-000-0000</div></div>
+        </a>
+        <div class="book-contact-divider"></div>
+        <a href="mailto:hello@apexphysio.ca" class="book-contact-item">
+          <span class="book-contact-icon">✉️</span>
+          <div><div class="book-contact-lbl">Email Us</div><div class="book-contact-val">hello@apexphysio.ca</div></div>
+        </a>
+      </div>
+      <div class="book-or"><span>or request a callback below</span></div>
+      <form name="booking-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="book-form" id="bookForm">
+        <input type="hidden" name="form-name" value="booking-request">
+        <p class="book-honeypot"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <div class="book-row">
+          <div class="book-field">
+            <label for="bf-name">Full Name *</label>
+            <input type="text" id="bf-name" name="name" placeholder="Jane Smith" required>
+          </div>
+          <div class="book-field">
+            <label for="bf-phone">Phone *</label>
+            <input type="tel" id="bf-phone" name="phone" placeholder="403-000-0000" required>
+          </div>
+        </div>
+        <div class="book-row">
+          <div class="book-field">
+            <label for="bf-email">Email *</label>
+            <input type="email" id="bf-email" name="email" placeholder="you@email.com" required>
+          </div>
+          <div class="book-field">
+            <label for="bf-service">Service Interest</label>
+            <select id="bf-service" name="service">
+              <option value="">— Select a service —</option>
+              <option>Physiotherapy — Initial Assessment</option>
+              <option>Massage Therapy</option>
+              <option>Chiropractic</option>
+              <option>Kinesiology / Active Rehab</option>
+              <option>MVA / WCB Intake</option>
+              <option>Acupuncture / IMS</option>
+              <option>Not sure — help me choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="book-field">
+          <label for="bf-msg">Briefly describe your concern (optional)</label>
+          <textarea id="bf-msg" name="message" rows="3" placeholder="e.g. Lower back pain from a car accident 3 weeks ago…"></textarea>
+        </div>
+        <button type="submit" class="btn-primary book-submit">📅 Request My Appointment →</button>
+      </form>
+      <div class="book-success" id="bookSuccess">
+        <div class="book-success-icon">🎉</div>
+        <h3>Request Received!</h3>
+        <p>We'll call you within 1 business hour to confirm your slot.<br>Can't wait? Call us at <a href="tel:+14030000000">403-000-0000</a>.</p>
+      </div>
+    </div>
   </div>
 </section>
 
