@@ -14,10 +14,10 @@
   window.addEventListener('resize', resize);
 
   const blobs = [
-    { x: .15, y: .25, r: 380, hue: 'rgba(0,229,179,', a: .22, sp: .00022, ph: 0 },
-    { x: .85, y: .75, r: 340, hue: 'rgba(14,120,180,', a: .28, sp: .00017, ph: 2 },
-    { x: .65, y: .2, r: 260, hue: 'rgba(255,176,58,', a: .10, sp: .00028, ph: 4 },
-    { x: .35, y: .85, r: 300, hue: 'rgba(0,201,167,', a: .16, sp: .0002, ph: 1 },
+    { x: .15, y: .25, r: 380, hue: 'rgba(154,222,27,', a: .22, sp: .00022, ph: 0 },
+    { x: .85, y: .75, r: 340, hue: 'rgba(150,158,165,', a: .28, sp: .00017, ph: 2 },
+    { x: .65, y: .2, r: 260, hue: 'rgba(213,217,220,', a: .10, sp: .00028, ph: 4 },
+    { x: .35, y: .85, r: 300, hue: 'rgba(124,181,24,', a: .16, sp: .0002, ph: 1 },
   ];
 
   const N = 70;
@@ -50,7 +50,7 @@
     const sweepX = ((t * .02) % 2 - .5) * W * 1.5;
     const sg = ctx.createLinearGradient(sweepX, 0, sweepX + W * .45, H);
     sg.addColorStop(0, 'rgba(255,255,255,0)');
-    sg.addColorStop(.5, 'rgba(120,220,255,.035)');
+    sg.addColorStop(.5, 'rgba(225,228,220,.035)');
     sg.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = sg;
     ctx.fillRect(0, 0, W, H);
@@ -62,7 +62,7 @@
       if (p.y < -.02) { p.y = 1.02; p.x = Math.random(); }
       const tw = .35 + Math.sin(t * 2 + p.tw) * .3;
       ctx.globalAlpha = tw;
-      ctx.fillStyle = '#7FF2D4';
+      ctx.fillStyle = '#B8E85C';
       ctx.beginPath();
       ctx.arc(p.x * W, p.y * H, p.r, 0, Math.PI * 2);
       ctx.fill();

@@ -9,8 +9,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 </head>
 <body>
+<script>document.documentElement.classList.add('has-js');</script>
 
 <div id="progress-bar"></div>
 
@@ -19,11 +24,7 @@
 <nav id="nav">
   <a href="#" class="nav-logo">
     <div class="logo-icon">
-      <svg viewBox="0 0 26 26" fill="none" width="24" height="24">
-        <path d="M13 4L23 21H3L13 4Z" stroke="#060D14" stroke-width="2" fill="none" stroke-linejoin="round"></path>
-        <line x1="13" y1="13" x2="13" y2="20" stroke="#060D14" stroke-width="2.5" stroke-linecap="round"></line>
-        <line x1="10" y1="17" x2="16" y2="17" stroke="#060D14" stroke-width="2" stroke-linecap="round"></line>
-      </svg>
+      <img src="assets/apex-logo-icon.png" alt="Apex Physio & Wellness Clinic logo" width="42" height="42">
     </div>
     <div class="logo-text"><span class="brand">Apex Physio</span><span class="sub">&amp; Wellness Clinic</span></div>
   </a>
@@ -48,23 +49,23 @@
   <a href="#book" class="mnav-cta">📅 Book Appointment →</a>
 </nav>
 
-<section class="hero" id="hero">
+<section class="hero gsap-hero" id="hero">
   <canvas id="motionCanvas"></canvas>
   <div class="hero-inner">
     <div>
-      <div class="hero-badge"><span class="badge-dot"></span> Now Open · Nolan Ridge NW Calgary</div>
+      <div class="hero-badge" data-hero-el><span class="badge-dot"></span> Now Open · Nolan Ridge NW Calgary</div>
       <h1>
-        <span class="line"><span>Rise Above</span></span>
-        <span class="line"><span>Pain. Reclaim</span></span>
-        <span class="line"><span>Your <em>Peak</em> Life.</span></span>
+        <span class="line"><span data-hero-el>Rise Above</span></span>
+        <span class="line"><span data-hero-el>Pain. Reclaim</span></span>
+        <span class="line"><span data-hero-el>Your <em>Peak</em> Life.</span></span>
       </h1>
-      <p class="hero-sub">Expert physiotherapy, massage, chiropractic and wellness — all under one roof. One-on-one care, direct billing, same-day booking in Nolan Ridge NW Calgary.</p>
-      <div class="hero-actions">
+      <p class="hero-sub" data-hero-el>Expert physiotherapy, massage, chiropractic and wellness — all under one roof. One-on-one care, direct billing, same-day booking in Nolan Ridge NW Calgary.</p>
+      <div class="hero-actions" data-hero-el>
         <a href="#book" class="btn-primary">📅 Book Your Visit</a>
         <a href="tel:+14030000000" class="btn-outline">📞 Call Us Today</a>
       </div>
     </div>
-    <div class="hero-cards">
+    <div class="hero-cards" data-hero-el>
       <div class="hero-card"><div class="card-icon">✅</div><div><div class="card-label">Insurance</div><div class="card-value">Direct Billing — WCB, MVA, Benefits</div></div></div>
       <div class="hero-card"><div class="card-icon">⚡</div><div><div class="card-label">Availability</div><div class="card-value">Same-Day Appointments Available</div></div></div>
       <div class="hero-card"><div class="card-icon">🏔️</div><div><div class="card-label">Our Promise</div><div class="card-value">Same Clinician Every Single Visit</div></div></div>
@@ -83,9 +84,12 @@
 
 <section class="services-section" id="services">
   <div class="container">
-    <p class="s-label reveal">What We Offer</p>
-    <h2 class="s-title reveal">Every Service You Need,<br>Under One Roof</h2>
-    <p class="s-sub reveal">Coordinated by clinicians who actually talk to each other — for faster, smarter recovery.</p>
+    <div class="services-head">
+      <div class="services-lottie" id="servicesLottie" aria-hidden="true"></div>
+      <p class="s-label reveal">What We Offer</p>
+      <h2 class="s-title reveal">Every Service You Need,<br>Under One Roof</h2>
+      <p class="s-sub reveal">Coordinated by clinicians who actually talk to each other — for faster, smarter recovery.</p>
+    </div>
     <div class="services-grid" id="servicesGrid"></div>
   </div>
 </section>
@@ -99,7 +103,7 @@
       <div class="bm-figure reveal">
         <svg width="240" height="480" viewBox="0 0 240 480" id="bodySvg">
           <g stroke="rgba(255,255,255,.5)" stroke-width="2.5" fill="none" stroke-linecap="round">
-            <circle cx="120" cy="50" r="26" fill="rgba(0,229,179,.08)"></circle>
+            <circle cx="120" cy="50" r="26" fill="rgba(154,222,27,.08)"></circle>
             <line x1="120" y1="76" x2="120" y2="200"></line>
             <line x1="120" y1="100" x2="60" y2="170"></line>
             <line x1="120" y1="100" x2="180" y2="170"></line>
@@ -261,6 +265,7 @@
 <footer>
   <div class="footer-grid">
     <div class="foot-brand">
+      <div class="foot-logo"><img src="assets/apex-logo-icon.png" alt="Apex Physio & Wellness Clinic logo" width="48" height="48"></div>
       <div class="name">Apex Physio &amp; Wellness Clinic</div>
       <p class="tagline">Rise above pain. Reclaim your peak life. One-on-one multidisciplinary care in Nolan Ridge NW Calgary.</p>
       <div class="social-row">
@@ -315,5 +320,9 @@
 <script src="motion-bg.js"></script>
 <script src="interactions.js"></script>
 <script src="booking.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script src="gsap-lottie.js"></script>
 </body>
 </html>
