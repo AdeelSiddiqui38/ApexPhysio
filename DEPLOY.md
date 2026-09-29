@@ -1,13 +1,20 @@
 # Deploying Apex Physio to WHC.ca
 
+> **Read first (Sep 29, 2026).** apex-physio.ca is an addon domain on the **remedypills.ca** hosting plan.
+> Its folder is **`~/apex-physio.ca`**, not `public_html` (that is the pharmacy site). Never upload Apex files to `public_html`.
+>
+> The live site in `~/apex-physio.ca` (waitlist mode, services pages, `send-booking.php`, `waitlist-count.php`) is **newer than `apexphysio/` in this repo**. Do not replace the live `index.html`, `site.css`, `booking.js` or PHP files with the repo copies. The 3D muscle map was added to the live site on Sep 29 without overwriting anything; a full backup from before that change is in `~/apex-physio-backups/2026-09-29/`.
+>
+> The sections below describe the original full-site setup and are kept for reference. `booking.php` in this repo is **not** used live (the server uses `send-booking.php`).
+
 The live website is the **`apexphysio/`** folder. It is a static site (HTML, CSS, JS) plus one PHP file for the booking form, so it runs on any WHC cPanel plan with no WordPress or database.
 
 Everything else in this repo (design system, `ui_kits/`, `guidelines/`, `marketing/`, the Word doc) is internal and is **not** uploaded.
 
-## What goes into `public_html`
+## What the site folder contains
 
 ```
-public_html/
+~/apex-physio.ca/
 ├── .htaccess          HTTPS redirect, caching, compression, 3D model file type, blocks private files
 ├── index.html         home page
 ├── site.css

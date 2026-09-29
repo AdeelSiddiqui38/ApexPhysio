@@ -240,7 +240,7 @@
       <p class="note">General information, not a diagnosis. A physiotherapist will assess what's going on for you.</p>
     </div>
     <div class="card-foot">
-      <a class="btn btn-book" id="cBook" href="../#book">Book an assessment</a>
+      <a class="btn btn-book" id="cBook" href="../#book">Join the opening waitlist</a>
       <button class="btn btn-ghost" id="cBack">Explore another area</button>
     </div>
   </aside>
@@ -256,7 +256,7 @@
       <div class="bar"><i id="barFill"></i></div>
       <p id="loadText">Loading anatomy</p>
     </div>
-    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book">book an assessment</a> directly.</div>
+    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book">join our opening waitlist</a>.</div>
   </div>
 </main>
 
@@ -269,6 +269,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const CONFIG = {
   model: 'body.glb',
+  // 'waitlist' while the clinic is opening soon; change to 'booking' once appointments open.
+  mode: 'waitlist',
   bookingUrl: '../'   // home page; the booking form lives at #book and reads ?area=<id>
 };
 
@@ -544,9 +546,15 @@ function updateVerdict(m){
   const n = card.querySelectorAll('.signs input:checked').length;
   const v = $('cVerdict'), book = $('cBook');
   book.classList.toggle('hot', n>=2);
-  if(n===0){ v.textContent = 'Tick anything that sounds like you.'; book.textContent='Book an assessment'; }
-  else if(n===1){ v.innerHTML = '<strong>One sign.</strong> Worth keeping an eye on, especially if it keeps coming back.'; book.textContent='Book an assessment'; }
-  else { v.innerHTML = '<strong>'+(n===3?'All three':'Two')+' sound familiar.</strong> That pattern is worth a proper look. We’ll find what’s driving it and give you a plan.'; book.textContent='Book my '+m.label.toLowerCase()+' assessment'; }
+  const wait = CONFIG.mode === 'waitlist';
+  const base = wait ? 'Join the opening waitlist' : 'Book an assessment';
+  if(n===0){ v.textContent = 'Tick anything that sounds like you.'; book.textContent = base; }
+  else if(n===1){ v.innerHTML = '<strong>One sign.</strong> Worth keeping an eye on, especially if it keeps coming back.'; book.textContent = base; }
+  else {
+    v.innerHTML = '<strong>'+(n===3?'All three':'Two')+' sound familiar.</strong> That pattern is worth a proper look. ' +
+      (wait ? 'Join the waitlist and we’ll reach out when we open to find what’s driving it.' : 'We’ll find what’s driving it and give you a plan.');
+    book.textContent = wait ? 'Get first access for my '+m.label.toLowerCase() : 'Book my '+m.label.toLowerCase()+' assessment';
+  }
 }
 
 /* ---------- View toggle ---------- */
