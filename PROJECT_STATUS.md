@@ -5,7 +5,8 @@
 - **Name:** Apex Physio & Wellness Clinic
 - **Address:** Unit 150, 246 Nolanridge Crescent NW, Calgary, Alberta
 - **Phone:** TBD (placeholder: 403-000-0000)
-- **Email:** TBD (placeholder: hello@apexphysio.ca)
+- **Email:** TBD (live site shows placeholder hello@apex-physio.ca)
+- **Website:** https://www.apex-physio.ca (LIVE, "Opening Soon" waitlist mode)
 - **Relationship to 1physioandmobility.ca:** Same staff, fully independent — no financial relationship
 
 ---
@@ -13,9 +14,10 @@
 ## Tech Stack Decided
 | Layer | Decision |
 |---|---|
-| Hosting | WHC.ca (Adeel has existing account) — see `DEPLOY.md` |
-| Site | Static HTML/CSS/JS in `apexphysio/` (replaces the earlier WordPress + Elementor plan) |
-| Booking form | `apexphysio/booking.php` on WHC: emails the clinic + saves to `~/booking-requests.csv` |
+| Hosting | WHC.ca, **remedypills.ca Web Hosting Pro** plan (server beaudry.whc.ca). apex-physio.ca is an addon domain — see `DEPLOY.md` |
+| Site folder | **`~/apex-physio.ca`** on the server. NOT `public_html` (that is remedypills.ca + afalytics.com) |
+| Site | Static HTML/CSS/JS. The **live server copy is the source of truth**; `apexphysio/` in this repo is older (see below) |
+| Waitlist form | Live: `send-booking.php` + `waitlist-count.php` (on server only). `apexphysio/booking.php` in the repo is not used live |
 | Booking (later) | Jane App (account NOT yet created) |
 | CDN / Security | Cloudflare (free plan) |
 | Analytics | Google Analytics 4 + Search Console |
@@ -45,13 +47,26 @@
 - [x] 3D Muscle Map at `apexphysio/pain-map/` (real anatomical model, 11 areas, pain education, links to booking with the area pre-filled)
 - [x] Booking form moved off Netlify Forms to `booking.php` so it works on WHC
 - [x] WHC deploy setup: `.htaccess`, `.cpanel.yml`, `DEPLOY.md`
-- [ ] Replace phone/email placeholders (listed in `DEPLOY.md`) and deploy
+- [x] **Deployed to apex-physio.ca (live):**
+  - Backed up the whole live site first → `~/apex-physio-backups/2026-09-29/apex-physio.ca/` (restore = copy back)
+  - Uploaded `pain-map/` (index.html + body.glb) and `painmap-prefill.js` into `~/apex-physio.ca` — no existing files overwritten
+  - Edited live `index.html`: "Explore the 3D Muscle Map" button in the body-map section, "3D Muscle Map" link in mobile menu + footer, `<script src="painmap-prefill.js">` after booking.js
+  - 3D map buttons say "Join the opening waitlist" (`mode: 'waitlist'` in `pain-map/index.html` — change to `'booking'` when the clinic opens)
+  - Tested live: home → 3D map → pick area → waitlist form pre-filled (service + "From the 3D muscle map: …")
+- [x] `.cpanel.yml` now deploys only pain-map files to `~/apex-physio.ca` (never `public_html`)
+
+### ⚠️ Repo vs live server
+The live site was edited directly on the server on Sep 16–18 (waitlist mode, `services/` pages, `service-page.js`, `send-booking.php`, `waitlist-count.php`, bigger `index.html`/`site.css`). Those are **not in this repo**. Do not deploy `apexphysio/index.html`, `site.css` or `booking.js` from the repo over the live site. Next step: download the live folder and commit it here so GitHub matches the live site again.
 
 ## To Do — Pick Up Here Next Session
-- [ ] **Phase 3 — WordPress Build** *(needs WHC login + domain name)*
-  - Install WordPress on WHC hosting
-  - Install Elementor Pro, RankMath, WPForms
-  - Build all 23 pages using the content doc + concept design
+- [ ] **Security:** `~/apex-physio.ca/Sep 18 2026.zip` is publicly downloadable. Move it to `~/apex-physio-backups/` or upload the prepared `.htaccess` (blocks .zip/.md/.csv, forces HTTPS)
+- [ ] **Sync repo with live:** copy the live `~/apex-physio.ca` files into `apexphysio/` and commit
+- [ ] Replace placeholder phone `403-000-0000` and email on the live site
+- [ ] When the clinic opens: set `mode: 'booking'` in `pain-map/index.html`, switch the site from waitlist to booking
+- [ ] Have a physio review the 3D map's pain-education wording before promoting it
+
+- [x] ~~Phase 3 — WordPress Build~~ → replaced by the static site now live at apex-physio.ca
+  - [ ] Remaining: bring the rest of the 23-page content doc onto the static site
 - [ ] **Phase 4 — Integrations**
   - Create Jane App account at jane.app *(Adeel to do — takes ~20 min)*
   - Embed Jane App booking widget on all relevant pages
