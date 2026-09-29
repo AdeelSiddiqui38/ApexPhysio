@@ -43,6 +43,7 @@
 <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
   <a href="#services" class="mnav-link">Services</a>
   <a href="#bodymap" class="mnav-link">Where It Hurts</a>
+  <a href="pain-map/" class="mnav-link">3D Muscle Map</a>
   <a href="#quiz" class="mnav-link">Self-Check</a>
   <a href="#library" class="mnav-link">Exercises</a>
   <a href="#location" class="mnav-link">Location &amp; Hours</a>
@@ -122,6 +123,10 @@
         <h3>Select a body area</h3>
         <p>Click any pulsing dot on the figure — neck, shoulder, lower back, knee and more — to learn about common conditions we treat and the best next step.</p>
       </div>
+    </div>
+    <div class="bm-3d reveal">
+      <a href="pain-map/" class="btn-primary">🧍 Explore the 3D Muscle Map →</a>
+      <span>Turn a real anatomical model, zoom into each muscle, and see why it hurts.</span>
     </div>
   </div>
 </section>
@@ -215,8 +220,7 @@
         </a>
       </div>
       <div class="book-or"><span>or request a callback below</span></div>
-      <form name="booking-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="book-form" id="bookForm">
-        <input type="hidden" name="form-name" value="booking-request">
+      <form name="booking-request" method="POST" action="booking.php" class="book-form" id="bookForm">
         <p class="book-honeypot"><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="book-row">
           <div class="book-field">
@@ -280,7 +284,7 @@
     </div>
     <div class="foot-col">
       <h5>Clinic</h5>
-      <a href="#bodymap">Where It Hurts</a><a href="#quiz">Self-Assessment</a><a href="#library">Exercise Library</a><a href="#location">Location &amp; Hours</a>
+      <a href="#bodymap">Where It Hurts</a><a href="pain-map/">3D Muscle Map</a><a href="#quiz">Self-Assessment</a><a href="#library">Exercise Library</a><a href="#location">Location &amp; Hours</a>
     </div>
     <div class="foot-col">
       <h5>Contact</h5>

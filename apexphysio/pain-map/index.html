@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>3D Pain Map | Apex Physio &amp; Wellness, Nolan Ridge NW Calgary</title>
+<meta name="description" content="Explore a real 3D muscle model, find where your pain lives, and learn why it hurts.">
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Apex brand: charcoal, electric lime, chrome silver. Ember is reserved for the pain highlight. */
+    --lime:#9ADE1B;
+    --lime-deep:#7CB518;
+    --ember:#ff6a3d;
+    --stage:#101316;
+    --ink:#F2F7FA;
+    --ink-2:#B9C1C7;
+    --ink-3:#848D94;
+    --on-lime:#14171A;
+    --glass:rgba(20,23,26,.82);
+    --line:rgba(213,217,220,.14);
+    --radius-l:20px;
+    --radius-s:12px;
+    color-scheme:dark;
+  }
+  /* The stage is a cinematic dark scene in both themes; tokens are shared on purpose. */
+  @media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --stage:#101316; } }
+  :root[data-theme="dark"]{ --stage:#101316; }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--stage);
+    color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--lime);outline-offset:3px;border-radius:8px}
+
+  .stage{
+    position:fixed;inset:0;
+    background:
+      radial-gradient(60% 55% at 50% 42%, rgba(154,222,27,.10), transparent 70%),
+      radial-gradient(40% 12% at 50% 96%, rgba(154,222,27,.10), transparent 70%),
+      var(--stage);
+  }
+  canvas#gl{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+  canvas#gl:active{cursor:grabbing}
+  .vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(0,0,0,.65) 100%)}
+
+  /* ---------- Top bar ---------- */
+  .top{
+    position:absolute;left:0;right:0;top:0;z-index:5;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+    padding:max(20px,env(safe-area-inset-top)) 28px 0;
+    pointer-events:none;
+  }
+  .intro{max-width:430px;pointer-events:auto}
+  .intro h1,.intro .lede{transition:opacity .5s ease}
+  body.has-sel .intro h1, body.has-sel .intro .lede{opacity:0;pointer-events:none}
+  .brand{font-family:"Sora",Inter,system-ui,sans-serif;font-weight:600;font-size:14px;color:var(--ink-2);letter-spacing:.01em;display:flex;align-items:center;gap:8px}
+  .brand{text-decoration:none;min-height:44px}
+  .brand img{width:28px;height:28px;object-fit:contain}
+  .brand:hover{color:var(--ink)}
+  h1{
+    font-family:"Sora",Inter,system-ui,sans-serif;font-weight:800;
+    font-size:clamp(32px,4.4vw,58px);line-height:.98;letter-spacing:-.025em;
+    margin-top:14px;
+  }
+  .lede{margin-top:14px;font-size:15.5px;line-height:1.55;color:var(--ink-2);max-width:38ch}
+  .views{display:flex;gap:6px;pointer-events:auto;background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:4px;backdrop-filter:blur(10px)}
+  .views button{min-height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:500;color:var(--ink-2)}
+  .views button[aria-pressed="true"]{background:rgba(154,222,27,.16);color:var(--ink)}
+  .views button:hover{color:var(--ink)}
+
+  /* ---------- Hotspots ---------- */
+  .spots{position:absolute;inset:0;pointer-events:none;z-index:3}
+  .spot{
+    position:absolute;left:0;top:0;width:44px;height:44px;margin:-22px 0 0 -22px;
+    pointer-events:auto;display:grid;place-items:center;
+    opacity:0;transition:opacity .35s ease;
+  }
+  .spot.on{opacity:1}
+  .spot.off{opacity:0;pointer-events:none}
+  .spot .dot{
+    width:14px;height:14px;border-radius:50%;
+    background:var(--lime);
+    box-shadow:0 0 0 3px rgba(20,23,26,.6), 0 0 18px 4px rgba(154,222,27,.75);
+    position:relative;transition:transform .25s ease, background .25s ease;
+  }
+  .spot .dot::after{
+    content:"";position:absolute;inset:-9px;border-radius:50%;
+    border:1.5px solid rgba(154,222,27,.7);
+    animation:ring 2.4s ease-out infinite;
+  }
+  @keyframes ring{0%{transform:scale(.45);opacity:1}100%{transform:scale(1.6);opacity:0}}
+  .spot:hover .dot,.spot:focus-visible .dot{transform:scale(1.25)}
+  .spot .tip{
+    position:absolute;left:34px;top:50%;transform:translateY(-50%);
+    white-space:nowrap;font-size:13px;font-weight:600;
+    background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px);
+    padding:6px 10px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;
+  }
+  .spot:hover .tip,.spot:focus-visible .tip{opacity:1}
+  .spot.sel .dot{background:var(--ember);box-shadow:0 0 0 3px rgba(20,23,26,.6),0 0 22px 6px rgba(255,106,61,.8)}
+  .spot.sel .dot::after{border-color:rgba(255,106,61,.8)}
+  .spots.focused .spot:not(.sel){opacity:.28}
+
+  /* ---------- Card ---------- */
+  .card{
+    position:absolute;z-index:6;right:24px;top:96px;bottom:108px;width:min(390px,92vw);
+    background:var(--glass);border:1px solid var(--line);border-radius:var(--radius-l);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    display:flex;flex-direction:column;
+    transform:translateX(calc(100% + 40px));opacity:0;
+    transition:transform .6s cubic-bezier(.2,.8,.2,1), opacity .4s ease;
+  }
+  .card.open{transform:none;opacity:1}
+  .card-scroll{overflow-y:auto;padding:26px 24px 8px;flex:1;overscroll-behavior:contain}
+  .card-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2);font-size:20px}
+  .card-close:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+  .anat{font-size:13px;color:var(--lime);font-weight:500;padding-right:40px}
+  .card h2{font-family:"Sora",Inter,system-ui,sans-serif;font-weight:700;font-size:29px;line-height:1.05;letter-spacing:-.015em;margin-top:6px}
+  .card h3{font-family:"Sora",Inter,system-ui,sans-serif;font-size:15px;font-weight:600;color:var(--ink);margin:20px 0 6px}
+  .card p{font-size:14.5px;line-height:1.58;color:var(--ink-2)}
+  .signs{list-style:none;display:grid;gap:8px;margin-top:10px}
+  .signs label{
+    display:flex;gap:12px;align-items:flex-start;min-height:44px;padding:11px 12px;
+    border:1px solid var(--line);border-radius:var(--radius-s);cursor:pointer;
+    font-size:14px;line-height:1.4;color:var(--ink);transition:border-color .2s, background .2s;
+  }
+  .signs input{appearance:none;flex:none;width:18px;height:18px;margin-top:1px;border-radius:5px;border:1.5px solid var(--ink-3);display:grid;place-items:center;transition:all .2s}
+  .signs input:checked{background:var(--lime);border-color:var(--lime)}
+  .signs input:checked::after{content:"";width:8px;height:4px;border:2px solid var(--on-lime);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+  .signs label:has(input:checked){border-color:rgba(154,222,27,.55);background:rgba(154,222,27,.07)}
+  .verdict{margin-top:14px;font-size:14px;line-height:1.5;color:var(--ink-2);min-height:21px}
+  .verdict strong{color:var(--ink);font-weight:600}
+  .note{font-size:12px !important;color:var(--ink-3) !important;margin-top:18px}
+  .card-foot{padding:14px 24px 22px;border-top:1px solid var(--line);display:grid;gap:8px}
+  .btn{display:flex;align-items:center;justify-content:center;min-height:50px;border-radius:999px;font-weight:600;font-size:15.5px;text-decoration:none;transition:transform .15s ease, filter .2s, box-shadow .3s}
+  .btn-book{background:var(--lime);color:var(--on-lime);font-weight:800}
+  .btn-book:hover{filter:brightness(1.07)}
+  .btn-book.hot{box-shadow:0 0 0 4px rgba(154,222,27,.22), 0 10px 40px rgba(154,222,27,.4)}
+  .btn-ghost{min-height:44px;color:var(--ink-2);font-size:14.5px;font-weight:500}
+  .btn-ghost:hover{color:var(--ink)}
+
+  /* ---------- Rail ---------- */
+  .rail{
+    position:absolute;z-index:4;left:0;right:0;bottom:0;
+    padding:0 20px max(16px,env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;gap:10px;align-items:center;
+    pointer-events:none;
+  }
+  .chips{
+    pointer-events:auto;display:flex;gap:6px;overflow-x:auto;max-width:100%;
+    padding:6px;background:var(--glass);border:1px solid var(--line);border-radius:999px;
+    backdrop-filter:blur(10px);scrollbar-width:none;
+  }
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;min-height:40px;padding:0 15px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--ink-2);white-space:nowrap}
+  .chip:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+  .chip[aria-pressed="true"]{background:rgba(154,222,27,.16);color:#E4F6C4}
+  .credit{pointer-events:auto;font-size:11.5px;color:var(--ink-3)}
+  .credit a{color:var(--ink-3)}
+  .hint{font-size:12.5px;color:var(--ink-3);pointer-events:none;transition:opacity .4s}
+
+  /* ---------- Loader ---------- */
+  .loader{position:absolute;inset:0;z-index:10;display:grid;place-items:center;background:var(--stage);transition:opacity .8s ease}
+  .loader.done{opacity:0;pointer-events:none}
+  .load-inner{text-align:center;width:min(260px,70vw)}
+  .load-inner p{font-size:13px;color:var(--ink-3);margin-top:12px}
+  .bar{height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+  .bar i{display:block;height:100%;width:0;background:var(--lime);box-shadow:0 0 12px var(--lime);transition:width .2s}
+  .fail{display:none;max-width:360px;text-align:center;color:var(--ink-2);font-size:14px;line-height:1.5;padding:20px}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:760px){
+    .top{padding:max(14px,env(safe-area-inset-top)) 16px 0;flex-direction:column;gap:12px}
+    h1{font-size:34px;margin-top:10px}
+    .lede{font-size:14px;margin-top:8px}
+    .card{left:10px;right:10px;width:auto;top:auto;bottom:10px;max-height:60svh;transform:translateY(calc(100% + 30px))}
+    .card-scroll{padding:22px 18px 6px}
+    .card-foot{padding:12px 18px 16px}
+    .card h2{font-size:25px}
+    .rail{padding:0 10px max(10px,env(safe-area-inset-bottom))}
+    body.has-sel .rail{opacity:0;pointer-events:none}
+    body.has-sel .views{opacity:0;pointer-events:none}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .spot .dot::after{animation:none;opacity:0}
+    .card,.loader,.spot{transition:none}
+  }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<main class="stage" id="stage">
+  <canvas id="gl" aria-label="Interactive 3D model of the human muscular system"></canvas>
+  <div class="vignette"></div>
+  <div class="spots" id="spots" aria-label="Muscle areas"></div>
+
+  <header class="top">
+    <div class="intro">
+      <a class="brand" href="../" aria-label="Back to Apex Physio &amp; Wellness home"><img src="../assets/apex-logo-icon.png" alt="" width="28" height="28">Apex Physio &amp; Wellness</a>
+      <h1>Where does it&nbsp;hurt?</h1>
+      <p class="lede">Pain is a signal, not a sentence. Tap a glowing point to see what that muscle does, why it complains, and whether your story sounds familiar.</p>
+    </div>
+    <div class="views" role="group" aria-label="Body view">
+      <button id="vFront" aria-pressed="true">Front</button>
+      <button id="vBack" aria-pressed="false">Back</button>
+    </div>
+  </header>
+
+  <aside class="card" id="card" aria-live="polite" aria-hidden="true">
+    <button class="card-close" id="cardClose" aria-label="Close and show the full body">&#x2715;</button>
+    <div class="card-scroll">
+      <div class="anat" id="cAnat"></div>
+      <h2 id="cTitle"></h2>
+      <h3>What it does</h3>
+      <p id="cDoes"></p>
+      <h3>Why it hurts</h3>
+      <p id="cHurts"></p>
+      <h3>Sound familiar?</h3>
+      <ul class="signs" id="cSigns"></ul>
+      <p class="verdict" id="cVerdict"></p>
+      <p class="note">General information, not a diagnosis. A physiotherapist will assess what's going on for you.</p>
+    </div>
+    <div class="card-foot">
+      <a class="btn btn-book" id="cBook" href="../#book">Book an assessment</a>
+      <button class="btn btn-ghost" id="cBack">Explore another area</button>
+    </div>
+  </aside>
+
+  <footer class="rail">
+    <span class="hint" id="hint">Drag to turn the body, scroll or pinch to zoom</span>
+    <nav class="chips" id="chips" aria-label="Choose a muscle area"></nav>
+    <span class="credit">3D model: <a href="https://sketchfab.com/3d-models/male-full-body-ecorche-ab11ebff89224f03bd75efede1164cf6" target="_blank" rel="noopener">“Male Full Body Ecorche”</a> by Diego Luján García, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, optimized for web</span>
+  </footer>
+
+  <div class="loader" id="loader">
+    <div class="load-inner" id="loadInner">
+      <div class="bar"><i id="barFill"></i></div>
+      <p id="loadText">Loading anatomy</p>
+    </div>
+    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book">book an assessment</a> directly.</div>
+  </div>
+</main>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const CONFIG = {
+  model: 'body.glb',
+  bookingUrl: '../'   // home page; the booking form lives at #book and reads ?area=<id>
+};
+
+/* Coordinates are in the model's own units (≈68 tall, feet at y≈-43, facing +z).
+   side = which way to cast the ray when snapping the point onto the surface. */
+const MUSCLES = [
+  { id:'neck', side:'back', x:3.0, y:13.6, label:'Neck & upper traps', anat:'Upper trapezius, levator scapulae',
+    does:'Hold up your head all day and lift your shoulders toward your ears whenever stress creeps in.',
+    hurts:'Hours of looking down at a screen keep these muscles working without a break. They become sensitive and stiff, and can send pain up into the head.',
+    signs:['Tightness that builds through the workday','Headaches that start at the base of your skull','Shoulder-checking in the car feels limited'] },
+  { id:'upperback', side:'back', x:3.2, y:6.2, label:'Between the shoulder blades', anat:'Rhomboids, middle trapezius',
+    does:'Draw your shoulder blades together and hold your upper back tall.',
+    hurts:'When the shoulders round forward for hours, these muscles sit stretched and loaded. The result is that burning, knotted spot you can never quite reach.',
+    signs:['A burning spot you can’t reach to rub','Worse by the end of a desk day','Better when you move, worse when you sit still'] },
+  { id:'shoulder', side:'back', x:-6.8, y:8.8, label:'Shoulder & rotator cuff', anat:'Supraspinatus, infraspinatus, teres minor',
+    does:'Keep the ball of your shoulder centred in a very shallow socket every time you reach, throw or lift.',
+    hurts:'They’re small muscles doing a big job. A sudden jump in overhead work, or months of rounded posture, can overload the tendons, and they often protest at night.',
+    signs:['Pain reaching overhead or behind your back','Waking when you roll onto that side','An ache down the outside of the upper arm'] },
+  { id:'elbow', side:'front', x:10.9, y:-1.8, label:'Elbow & forearm', anat:'Wrist extensors, brachioradialis',
+    does:'Grip, type, lift a kettle, turn a screwdriver. Most forearm muscles anchor onto one small point at the elbow.',
+    hurts:'Repetitive gripping, or a sudden increase in mouse, tool or racquet work, can overload that tendon attachment. Most people know it as tennis elbow.',
+    signs:['Pain on the outside of the elbow when you grip','Lifting a mug or kettle stings','Your handshake feels weaker than usual'] },
+  { id:'lowback', side:'back', x:-2.0, y:-2.2, label:'Lower back', anat:'Erector spinae, quadratus lumborum',
+    does:'Keep you upright and control every bend, lift and twist.',
+    hurts:'Most lower back pain isn’t a sign of damage. Muscles guard, the nervous system turns the volume up, and moving less usually makes it worse rather than better.',
+    signs:['Stiff and sore first thing in the morning','Bracing yourself before you bend or lift','Long stretches of sitting make it worse'] },
+  { id:'glutes', side:'back', x:3.6, y:-7.2, label:'Hips & glutes', anat:'Gluteus maximus, gluteus medius',
+    does:'Your largest muscle group. They power climbing, standing up and running, and keep your pelvis level with every step.',
+    hurts:'When the glutes get weak from long hours of sitting, the hips, knees and lower back pick up the slack, and they often complain first.',
+    signs:['An ache in the buttock or side of the hip when walking','Lying on your side at night is uncomfortable','Stairs feel harder than they used to'] },
+  { id:'hipflexor', side:'front', x:-3.1, y:-8.6, label:'Hip flexors', anat:'Iliopsoas, rectus femoris',
+    does:'Lift your knee toward your chest with every step, stair and stride.',
+    hurts:'A long day of sitting keeps them shortened. When you stand, they pull on the front of the hip and on the lower back.',
+    signs:['Tight at the front of the hip when you stand up','Hard to take a long stride','Lower back aches after sitting a while'] },
+  { id:'knee', side:'front', x:4.3, y:-20.5, label:'Thigh & knee', anat:'Quadriceps, patellar tendon',
+    does:'Straighten your knee and absorb the impact every time your foot lands.',
+    hurts:'Changes in load, like a new running plan, more stairs or deep squats, can irritate the tendon and the kneecap. The knee often pays for what the hip and ankle are doing.',
+    signs:['Pain going down stairs','An ache after sitting with your knees bent','Swelling or clicking after activity'] },
+  { id:'hamstring', side:'back', x:3.9, y:-16.2, label:'Hamstrings', anat:'Biceps femoris, semitendinosus, semimembranosus',
+    does:'Brake your leg at the end of every stride and help straighten the hip.',
+    hurts:'They’re among the most commonly strained muscles in running sports, and they can feel “tight” when they’re really guarding a sensitive nerve or lower back.',
+    signs:['A pull when you bend toward your toes','A sharp twinge when sprinting or kicking','Tightness that stretching never seems to fix'] },
+  { id:'shin', side:'front', x:4.9, y:-30.2, label:'Shin', anat:'Tibialis anterior',
+    does:'Lift your foot as your leg swings through, then lower it with control as it lands.',
+    hurts:'A quick jump in running, especially on hard ground or in new shoes, can overload the shin muscles and the bone beneath them. Most people call it shin splints.',
+    signs:['An ache along the shin when you run','Soreness that lingers after the run','Tender to press along the shin bone'] },
+  { id:'calf', side:'back', x:4.3, y:-30.6, label:'Calf & Achilles', anat:'Gastrocnemius, soleus, Achilles tendon',
+    does:'Push you off the ground with every step. The Achilles handles several times your body weight when you run.',
+    hurts:'Sudden jumps in walking, running or jumping, or new footwear, can overload the tendon. It often hurts most at the start of activity, then eases as you warm up.',
+    signs:['Stiff heel or calf first thing in the morning','Pain that eases once you’ve warmed up','Tender just above the heel'] }
+];
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id)=>document.getElementById(id);
+const stage=$('stage'), canvas=$('gl'), spotsEl=$('spots'), card=$('card');
+
+/* ---------- Renderer ---------- */
+let renderer;
+try{
+  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:'high-performance' });
+}catch(e){ showFail(); throw e; }
+renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+scene.environmentIntensity = 0.45;
+
+const camera = new THREE.PerspectiveCamera(30, 1, 0.5, 800);
+const HOME = { pos:new THREE.Vector3(0,-4,150), target:new THREE.Vector3(0,-9,0) };
+const BACKHOME = { pos:new THREE.Vector3(0,-4,-150), target:new THREE.Vector3(0,-9,0) };
+camera.position.copy(reduce ? HOME.pos : new THREE.Vector3(6,18,34));
+
+// Cinematic lighting: warm key, cool teal rim from behind, soft fill.
+const key = new THREE.DirectionalLight(0xfff1e6, 2.4); key.position.set(-40,60,70); scene.add(key);
+const rimL = new THREE.DirectionalLight(0xd5d9dc, 2.0); rimL.position.set(-60,20,-60); scene.add(rimL);
+const rimR = new THREE.DirectionalLight(0x9ade1b, 0.9); rimR.position.set(60,10,-50); scene.add(rimR);
+const fill = new THREE.HemisphereLight(0xe6ebee, 0x14171a, 0.55); scene.add(fill);
+
+const controls = new OrbitControls(camera, canvas);
+controls.target.copy(HOME.target);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+controls.enablePan = false;
+controls.minDistance = 14; controls.maxDistance = 210;
+controls.rotateSpeed = 0.6; controls.zoomSpeed = 0.9;
+controls.minPolarAngle = 0.35; controls.maxPolarAngle = Math.PI - 0.35;
+controls.enabled = false;
+
+/* ---------- Focus shader (glow + dim) injected into every model material ---------- */
+const U = {
+  uFocus:{ value:new THREE.Vector3(0,-999,0) },
+  uRadius:{ value:5.5 },
+  uGlow:{ value:0 },
+  uDim:{ value:0 },
+  uTime:{ value:0 },
+  uScanY:{ value:999 },
+  uEmber:{ value:new THREE.Color(0xff6a3d) },
+  uScan:{ value:new THREE.Color(0x9ade1b) }
+};
+function patch(mat){
+  mat.onBeforeCompile = (sh)=>{
+    Object.assign(sh.uniforms, U);
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vWP;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\nvWP = (modelMatrix * vec4(transformed,1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', `#include <common>
+        varying vec3 vWP; uniform vec3 uFocus; uniform float uRadius, uGlow, uDim, uTime, uScanY;
+        uniform vec3 uEmber, uScan;`)
+      .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+        float fd = distance(vWP, uFocus);
+        float fm = 1.0 - smoothstep(uRadius*0.3, uRadius, fd);
+        float pulse = 0.72 + 0.28*sin(uTime*2.2);
+        totalEmissiveRadiance += uEmber * fm * uGlow * pulse * 0.6;
+        float sb = exp(-pow((vWP.y - uScanY)/0.9, 2.0));
+        totalEmissiveRadiance += uScan * sb * 0.7;`)
+      .replace('#include <tonemapping_fragment>', `gl_FragColor.rgb *= mix(1.0, mix(0.22, 1.0, fm), uDim);
+        #include <tonemapping_fragment>`);
+  };
+  mat.needsUpdate = true;
+}
+
+/* ---------- Load model ---------- */
+const loader = new GLTFLoader();
+loader.setMeshoptDecoder(MeshoptDecoder);
+const meshes = [];
+let model;
+
+// GLTFLoader normally decodes textures with fetch(blob:) + createImageBitmap, which strict
+// content-security policies block. Hiding createImageBitmap during parsing makes it use
+// plain <img> loading instead, which works everywhere.
+const _cib = window.createImageBitmap;
+try { window.createImageBitmap = undefined; } catch(e){}
+const restoreCIB = () => { try { window.createImageBitmap = _cib; } catch(e){} };
+
+loader.load(CONFIG.model, (gltf)=>{
+  restoreCIB();
+  model = gltf.scene;
+  model.traverse(o=>{
+    if(o.isMesh){
+      meshes.push(o);
+      const m = o.material;
+      if(m){ m.roughness = Math.min(1, (m.roughness ?? 0.6)*0.9); patch(m); }
+    }
+  });
+  scene.add(model);
+  model.updateMatrixWorld(true);
+  buildSpots();
+  finishLoading();
+}, (e)=>{
+  if(e.total){ const p = Math.round(e.loaded/e.total*100); $('barFill').style.width = p+'%'; $('loadText').textContent = 'Loading anatomy '+p+'%'; }
+  else { $('barFill').style.width = Math.min(95, e.loaded/40000)+'%'; }
+}, (err)=>{ restoreCIB(); console.error(err); showFail(); });
+
+function showFail(){ $('loadInner').style.display='none'; $('fail').style.display='block'; }
+
+/* ---------- Hotspots: snap each point onto the surface ---------- */
+const ray = new THREE.Raycaster();
+const spots = [];
+function buildSpots(){
+  MUSCLES.forEach((m,i)=>{
+    const dirZ = m.side==='front' ? -1 : 1;
+    ray.set(new THREE.Vector3(m.x, m.y, -dirZ*200), new THREE.Vector3(0,0,dirZ));
+    const hit = ray.intersectObjects(meshes, false)[0];
+    const p = hit ? hit.point.clone() : new THREE.Vector3(m.x, m.y, m.side==='front'?4:-5);
+    let n = new THREE.Vector3(0,0,-dirZ);
+    if(hit && hit.face){ n = hit.face.normal.clone().transformDirection(hit.object.matrixWorld); if(n.dot(new THREE.Vector3(0,0,-dirZ))<0) n.negate(); }
+    // Blend the surface normal with the view axis so fly-in angles stay flattering.
+    n.lerp(new THREE.Vector3(0,0,-dirZ), 0.45).normalize();
+    m.p = p; m.n = n;
+
+    const b = document.createElement('button');
+    b.className = 'spot'; b.type='button';
+    b.setAttribute('aria-label', m.label);
+    b.innerHTML = '<span class="dot"></span><span class="tip">'+m.label+'</span>';
+    b.addEventListener('click', ()=>select(m));
+    spotsEl.appendChild(b);
+    spots.push({ m, el:b, delay: i*90 });
+
+    const c = document.createElement('button');
+    c.className='chip'; c.type='button'; c.textContent=m.label; c.dataset.id=m.id; c.setAttribute('aria-pressed','false');
+    c.addEventListener('click', ()=>select(m));
+    $('chips').appendChild(c);
+  });
+}
+
+/* ---------- Camera tweening ---------- */
+let tween = null;
+const ease = t => t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+function flyTo(pos, target, dur=1400, after){
+  if(reduce){ camera.position.copy(pos); controls.target.copy(target); controls.update(); after&&after(); return; }
+  tween = { from:camera.position.clone(), fromT:controls.target.clone(), to:pos.clone(), toT:target.clone(), t0:performance.now(), dur, after };
+  controls.enabled = false;
+}
+function stepTween(now){
+  if(!tween) return;
+  const k = Math.min(1,(now-tween.t0)/tween.dur), e = ease(k);
+  // Arc the path outward a little so the move feels like a camera dolly, not a slide.
+  const mid = tween.from.clone().lerp(tween.to, e);
+  const lift = Math.sin(Math.PI*e) * tween.from.distanceTo(tween.to) * 0.12;
+  const out = mid.clone().sub(tween.toT).normalize().multiplyScalar(lift);
+  camera.position.copy(mid.add(out));
+  controls.target.copy(tween.fromT.clone().lerp(tween.toT, e));
+  if(k>=1){ const a=tween.after; tween=null; controls.enabled=true; a&&a(); }
+}
+
+/* ---------- Selection ---------- */
+let current = null, glowTarget = 0, dimTarget = 0;
+const desktop = () => innerWidth > 760;
+
+function select(m){
+  current = m;
+  document.body.classList.add('has-sel');
+  spotsEl.classList.add('focused');
+  spots.forEach(s=>s.el.classList.toggle('sel', s.m===m));
+  document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed', String(c.dataset.id===m.id)));
+  U.uFocus.value.copy(m.p);
+  glowTarget = 1; dimTarget = 1;
+  setView(m.side);
+
+  const dist = desktop() ? 44 : 52;
+  const pos = m.p.clone().addScaledVector(m.n, dist).add(new THREE.Vector3(0,2.2,0));
+  const target = m.p.clone();
+  if(desktop()){
+    // Offset the aim so the muscle sits left of the card.
+    const right = new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0), m.n).normalize();
+    target.addScaledVector(right, dist*0.2); pos.addScaledVector(right, dist*0.2);
+  } else {
+    const vh = 2*dist*Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
+    target.y -= vh*0.26; pos.y -= vh*0.26;
+  }
+  flyTo(pos, target, 1500);
+  fillCard(m);
+  card.classList.add('open'); card.setAttribute('aria-hidden','false');
+  hideHint();
+}
+
+function reset(){
+  current = null;
+  document.body.classList.remove('has-sel');
+  spotsEl.classList.remove('focused');
+  spots.forEach(s=>s.el.classList.remove('sel'));
+  document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+  glowTarget = 0; dimTarget = 0;
+  card.classList.remove('open'); card.setAttribute('aria-hidden','true');
+  const back = camera.position.z < 0;
+  const h = back ? BACKHOME : HOME;
+  flyTo(h.pos, h.target, 1300);
+}
+
+function fillCard(m){
+  $('cAnat').textContent = m.anat;
+  $('cTitle').textContent = m.label;
+  $('cDoes').textContent = m.does;
+  $('cHurts').textContent = m.hurts;
+  const ul = $('cSigns'); ul.innerHTML='';
+  m.signs.forEach((s,i)=>{
+    const li=document.createElement('li');
+    li.innerHTML = '<label><input type="checkbox" data-i="'+i+'"><span></span></label>';
+    li.querySelector('span').textContent = s;
+    li.querySelector('input').addEventListener('change', ()=>{ updateVerdict(m); $('cVerdict').scrollIntoView({block:'nearest', behavior: reduce?'auto':'smooth'}); });
+    ul.appendChild(li);
+  });
+  updateVerdict(m);
+  $('cBook').href = CONFIG.bookingUrl + '?area=' + encodeURIComponent(m.id) + '#book';
+  card.querySelector('.card-scroll').scrollTop = 0;
+}
+
+function updateVerdict(m){
+  const n = card.querySelectorAll('.signs input:checked').length;
+  const v = $('cVerdict'), book = $('cBook');
+  book.classList.toggle('hot', n>=2);
+  if(n===0){ v.textContent = 'Tick anything that sounds like you.'; book.textContent='Book an assessment'; }
+  else if(n===1){ v.innerHTML = '<strong>One sign.</strong> Worth keeping an eye on, especially if it keeps coming back.'; book.textContent='Book an assessment'; }
+  else { v.innerHTML = '<strong>'+(n===3?'All three':'Two')+' sound familiar.</strong> That pattern is worth a proper look. We’ll find what’s driving it and give you a plan.'; book.textContent='Book my '+m.label.toLowerCase()+' assessment'; }
+}
+
+/* ---------- View toggle ---------- */
+function setView(side){
+  $('vFront').setAttribute('aria-pressed', String(side==='front'));
+  $('vBack').setAttribute('aria-pressed', String(side==='back'));
+}
+$('vFront').addEventListener('click', ()=>{ if(current) reset(); setView('front'); flyTo(HOME.pos, HOME.target, 1300); });
+$('vBack').addEventListener('click', ()=>{ if(current) reset(); setView('back'); flyTo(BACKHOME.pos, BACKHOME.target, 1300); });
+$('cardClose').addEventListener('click', reset);
+$('cBack').addEventListener('click', reset);
+addEventListener('keydown', e=>{ if(e.key==='Escape' && current) reset(); });
+
+let hinted=false;
+function hideHint(){ if(!hinted){ hinted=true; $('hint').style.opacity=0; } }
+canvas.addEventListener('pointerdown', ()=>{ hideHint(); controls.autoRotate=false; });
+
+/* ---------- Intro sequence ---------- */
+let introStart = 0, introDone = false;
+function finishLoading(){
+  $('barFill').style.width='100%';
+  setTimeout(()=>$('loader').classList.add('done'), 150);
+  if(reduce){ camera.position.copy(HOME.pos); controls.target.copy(HOME.target); controls.enabled=true; introDone=true; spots.forEach(s=>s.el.classList.add('on')); return; }
+  introStart = performance.now();
+  flyTo(HOME.pos, HOME.target, 3200, ()=>{ introDone = true; });
+  spots.forEach(s=> setTimeout(()=>s.el.classList.add('on'), 2600 + s.delay));
+}
+
+/* ---------- Resize ---------- */
+function resize(){
+  const w = stage.clientWidth, h = stage.clientHeight;
+  renderer.setSize(w,h,false);
+  camera.aspect = w/h;
+  // Keep the full body in frame on tall/narrow screens.
+  camera.fov = w/h < 0.8 ? 42 : 30;
+  camera.updateProjectionMatrix();
+  // Fit the whole body (≈68 units + margin) into the space above the bottom menu.
+  const railPx = w > 760 ? 120 : 150, topPx = w > 760 ? 30 : 190;
+  const usable = Math.max(0.35, (h - railPx - topPx) / h);
+  const visH = 74 / usable;
+  const tanHalf = Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
+  const distV = visH / 2 / tanHalf;
+  const distW = (34 / (w/h)) / tanHalf;          // keep outstretched arms in frame on narrow screens
+  const dist = Math.max(distV, distW);
+  const ty = -9 - ((railPx - topPx) / 2 / h) * (2*dist*tanHalf);
+  HOME.target.set(0, ty, 0); BACKHOME.target.set(0, ty, 0);
+  HOME.pos.set(0, ty + 5, dist); BACKHOME.pos.set(0, ty + 5, -dist);
+  controls.maxDistance = dist * 1.3;
+  if(!current && !tween && introDone){ const back = camera.position.z < 0; camera.position.copy(back?BACKHOME.pos:HOME.pos); controls.target.copy(HOME.target); }
+}
+addEventListener('resize', resize); resize();
+
+/* ---------- Loop ---------- */
+const tmp = new THREE.Vector3(), toCam = new THREE.Vector3();
+function frame(now){
+  requestAnimationFrame(frame);
+  U.uTime.value = now/1000;
+  const dt = Math.min(0.1, (now - (frame.last||now))/1000); frame.last = now;
+  const kk = reduce ? 1 : 1 - Math.pow(0.02, dt);
+  U.uGlow.value += (glowTarget - U.uGlow.value)*kk;
+  U.uDim.value += (dimTarget - U.uDim.value)*kk;
+  if(introStart){
+    const k = (now - introStart)/2600;
+    U.uScanY.value = k<1 ? 27 - k*74 : 999;
+  }
+  stepTween(now);
+  if(controls.enabled) controls.update();
+
+  const w = stage.clientWidth, h = stage.clientHeight;
+  for(const s of spots){
+    const m = s.m;
+    toCam.copy(camera.position).sub(m.p).normalize();
+    const facing = toCam.dot(m.n) > 0.12;
+    tmp.copy(m.p).project(camera);
+    const vis = facing && tmp.z < 1 && Math.abs(tmp.x) < 1.05 && Math.abs(tmp.y) < 1.05;
+    s.el.classList.toggle('off', !vis);
+    s.el.style.transform = 'translate3d('+((tmp.x*0.5+0.5)*w).toFixed(1)+'px,'+((-tmp.y*0.5+0.5)*h).toFixed(1)+'px,0)';
+    s.el.tabIndex = vis ? 0 : -1;
+  }
+  renderer.render(scene, camera);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

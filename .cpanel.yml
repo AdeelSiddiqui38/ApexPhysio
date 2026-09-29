@@ -1,0 +1,12 @@
+# cPanel "Git Version Control" deployment for WHC.
+# In cPanel: Git Version Control > Manage > Pull or Deploy > "Deploy HEAD Commit".
+# Copies the public site (the apexphysio/ folder) into public_html.
+# Internal folders (marketing/) are left out.
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=$HOME/public_html/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R apexphysio/index.html apexphysio/site.css apexphysio/.htaccess $DEPLOYPATH
+    - /bin/cp -R apexphysio/booking.js apexphysio/booking.php apexphysio/interactions.js apexphysio/motion-bg.js apexphysio/gsap-lottie.js $DEPLOYPATH
+    - /bin/cp -R apexphysio/assets apexphysio/pain-map $DEPLOYPATH

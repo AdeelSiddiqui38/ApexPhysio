@@ -350,3 +350,8 @@ footer{background:var(--ink);padding:52px 5% 28px}
   .book-form{padding:10px 20px 24px}
   .book-or{padding:16px 20px 8px}
 }
+
+/* link to the 3D pain map */
+.bm-3d{position:relative;z-index:1;margin-top:44px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center}
+.bm-3d span{color:rgba(255,255,255,.6);font-size:.95rem;max-width:360px}
+.book-status{margin-top:12px;color:#C0392B;font-weight:600;font-size:.92rem}

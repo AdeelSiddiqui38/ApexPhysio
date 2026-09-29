@@ -1,5 +1,5 @@
 # Apex Physio & Wellness Clinic — Project Status
-**Last Updated:** June 28, 2026
+**Last Updated:** September 29, 2026
 
 ## Business Details
 - **Name:** Apex Physio & Wellness Clinic
@@ -13,11 +13,10 @@
 ## Tech Stack Decided
 | Layer | Decision |
 |---|---|
-| Hosting | WHC.ca (Adeel has existing account) |
-| CMS | WordPress |
-| Page Builder | Elementor Pro |
-| SEO Plugin | RankMath |
-| Booking | Jane App (account NOT yet created) |
+| Hosting | WHC.ca (Adeel has existing account) — see `DEPLOY.md` |
+| Site | Static HTML/CSS/JS in `apexphysio/` (replaces the earlier WordPress + Elementor plan) |
+| Booking form | `apexphysio/booking.php` on WHC: emails the clinic + saves to `~/booking-requests.csv` |
+| Booking (later) | Jane App (account NOT yet created) |
 | CDN / Security | Cloudflare (free plan) |
 | Analytics | Google Analytics 4 + Search Console |
 
@@ -41,6 +40,12 @@
 - [x] Tech stack & hosting decision
 
 ---
+
+## Sept 29, 2026 update ✅
+- [x] 3D Muscle Map at `apexphysio/pain-map/` (real anatomical model, 11 areas, pain education, links to booking with the area pre-filled)
+- [x] Booking form moved off Netlify Forms to `booking.php` so it works on WHC
+- [x] WHC deploy setup: `.htaccess`, `.cpanel.yml`, `DEPLOY.md`
+- [ ] Replace phone/email placeholders (listed in `DEPLOY.md`) and deploy
 
 ## To Do — Pick Up Here Next Session
 - [ ] **Phase 3 — WordPress Build** *(needs WHC login + domain name)*
