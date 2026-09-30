@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>3D Pain Map | Apex Physio &amp; Wellness, Nolan Ridge NW Calgary</title>
+<script>if (/[?&]embed(=|&|$)/.test(location.search)) document.documentElement.classList.add('embed');</script>
 <meta name="description" content="Explore a real 3D muscle model, find where your pain lives, and learn why it hurts.">
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
@@ -195,6 +196,18 @@
     body.has-sel .rail{opacity:0;pointer-events:none}
     body.has-sel .views{opacity:0;pointer-events:none}
   }
+  /* ---------- Embedded in the home page (?embed=1) ---------- */
+  .full-link{display:none}
+  .embed .intro{display:none}
+  .embed .top{justify-content:flex-end;align-items:center;gap:10px;padding:16px 16px 0}
+  .embed .full-link{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);color:var(--ink-2);font-size:13.5px;font-weight:500;text-decoration:none;pointer-events:auto;backdrop-filter:blur(10px)}
+  .embed .full-link:hover{color:var(--ink)}
+  .embed .card{top:80px}
+  .embed canvas#gl{touch-action:pan-y}
+  @media (max-width:760px){
+    .embed .top{flex-direction:row;justify-content:space-between;padding:12px 12px 0}
+    .embed .card{top:auto}
+  }
   @media (prefers-reduced-motion: reduce){
     .spot .dot::after{animation:none;opacity:0}
     .card,.loader,.spot{transition:none}
@@ -223,6 +236,7 @@
       <button id="vFront" aria-pressed="true">Front</button>
       <button id="vBack" aria-pressed="false">Back</button>
     </div>
+    <a class="full-link" href="./" target="_top">Full screen ↗</a>
   </header>
 
   <aside class="card" id="card" aria-live="polite" aria-hidden="true">
@@ -240,7 +254,7 @@
       <p class="note">General information, not a diagnosis. A physiotherapist will assess what's going on for you.</p>
     </div>
     <div class="card-foot">
-      <a class="btn btn-book" id="cBook" href="../#book">Join the opening waitlist</a>
+      <a class="btn btn-book" id="cBook" href="../#book" target="_top">Join the opening waitlist</a>
       <button class="btn btn-ghost" id="cBack">Explore another area</button>
     </div>
   </aside>
@@ -256,7 +270,7 @@
       <div class="bar"><i id="barFill"></i></div>
       <p id="loadText">Loading anatomy</p>
     </div>
-    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book">join our opening waitlist</a>.</div>
+    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book" target="_top">join our opening waitlist</a>.</div>
   </div>
 </main>
 
@@ -356,6 +370,13 @@ const fill = new THREE.HemisphereLight(0xe6ebee, 0x14171a, 0.55); scene.add(fill
 const controls = new OrbitControls(camera, canvas);
 controls.target.copy(HOME.target);
 controls.enableDamping = true; controls.dampingFactor = 0.08;
+const EMBED = document.documentElement.classList.contains('embed');
+if (EMBED) {
+  // Inside the home page: the mouse wheel and vertical swipes scroll the page, not the model.
+  controls.enableZoom = false;
+  canvas.style.touchAction = 'pan-y';
+  document.getElementById('hint').textContent = 'Drag to turn the body, tap a glowing point to zoom in';
+}
 controls.enablePan = false;
 controls.minDistance = 14; controls.maxDistance = 210;
 controls.rotateSpeed = 0.6; controls.zoomSpeed = 0.9;
@@ -592,7 +613,8 @@ function resize(){
   camera.fov = w/h < 0.8 ? 42 : 30;
   camera.updateProjectionMatrix();
   // Fit the whole body (≈68 units + margin) into the space above the bottom menu.
-  const railPx = w > 760 ? 120 : 150, topPx = w > 760 ? 30 : 190;
+  const embed = document.documentElement.classList.contains('embed');
+  const railPx = w > 760 ? 120 : 150, topPx = embed ? 70 : (w > 760 ? 30 : 190);
   const usable = Math.max(0.35, (h - railPx - topPx) / h);
   const visH = 74 / usable;
   const tanHalf = Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
