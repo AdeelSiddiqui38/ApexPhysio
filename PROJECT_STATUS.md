@@ -16,8 +16,8 @@
 |---|---|
 | Hosting | WHC.ca, **remedypills.ca Web Hosting Pro** plan (server beaudry.whc.ca). apex-physio.ca is an addon domain — see `DEPLOY.md` |
 | Site folder | **`~/apex-physio.ca`** on the server. NOT `public_html` (that is remedypills.ca + afalytics.com) |
-| Site | Static HTML/CSS/JS. The **live server copy is the source of truth**; `apexphysio/` in this repo is older (see below) |
-| Waitlist form | Live: `send-booking.php` + `waitlist-count.php` (on server only). `apexphysio/booking.php` in the repo is not used live |
+| Site | Static HTML/CSS/JS in `apexphysio/` (matches the live site as of Sep 30, 2026) |
+| Waitlist form | `apexphysio/send-booking.php` (emails hello@apex-physio.ca) + `waitlist-count.php` |
 | Booking (later) | Jane App (account NOT yet created) |
 | CDN / Security | Cloudflare (free plan) |
 | Analytics | Google Analytics 4 + Search Console |
@@ -57,12 +57,12 @@
 - [x] **Sep 30:** added `~/apex-physio.ca/.htaccess` so browsers re-check pages/CSS/JS for updates (`Cache-Control: no-cache`); images cache 7 days, the 3D model 30 days. Fixes visitors seeing an old saved copy after edits. remedypills.ca unaffected.
 - [x] **Sep 30:** replaced the old 2D body-map figure on the home page with the real 3D model, embedded in the "Click Where It Hurts" section (`pain-map/?embed=1` in a lazy-loaded iframe). The old figure is hidden (`hidden style="display:none"`), not deleted, because the live `interactions.js` still references its elements (`bodySvgFront`, `bmPanel`); deleting them would break the quiz/services scripts. Backup before this change: `~/apex-physio-backups/2026-09-30/`.
 
-### ⚠️ Repo vs live server
-The live site was edited directly on the server on Sep 16–18 (waitlist mode, `services/` pages, `service-page.js`, `send-booking.php`, `waitlist-count.php`, bigger `index.html`/`site.css`). Those are **not in this repo**. Do not deploy `apexphysio/index.html`, `site.css` or `booking.js` from the repo over the live site. Next step: download the live folder and commit it here so GitHub matches the live site again.
+### Repo vs live server
+**Synced on Sep 30, 2026:** `apexphysio/` now matches the live `~/apex-physio.ca` code (home page with the embedded 3D map, `services/` pages, `service-page.js`, `send-booking.php`, `waitlist-count.php`, `.htaccess`). The repo-only `booking.php` was removed (the live site uses `send-booking.php`). Not in the repo on purpose: the server backup zip and the runtime `waitlist-count.txt`.
+From now on, make changes in the repo first, then upload, so the two stay in step.
 
 ## To Do — Pick Up Here Next Session
 - [ ] **Security:** `~/apex-physio.ca/Sep 18 2026.zip` is publicly downloadable. Move it to `~/apex-physio-backups/` or upload the prepared `.htaccess` (blocks .zip/.md/.csv, forces HTTPS)
-- [ ] **Sync repo with live:** copy the live `~/apex-physio.ca` files into `apexphysio/` and commit
 - [ ] Replace placeholder phone `403-000-0000` and email on the live site
 - [ ] When the clinic opens: set `mode: 'booking'` in `pain-map/index.html`, switch the site from waitlist to booking
 - [ ] Have a physio review the 3D map's pain-education wording before promoting it

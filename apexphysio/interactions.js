@@ -14,14 +14,14 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ── services ── */
 const SERVICES = [
-  { icon: '🦴', name: 'Physiotherapy', desc: 'Back/neck pain, whiplash, shoulder injuries and post-surgical rehab.', body: 'Hands-on manual therapy, exercise prescription and education — one-on-one, full sessions with the same physiotherapist every visit.' },
-  { icon: '💆', name: 'Massage Therapy', desc: 'Deep tissue, sports, therapeutic and relaxation massage.', body: 'Registered massage therapists targeting muscle tension, recovery and stress — direct billing available.' },
-  { icon: '🩻', name: 'Chiropractic', desc: 'Spinal adjustments, joint mobilization and posture correction.', body: 'Evidence-based chiropractic care coordinated with your physio plan for faster results.' },
-  { icon: '🏃', name: 'Kinesiology', desc: 'Active rehab, exercise therapy and return-to-work conditioning.', body: 'Movement specialists building strength and function after injury, MVA or surgery.' },
-  { icon: '📌', name: 'Acupuncture & IMS', desc: 'Dry needling and acupuncture for pain and muscle release.', body: 'Certified practitioners using needling techniques to release trigger points and calm chronic pain.' },
-  { icon: '🚗', name: 'MVA Rehab', desc: 'Motor vehicle accident recovery with direct insurer billing.', body: 'We handle the paperwork with your insurer under Alberta DTPR — you focus on recovery.' },
-  { icon: '👷', name: 'WCB Injuries', desc: 'Workplace injury rehab and return-to-work programs.', body: 'WCB-authorized treatment with progress reporting and modified-duty planning.' },
-  { icon: '🧘', name: 'Wellness Programs', desc: 'Posture clinics, ergonomics and injury prevention.', body: 'Stay at your peak — preventative programs for desk workers, athletes and seniors.' },
+  { icon: '🦴', name: 'Physiotherapy', desc: 'Back/neck pain, whiplash, shoulder injuries and post-surgical rehab.', body: 'Hands-on manual therapy, exercise prescription and education — one-on-one, full sessions with the same physiotherapist every visit.', slug: 'physiotherapy' },
+  { icon: '💆', name: 'Massage Therapy', desc: 'Deep tissue, sports, therapeutic and relaxation massage.', body: 'Registered massage therapists targeting muscle tension, recovery and stress — direct billing available.', slug: 'massage-therapy' },
+  { icon: '🩻', name: 'Chiropractic', desc: 'Spinal adjustments, joint mobilization and posture correction.', body: 'Evidence-based chiropractic care coordinated with your physio plan for faster results.', slug: 'chiropractic' },
+  { icon: '🏃', name: 'Kinesiology', desc: 'Active rehab, exercise therapy and return-to-work conditioning.', body: 'Movement specialists building strength and function after injury, MVA or surgery.', slug: 'kinesiology' },
+  { icon: '📌', name: 'Acupuncture & IMS', desc: 'Dry needling and acupuncture for pain and muscle release.', body: 'Certified practitioners using needling techniques to release trigger points and calm chronic pain.', slug: 'acupuncture-ims' },
+  { icon: '🚗', name: 'MVA Rehab', desc: 'Motor vehicle accident recovery with direct insurer billing.', body: 'We handle the paperwork with your insurer under Alberta DTPR — you focus on recovery.', slug: 'mva-rehab' },
+  { icon: '👷', name: 'WCB Injuries', desc: 'Workplace injury rehab and return-to-work programs.', body: 'WCB-authorized treatment with progress reporting and modified-duty planning.', slug: 'wcb-injuries' },
+  { icon: '🧘', name: 'Wellness Programs', desc: 'Posture clinics, ergonomics and injury prevention.', body: 'Stay at your peak — preventative programs for desk workers, athletes and seniors.', slug: 'wellness-programs' },
 ];
 document.getElementById('servicesGrid').innerHTML = SERVICES.map((s, i) => `
   <div class="service-card reveal d${(i % 6) + 1}" data-svc="${i}">
@@ -30,11 +30,10 @@ document.getElementById('servicesGrid').innerHTML = SERVICES.map((s, i) => `
   </div>`).join('');
 document.querySelectorAll('.service-card').forEach(el => {
   io.observe(el);
+  el.style.cursor = 'pointer';
   el.addEventListener('click', () => {
     const s = SERVICES[+el.dataset.svc];
-    document.getElementById('modalTitle').textContent = s.icon + ' ' + s.name;
-    document.getElementById('modalBody').textContent = s.body;
-    document.getElementById('modalBack').classList.add('open');
+    window.location.href = 'services/' + s.slug + '.html';
   });
 });
 document.getElementById('modalX').onclick = () => document.getElementById('modalBack').classList.remove('open');
@@ -43,31 +42,66 @@ document.getElementById('modalBack').addEventListener('click', e => {
 });
 
 /* ── body map ── */
-const SPOTS = [
-  { x: 120, y: 50, area: 'Head & Jaw', title: 'Headaches · TMJ · Concussion', desc: 'Tension headaches, jaw pain and post-concussion symptoms often trace back to the neck and jaw muscles.', tags: ['Physiotherapy', 'Massage', 'Acupuncture'] },
-  { x: 120, y: 92, area: 'Neck', title: 'Neck Pain & Whiplash', desc: 'Stiff neck, whiplash from an MVA, or "tech neck" from desk work — among the most common issues we treat.', tags: ['Physiotherapy', 'Chiropractic', 'MVA Rehab'] },
-  { x: 88, y: 128, area: 'Shoulder', title: 'Rotator Cuff & Frozen Shoulder', desc: 'Pain reaching overhead, clicking, or post-injury weakness responds well to targeted physio and needling.', tags: ['Physiotherapy', 'IMS / Dry Needling'] },
-  { x: 120, y: 185, area: 'Lower Back', title: 'Low Back Pain & Sciatica', desc: 'Disc irritation, sciatica and chronic stiffness — hands-on treatment plus a progressive exercise plan.', tags: ['Physiotherapy', 'Chiropractic', 'Kinesiology'] },
-  { x: 185, y: 205, area: 'Wrist & Hand', title: 'Carpal Tunnel & Sprains', desc: 'Numb or tingling hands, sport sprains and repetitive-strain injuries of the wrist and elbow.', tags: ['Physiotherapy', 'Ergonomics'] },
-  { x: 108, y: 300, area: 'Hip', title: 'Hip Pain & Bursitis', desc: 'Pinching hips, bursitis and glute weakness that limit walking, squatting and stairs.', tags: ['Physiotherapy', 'Kinesiology'] },
-  { x: 152, y: 372, area: 'Knee', title: 'Knee Injuries & Runner\u2019s Knee', desc: 'ACL/MCL sprains, meniscus irritation and patellofemoral pain from running or sport.', tags: ['Physiotherapy', 'Sports Rehab'] },
-  { x: 82, y: 440, area: 'Ankle & Foot', title: 'Ankle Sprains & Plantar Fasciitis', desc: 'Rolled ankles that never fully healed and heel pain that bites with the first steps of the day.', tags: ['Physiotherapy', 'Massage'] },
+const FRONT_SPOTS = [
+  { x: 120, y: 40, area: 'Head & Jaw', title: 'Headaches · TMJ · Concussion', desc: 'Tension headaches, jaw pain and post-concussion symptoms often trace back to the neck and jaw muscles.', tags: ['Physiotherapy', 'Massage Therapy', 'Acupuncture & IMS'] },
+  { x: 120, y: 78, area: 'Neck', title: 'Neck Pain & Whiplash', desc: 'Stiff neck, whiplash from an MVA, or "tech neck" from desk work — among the most common issues we treat.', tags: ['Physiotherapy', 'Chiropractic', 'MVA Rehab'] },
+  { x: 188, y: 122, area: 'Shoulder', title: 'Rotator Cuff & Frozen Shoulder', desc: 'Pain reaching overhead, clicking, or post-injury weakness responds well to targeted physio and needling.', tags: ['Physiotherapy', 'Acupuncture & IMS'] },
+  { x: 120, y: 128, area: 'Chest', title: 'Pec Strains & Rib Pain', desc: 'Sharp pain with deep breaths, a pulled chest muscle from lifting, or rib-area tightness after an MVA.', tags: ['Physiotherapy', 'Massage Therapy', 'MVA Rehab'] },
+  { x: 52, y: 180, area: 'Biceps & Forearm', title: 'Tennis Elbow & Carpal Tunnel', desc: 'Numb or tingling hands, golfer’s/tennis elbow and repetitive-strain injuries of the arm and wrist.', tags: ['Physiotherapy', 'Massage Therapy'] },
+  { x: 120, y: 195, area: 'Abs & Core', title: 'Core Weakness & Strain', desc: 'Postpartum core recovery, ab strains and general core weakness that’s driving your back pain.', tags: ['Physiotherapy', 'Kinesiology'] },
+  { x: 120, y: 242, area: 'Hip & Groin', title: 'Hip Pain & Groin Strain', desc: 'Pinching hips, groin strains from sport, and hip-flexor tightness that limit walking, squatting and stairs.', tags: ['Physiotherapy', 'Kinesiology'] },
+  { x: 87, y: 330, area: 'Quad & Knee', title: 'Knee Injuries & Runner’s Knee', desc: 'ACL/MCL sprains, meniscus irritation and patellofemoral pain from running or sport.', tags: ['Physiotherapy', 'Kinesiology'] },
+  { x: 170, y: 430, area: 'Calf & Ankle', title: 'Ankle Sprains & Plantar Fasciitis', desc: 'Rolled ankles that never fully healed and heel pain that bites with the first steps of the day.', tags: ['Physiotherapy', 'Massage Therapy'] },
 ];
-const svg = document.getElementById('bodySvg');
-SPOTS.forEach((s, i) => {
-  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  g.setAttribute('class', 'bm-spot');
-  g.dataset.i = i;
-  g.innerHTML = `<circle class="ring" cx="${s.x}" cy="${s.y}" r="14"></circle><circle class="core" cx="${s.x}" cy="${s.y}" r="8"></circle>`;
-  g.addEventListener('click', () => {
-    document.querySelectorAll('.bm-spot').forEach(el => el.classList.remove('active'));
-    g.classList.add('active');
-    document.getElementById('bmPanel').innerHTML = `
-      <div class="area">${s.area}</div><h3>${s.title}</h3><p>${s.desc}</p>
-      <div class="bm-tags">${s.tags.map(t => `<span class="bm-tag">${t}</span>`).join('')}</div>
-      <a href="#book" class="btn-primary" style="padding:12px 22px;font-size:.9rem">Book an Assessment →</a>`;
+const BACK_SPOTS = [
+  { x: 120, y: 115, area: 'Traps & Upper Back', title: 'Tension & Upper Back Tightness', desc: 'Chronic knots between the shoulder blades from desk work, stress or poor posture.', tags: ['Massage Therapy', 'Physiotherapy', 'Chiropractic'] },
+  { x: 158, y: 175, area: 'Lats / Mid-Back', title: 'Mid-Back Stiffness & Postural Pain', desc: 'A dull ache between the shoulder blades or along the ribs from rounded-shoulder posture or overuse.', tags: ['Physiotherapy', 'Chiropractic', 'Massage Therapy'] },
+  { x: 120, y: 220, area: 'Lower Back', title: 'Low Back Pain & Sciatica', desc: 'Disc irritation, sciatica and chronic stiffness — hands-on treatment plus a progressive exercise plan.', tags: ['Physiotherapy', 'Chiropractic', 'Kinesiology'] },
+  { x: 120, y: 270, area: 'Glutes', title: 'Glute Weakness & Sciatic Pain', desc: 'Deep buttock pain, piriformis tightness and glute weakness contributing to hip and low-back issues.', tags: ['Physiotherapy', 'Kinesiology', 'Acupuncture & IMS'] },
+  { x: 87, y: 335, area: 'Hamstring', title: 'Hamstring Strains & Tightness', desc: 'Pulled hamstrings from sprinting or sport, and chronic tightness limiting your forward bend.', tags: ['Physiotherapy', 'Massage Therapy', 'Kinesiology'] },
+  { x: 170, y: 430, area: 'Calf & Achilles', title: 'Achilles Tightness & Calf Strains', desc: 'Achilles tendon pain, calf tightness and lower-leg strains common in runners.', tags: ['Physiotherapy', 'Massage Therapy'] },
+];
+
+let bmView = 'front';
+function renderSpots(view) {
+  const svg = document.getElementById(view === 'front' ? 'bodySvgFront' : 'bodySvgBack');
+  const spots = view === 'front' ? FRONT_SPOTS : BACK_SPOTS;
+  svg.querySelectorAll('.bm-spot').forEach(el => el.remove());
+  spots.forEach((s, i) => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'bm-spot');
+    g.dataset.i = i;
+    g.innerHTML = `<circle class="ring" cx="${s.x}" cy="${s.y}" r="12"></circle><circle class="core" cx="${s.x}" cy="${s.y}" r="7"></circle>`;
+    g.addEventListener('click', () => {
+      svg.querySelectorAll('.bm-spot').forEach(el => el.classList.remove('active'));
+      g.classList.add('active');
+      document.getElementById('bmPanel').innerHTML = `
+        <div class="area">${s.area}</div><h3>${s.title}</h3><p>${s.desc}</p>
+        <div class="bm-tags">${s.tags.map(t => `<span class="bm-tag">${t}</span>`).join('')}</div>
+        <a href="#book" class="btn-primary" style="padding:12px 22px;font-size:.9rem">Join the Waitlist →</a>`;
+    });
+    svg.appendChild(g);
   });
-  svg.appendChild(g);
+}
+renderSpots('front');
+
+document.querySelectorAll('.bm-view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const view = btn.dataset.view;
+    if (view === bmView) return;
+    bmView = view;
+    document.querySelectorAll('.bm-view-btn').forEach(b => {
+      b.classList.toggle('active', b === btn);
+      b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+    });
+    document.getElementById('bodySvgFront').style.display = view === 'front' ? '' : 'none';
+    document.getElementById('bodySvgBack').style.display = view === 'back' ? '' : 'none';
+    if (!document.querySelector(`#bodySvg${view === 'front' ? 'Front' : 'Back'} .bm-spot`)) renderSpots(view);
+    document.getElementById('bmPanel').innerHTML = `
+      <div class="area">Start Here</div>
+      <h3>Select a body area</h3>
+      <p>Click any pulsing dot on the ${view} of the figure to learn about common conditions we treat and the best next step.</p>`;
+  });
 });
 
 /* ── quiz ── */
@@ -101,7 +135,7 @@ function renderQuiz() {
       <div class="quiz-result">
         <div style="font-size:2.6rem;margin-bottom:10px">🎯</div>
         <h3>Recommended: ${r.title}</h3><p>${r.desc}</p>
-        <a href="#book" class="btn-primary" style="padding:13px 26px;font-size:.92rem">Book ${r.title.split(' ')[0]} →</a>
+        <a href="#book" class="btn-primary" style="padding:13px 26px;font-size:.92rem">Join the Waitlist →</a>
         <br><button class="quiz-restart">↺ Retake quiz</button>
       </div>`;
     card.querySelector('.quiz-restart').onclick = () => { qStep = 0; qAns = []; renderQuiz(); };

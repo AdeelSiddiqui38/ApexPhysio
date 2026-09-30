@@ -5,7 +5,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apex Physio & Wellness Clinic | NW Calgary | Unit 150, 246 Nolanridge Crescent NW</title>
-<meta name="description" content="Physiotherapy, Kinesiology, Massage Therapy, Chiropractic & Wellness in Nolan Ridge NW Calgary. Direct billing, same-day booking, one-on-one care.">
+<meta name="description" content="Physiotherapy, Kinesiology, Massage Therapy, Chiropractic & Wellness — opening soon in Nolan Ridge NW Calgary. Direct billing, one-on-one care. Join our waitlist.">
+<link rel="canonical" href="https://www.apex-physio.ca/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.apex-physio.ca/">
+<meta property="og:title" content="Apex Physio & Wellness Clinic | NW Calgary | Opening Soon">
+<meta property="og:description" content="Physiotherapy, Kinesiology, Massage Therapy, Chiropractic & Wellness — opening soon in Nolan Ridge NW Calgary. Direct billing, one-on-one care. Join our waitlist.">
+<meta property="og:image" content="https://www.apex-physio.ca/assets/apex-logo-full.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
@@ -19,7 +26,7 @@
 
 <div id="progress-bar"></div>
 
-<div class="announce">🎉 Now Open in Nolan Ridge NW Calgary — Unit 150, 246 Nolanridge Crescent NW &nbsp;|&nbsp; Direct Billing &nbsp;|&nbsp; Same-Day Appointments</div>
+<div class="announce">🚧 Opening Soon in Nolan Ridge NW Calgary — Unit 150, 246 Nolanridge Crescent NW &nbsp;|&nbsp; Direct Billing &nbsp;|&nbsp; Join the Waitlist</div>
 
 <nav id="nav">
   <a href="#" class="nav-logo">
@@ -29,46 +36,68 @@
     <div class="logo-text"><span class="brand">Apex Physio</span><span class="sub">&amp; Wellness Clinic</span></div>
   </a>
   <div class="nav-links">
-    <a href="#services">Services</a>
+    <div class="nav-drop">
+      <a href="#services" class="nav-drop-trigger">Services <span class="caret">▾</span></a>
+      <div class="nav-drop-panel">
+        <a href="services/physiotherapy.html">🦴 Physiotherapy</a>
+        <a href="services/massage-therapy.html">💆 Massage Therapy</a>
+        <a href="services/chiropractic.html">🩻 Chiropractic</a>
+        <a href="services/kinesiology.html">🏃 Kinesiology</a>
+        <a href="services/acupuncture-ims.html">📌 Acupuncture &amp; IMS</a>
+        <a href="services/mva-rehab.html">🚗 MVA Rehab</a>
+        <a href="services/wcb-injuries.html">👷 WCB Injuries</a>
+        <a href="services/wellness-programs.html">🧘 Wellness Programs</a>
+        <a href="#services" class="nav-drop-all">View All Services →</a>
+      </div>
+    </div>
     <a href="#bodymap">Where It Hurts</a>
     <a href="#quiz">Self-Check</a>
     <a href="#library">Exercises</a>
     <a href="#location">Location</a>
   </div>
-  <a href="#book" class="nav-cta">Book Appointment →</a>
+  <a href="#book" class="nav-cta">Join the Waitlist →</a>
   <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" aria-hidden="true">
   <a href="#services" class="mnav-link">Services</a>
+  <a href="services/physiotherapy.html" class="mnav-sublink">🦴 Physiotherapy</a>
+  <a href="services/massage-therapy.html" class="mnav-sublink">💆 Massage Therapy</a>
+  <a href="services/chiropractic.html" class="mnav-sublink">🩻 Chiropractic</a>
+  <a href="services/kinesiology.html" class="mnav-sublink">🏃 Kinesiology</a>
+  <a href="services/acupuncture-ims.html" class="mnav-sublink">📌 Acupuncture &amp; IMS</a>
+  <a href="services/mva-rehab.html" class="mnav-sublink">🚗 MVA Rehab</a>
+  <a href="services/wcb-injuries.html" class="mnav-sublink">👷 WCB Injuries</a>
+  <a href="services/wellness-programs.html" class="mnav-sublink">🧘 Wellness Programs</a>
   <a href="#bodymap" class="mnav-link">Where It Hurts</a>
   <a href="pain-map/" class="mnav-link">3D Muscle Map</a>
   <a href="#quiz" class="mnav-link">Self-Check</a>
   <a href="#library" class="mnav-link">Exercises</a>
   <a href="#location" class="mnav-link">Location &amp; Hours</a>
-  <a href="#book" class="mnav-cta">📅 Book Appointment →</a>
+  <a href="#book" class="mnav-cta">📅 Join the Waitlist →</a>
 </nav>
 
 <section class="hero gsap-hero" id="hero">
   <canvas id="motionCanvas"></canvas>
   <div class="hero-inner">
     <div>
-      <div class="hero-badge" data-hero-el><span class="badge-dot"></span> Now Open · Nolan Ridge NW Calgary</div>
+      <div class="hero-badge" data-hero-el><span class="badge-dot"></span> Opening Soon · Nolan Ridge NW Calgary</div>
       <h1>
         <span class="line"><span data-hero-el>Rise Above</span></span>
         <span class="line"><span data-hero-el>Pain. Reclaim</span></span>
         <span class="line"><span data-hero-el>Your <em>Peak</em> Life.</span></span>
       </h1>
-      <p class="hero-sub" data-hero-el>Expert physiotherapy, massage, chiropractic and wellness — all under one roof. One-on-one care, direct billing, same-day booking in Nolan Ridge NW Calgary.</p>
+      <p class="hero-sub" data-hero-el>Expert physiotherapy, massage, chiropractic and wellness — all under one roof. One-on-one care and direct billing, opening soon in Nolan Ridge NW Calgary.</p>
       <div class="hero-actions" data-hero-el>
-        <a href="#book" class="btn-primary">📅 Book Your Visit</a>
-        <a href="tel:+14030000000" class="btn-outline">📞 Call Us Today</a>
+        <a href="#book" class="btn-primary">🔔 Join the Waitlist</a>
+        <a href="tel:+14030000000" class="btn-outline">📞 Get in Touch</a>
       </div>
+      <p class="momentum-line" data-hero-el id="momentumLine">🔥 Founding members are already joining our waitlist</p>
     </div>
     <div class="hero-cards" data-hero-el>
       <div class="hero-card"><div class="card-icon">✅</div><div><div class="card-label">Insurance</div><div class="card-value">Direct Billing — WCB, MVA, Benefits</div></div></div>
-      <div class="hero-card"><div class="card-icon">⚡</div><div><div class="card-label">Availability</div><div class="card-value">Same-Day Appointments Available</div></div></div>
+      <div class="hero-card"><div class="card-icon">🚧</div><div><div class="card-label">Status</div><div class="card-value">Opening Soon — Join the Waitlist</div></div></div>
       <div class="hero-card"><div class="card-icon">🏔️</div><div><div class="card-label">Our Promise</div><div class="card-value">Same Clinician Every Single Visit</div></div></div>
       <div class="hero-card"><div class="card-icon">📍</div><div><div class="card-label">Location</div><div class="card-value">Unit 150 · 246 Nolanridge Crescent NW</div></div></div>
     </div>
@@ -79,7 +108,7 @@
   <div class="trust-item"><span class="t-icon">🔬</span><div><div class="t-val">Evidence-Based</div><div class="t-lbl">Treatment Methods</div></div></div>
   <div class="trust-item"><span class="t-icon">🏥</span><div><div class="t-val">Registered</div><div class="t-lbl">Clinicians Only</div></div></div>
   <div class="trust-item"><span class="t-icon">💳</span><div><div class="t-val">Direct Billing</div><div class="t-lbl">MVA · WCB · Benefits</div></div></div>
-  <div class="trust-item"><span class="t-icon">📅</span><div><div class="t-val">Same Day</div><div class="t-lbl">Booking Available</div></div></div>
+  <div class="trust-item"><span class="t-icon">🔔</span><div><div class="t-val">Waitlist Open</div><div class="t-lbl">Reserve Your Spot</div></div></div>
   <div class="trust-item"><span class="t-icon">🤝</span><div><div class="t-val">1-on-1</div><div class="t-lbl">Personalised Care</div></div></div>
 </div>
 
@@ -99,21 +128,112 @@
   <div class="container">
     <p class="s-label reveal" style="color:var(--amber)">Interactive</p>
     <h2 class="s-title reveal">Click Where It Hurts</h2>
-    <p class="s-sub reveal">Tap a glowing point on the body to see what might be going on and which of our services can help.</p>
-    <div class="bm-grid">
+    <p class="s-sub reveal">Turn a real anatomical model, tap a glowing point, and see what that muscle does, why it hurts, and whether your story sounds familiar.</p>
+    <!-- Old 2D body map, kept hidden because interactions.js still references it. Replaced by the 3D muscle map below (Sep 30, 2026). -->
+    <div class="bm-grid" hidden style="display:none">
       <div class="bm-figure reveal">
-        <svg width="240" height="480" viewBox="0 0 240 480" id="bodySvg">
-          <g stroke="rgba(255,255,255,.5)" stroke-width="2.5" fill="none" stroke-linecap="round">
-            <circle cx="120" cy="50" r="26" fill="rgba(154,222,27,.08)"></circle>
-            <line x1="120" y1="76" x2="120" y2="200"></line>
-            <line x1="120" y1="100" x2="60" y2="170"></line>
-            <line x1="120" y1="100" x2="180" y2="170"></line>
-            <line x1="60" y1="170" x2="50" y2="230"></line>
-            <line x1="180" y1="170" x2="190" y2="230"></line>
-            <line x1="120" y1="200" x2="85" y2="320"></line>
-            <line x1="120" y1="200" x2="155" y2="320"></line>
-            <line x1="85" y1="320" x2="80" y2="440"></line>
-            <line x1="155" y1="320" x2="160" y2="440"></line>
+        <div class="bm-view-toggle" id="bmViewToggle" role="tablist" aria-label="Body view">
+          <button type="button" class="bm-view-btn active" data-view="front" role="tab" aria-selected="true">Front</button>
+          <button type="button" class="bm-view-btn" data-view="back" role="tab" aria-selected="false">Back</button>
+        </div>
+        <svg class="bm-body-svg" id="bodySvgFront" width="240" height="520" viewBox="0 0 240 520">
+          <defs>
+            <linearGradient id="skinF" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3B4149"/><stop offset="100%" stop-color="#252A31"/></linearGradient>
+            <radialGradient id="bulgeF" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#9ADE1B" stop-opacity=".30"/><stop offset="100%" stop-color="#9ADE1B" stop-opacity="0"/></radialGradient>
+            <radialGradient id="bulgeFs" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#ffffff" stop-opacity=".10"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+          </defs>
+          <g stroke="#14171A" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+            <ellipse cx="120" cy="40" rx="20" ry="24" fill="url(#skinF)"/>
+            <path fill="url(#skinF)" d="M110,64 C108,72 108,78 108,84 C90,88 74,90 66,98 C48,104 40,114 40,128 C40,150 36,164 34,178 C31,198 29,210 28,222 C26,238 25,250 24,258 C23,270 22,282 22,292 C22,300 26,306 34,308 C42,306 46,300 46,292 C46,280 47,268 48,258 C49,244 50,232 52,220 C54,206 57,192 61,178 C64,164 66,156 68,148 C78,170 84,190 86,208 C84,222 81,236 80,248 C86,254 96,257 110,257 L130,257 C144,257 154,254 160,248 C159,236 156,222 154,208 C156,190 162,170 172,148 C174,156 176,164 179,178 C181,192 184,206 186,220 C188,232 189,244 190,258 C191,268 192,280 192,292 C192,300 196,306 204,308 C212,306 216,300 216,292 C215,282 214,270 213,258 C212,250 211,238 209,222 C208,210 206,198 203,178 C201,164 200,150 200,128 C200,114 192,104 174,98 C166,90 150,88 132,84 C132,78 132,72 130,64 Z"/>
+            <path fill="url(#skinF)" d="M110,257 C100,270 96,285 95,300 C93,320 92,340 93,360 C94,372 96,380 100,386 C98,400 96,415 95,428 C94,442 93,452 92,460 C91,468 90,474 89,480 L64,486 C60,480 58,472 58,462 C58,450 60,436 62,420 C64,404 66,388 70,374 C74,360 77,340 78,320 C79,300 79,280 80,262 C90,258 100,257 110,257 Z"/>
+            <path fill="url(#skinF)" d="M130,257 C140,270 144,285 145,300 C147,320 148,340 147,360 C146,372 144,380 140,386 C142,400 144,415 145,428 C146,442 147,452 148,460 C149,468 150,474 151,480 L176,486 C180,480 182,472 182,462 C182,450 180,436 178,420 C176,404 174,388 170,374 C166,360 163,340 162,320 C161,300 161,280 160,262 C150,258 140,257 130,257 Z"/>
+          </g>
+          <g stroke="none">
+            <path d="M32,108 C30,120 32,134 42,142 C50,136 52,124 48,110 C42,104 36,104 32,108 Z" fill="url(#bulgeF)"/>
+            <path d="M208,108 C210,120 208,134 198,142 C190,136 188,124 192,110 C198,104 204,104 208,108 Z" fill="url(#bulgeF)"/>
+            <path d="M120,104 C104,106 92,112 88,124 C86,134 90,144 104,150 C112,146 118,138 120,128 Z" fill="url(#bulgeF)"/>
+            <path d="M120,104 C136,106 148,112 152,124 C154,134 150,144 136,150 C128,146 122,138 120,128 Z" fill="url(#bulgeF)"/>
+            <ellipse cx="46" cy="180" rx="11" ry="23" fill="url(#bulgeFs)"/>
+            <ellipse cx="194" cy="180" rx="11" ry="23" fill="url(#bulgeFs)"/>
+            <ellipse cx="120" cy="195" rx="18" ry="40" fill="url(#bulgeFs)"/>
+            <path d="M96,165 C90,185 90,208 96,228 L102,224 C98,205 98,184 102,166 Z" fill="url(#bulgeFs)"/>
+            <path d="M144,165 C150,185 150,208 144,228 L138,224 C142,205 142,184 138,166 Z" fill="url(#bulgeFs)"/>
+            <ellipse cx="80" cy="335" rx="9" ry="42" fill="url(#bulgeFs)"/>
+            <ellipse cx="93" cy="330" rx="10" ry="46" fill="url(#bulgeF)"/>
+            <ellipse cx="105" cy="340" rx="8" ry="38" fill="url(#bulgeFs)"/>
+            <ellipse cx="160" cy="335" rx="9" ry="42" fill="url(#bulgeFs)"/>
+            <ellipse cx="147" cy="330" rx="10" ry="46" fill="url(#bulgeF)"/>
+            <ellipse cx="135" cy="340" rx="8" ry="38" fill="url(#bulgeFs)"/>
+            <ellipse cx="76" cy="420" rx="8" ry="28" fill="url(#bulgeFs)"/>
+            <ellipse cx="164" cy="420" rx="8" ry="28" fill="url(#bulgeFs)"/>
+          </g>
+          <g stroke="rgba(0,0,0,.4)" stroke-width="1" fill="none" stroke-linecap="round">
+            <path d="M120,104 L120,150"/>
+            <path d="M120,160 L120,250"/>
+            <path d="M104,170 L136,170"/>
+            <path d="M103,190 L137,190"/>
+            <path d="M103,210 L137,210"/>
+            <path d="M103,230 L137,230"/>
+            <path d="M98,262 C88,300 78,335 70,372"/>
+            <path d="M142,262 C152,300 162,335 170,372"/>
+            <path d="M87,295 C82,320 82,345 87,365"/>
+            <path d="M153,295 C158,320 158,345 153,365"/>
+          </g>
+          <g stroke="#14171A" stroke-width="1.4" stroke-linejoin="round">
+            <path fill="url(#skinF)" d="M60,458 C58,466 60,474 68,478 C78,482 88,482 94,478 C96,475 95,470 90,468 C82,464 72,460 64,457 Z"/>
+            <path fill="url(#skinF)" d="M180,458 C182,466 180,474 172,478 C162,482 152,482 146,478 C144,475 145,470 150,468 C158,464 168,460 176,457 Z"/>
+          </g>
+          <!-- hotspots injected by JS -->
+        </svg>
+        <svg class="bm-body-svg" id="bodySvgBack" width="240" height="520" viewBox="0 0 240 520" style="display:none">
+          <defs>
+            <linearGradient id="skinB" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#3B4149"/><stop offset="100%" stop-color="#252A31"/></linearGradient>
+            <radialGradient id="bulgeB" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#9ADE1B" stop-opacity=".30"/><stop offset="100%" stop-color="#9ADE1B" stop-opacity="0"/></radialGradient>
+            <radialGradient id="bulgeBs" cx="50%" cy="35%" r="70%"><stop offset="0%" stop-color="#ffffff" stop-opacity=".10"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+          </defs>
+          <g stroke="#14171A" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
+            <ellipse cx="120" cy="40" rx="20" ry="24" fill="url(#skinB)"/>
+            <path fill="url(#skinB)" d="M110,64 C108,72 108,78 108,84 C90,88 74,90 66,98 C48,104 40,114 40,128 C40,150 36,164 34,178 C31,198 29,210 28,222 C26,238 25,250 24,258 C23,270 22,282 22,292 C22,300 26,306 34,308 C42,306 46,300 46,292 C46,280 47,268 48,258 C49,244 50,232 52,220 C54,206 57,192 61,178 C64,164 66,156 68,148 C78,170 84,190 86,208 C84,222 81,236 80,248 C86,254 96,257 110,257 L130,257 C144,257 154,254 160,248 C159,236 156,222 154,208 C156,190 162,170 172,148 C174,156 176,164 179,178 C181,192 184,206 186,220 C188,232 189,244 190,258 C191,268 192,280 192,292 C192,300 196,306 204,308 C212,306 216,300 216,292 C215,282 214,270 213,258 C212,250 211,238 209,222 C208,210 206,198 203,178 C201,164 200,150 200,128 C200,114 192,104 174,98 C166,90 150,88 132,84 C132,78 132,72 130,64 Z"/>
+            <path fill="url(#skinB)" d="M110,257 C100,270 96,285 95,300 C93,320 92,340 93,360 C94,372 96,380 100,386 C98,400 96,415 95,428 C94,442 93,452 92,460 C91,468 90,474 89,480 L64,486 C60,480 58,472 58,462 C58,450 60,436 62,420 C64,404 66,388 70,374 C74,360 77,340 78,320 C79,300 79,280 80,262 C90,258 100,257 110,257 Z"/>
+            <path fill="url(#skinB)" d="M130,257 C140,270 144,285 145,300 C147,320 148,340 147,360 C146,372 144,380 140,386 C142,400 144,415 145,428 C146,442 147,452 148,460 C149,468 150,474 151,480 L176,486 C180,480 182,472 182,462 C182,450 180,436 178,420 C176,404 174,388 170,374 C166,360 163,340 162,320 C161,300 161,280 160,262 C150,258 140,257 130,257 Z"/>
+          </g>
+          <g stroke="none">
+            <path d="M120,72 C132,84 158,100 172,112 C176,120 172,128 162,126 C144,118 130,108 120,100 C110,108 96,118 78,126 C68,128 64,120 68,112 C82,100 108,84 120,72 Z
+                      M120,100 C126,120 130,150 126,185 C124,205 116,205 114,185 C110,150 114,120 120,100 Z" fill="url(#bulgeB)" fill-rule="evenodd"/>
+            <path d="M32,108 C30,120 32,134 42,142 C50,136 52,124 48,110 C42,104 36,104 32,108 Z" fill="url(#bulgeBs)"/>
+            <path d="M208,108 C210,120 208,134 198,142 C190,136 188,124 192,110 C198,104 204,104 208,108 Z" fill="url(#bulgeBs)"/>
+            <path d="M64,140 C58,160 58,185 66,205 C74,220 88,222 96,214 C92,192 84,168 74,148 C70,142 66,140 64,140 Z" fill="url(#bulgeB)"/>
+            <path d="M176,140 C182,160 182,185 174,205 C166,220 152,222 144,214 C148,192 156,168 166,148 C170,142 174,140 176,140 Z" fill="url(#bulgeB)"/>
+            <ellipse cx="120" cy="222" rx="15" ry="34" fill="url(#bulgeBs)"/>
+            <ellipse cx="90" cy="255" rx="12" ry="14" fill="url(#bulgeBs)"/>
+            <ellipse cx="150" cy="255" rx="12" ry="14" fill="url(#bulgeBs)"/>
+            <ellipse cx="97" cy="276" rx="20" ry="22" fill="url(#bulgeB)"/>
+            <ellipse cx="143" cy="276" rx="20" ry="22" fill="url(#bulgeB)"/>
+            <ellipse cx="78" cy="335" rx="10" ry="40" fill="url(#bulgeB)"/>
+            <ellipse cx="96" cy="335" rx="9" ry="38" fill="url(#bulgeBs)"/>
+            <ellipse cx="162" cy="335" rx="10" ry="40" fill="url(#bulgeB)"/>
+            <ellipse cx="144" cy="335" rx="9" ry="38" fill="url(#bulgeBs)"/>
+            <ellipse cx="70" cy="410" rx="12" ry="20" fill="url(#bulgeB)"/>
+            <ellipse cx="70" cy="445" rx="8" ry="18" fill="url(#bulgeBs)"/>
+            <ellipse cx="170" cy="410" rx="12" ry="20" fill="url(#bulgeB)"/>
+            <ellipse cx="170" cy="445" rx="8" ry="18" fill="url(#bulgeBs)"/>
+          </g>
+          <g stroke="rgba(0,0,0,.4)" stroke-width="1" fill="none" stroke-linecap="round">
+            <path d="M120,86 L120,150"/>
+            <path d="M120,150 C110,160 106,175 108,195"/>
+            <path d="M120,150 C130,160 134,175 132,195"/>
+            <path d="M120,205 L120,250"/>
+            <path d="M95,255 C90,262 90,272 95,280"/>
+            <path d="M145,255 C150,262 150,272 145,280"/>
+            <path d="M120,265 L120,300"/>
+            <path d="M87,300 C82,320 82,345 87,362"/>
+            <path d="M153,300 C158,320 158,345 153,362"/>
+            <path d="M70,392 L70,462"/>
+            <path d="M170,392 L170,462"/>
+          </g>
+          <g stroke="#14171A" stroke-width="1.4" stroke-linejoin="round">
+            <path fill="url(#skinB)" d="M60,458 C58,466 60,474 68,478 C78,482 88,482 94,478 C96,475 95,470 90,468 C82,464 72,460 64,457 Z"/>
+            <path fill="url(#skinB)" d="M180,458 C182,466 180,474 172,478 C162,482 152,482 146,478 C144,475 145,470 150,468 C158,464 168,460 176,457 Z"/>
           </g>
           <!-- hotspots injected by JS -->
         </svg>
@@ -121,12 +241,11 @@
       <div class="bm-panel reveal d2" id="bmPanel">
         <div class="area">Start Here</div>
         <h3>Select a body area</h3>
-        <p>Click any pulsing dot on the figure — neck, shoulder, lower back, knee and more — to learn about common conditions we treat and the best next step.</p>
+        <p>Click any pulsing dot on the figure — neck, shoulder, chest, core, quad and more — to learn about common conditions we treat and the best next step. Flip to the back view for lower back, glutes and hamstrings.</p>
       </div>
     </div>
-    <div class="bm-3d reveal">
-      <a href="pain-map/" class="btn-primary">🧍 Explore the 3D Muscle Map →</a>
-      <span>Turn a real anatomical model, zoom into each muscle, and see why it hurts.</span>
+    <div class="bm-3d-embed" style="position:relative;z-index:1;margin-top:36px;border-radius:24px;overflow:hidden;background:#101316;box-shadow:0 30px 80px rgba(20,23,26,.22);height:clamp(560px,78vh,760px)">
+      <iframe src="pain-map/?embed=1" title="Interactive 3D muscle map: tap a muscle to see why it hurts" loading="lazy" allow="fullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe>
     </div>
   </div>
 </section>
@@ -184,6 +303,7 @@
           <span class="comm-tag">Carrington</span><span class="comm-tag">Livingston</span><span class="comm-tag">Sherwood</span>
           <span class="comm-tag">Kincora</span><span class="comm-tag">Glacier Ridge</span><span class="comm-tag">Ambleton</span>
         </div>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:8px">Planned hours upon opening:</p>
         <ul class="hours-list">
           <li><span class="day">Monday – Friday</span><span class="time">8:00 AM – 8:00 PM</span></li>
           <li><span class="day">Saturday</span><span class="time">9:00 AM – 4:00 PM</span></li>
@@ -204,9 +324,9 @@
 
 <section class="booking-section" id="book">
   <div class="container">
-    <p class="s-label reveal">Book Online</p>
-    <h2 class="s-title reveal">Request Your Assessment</h2>
-    <p class="s-sub reveal">Fill in the form below and we'll call you back to confirm your appointment — usually within 1 business hour. Direct billing available for most insurers.</p>
+    <p class="s-label reveal">Opening Soon</p>
+    <h2 class="s-title reveal">Join Our Opening Waitlist</h2>
+    <p class="s-sub reveal">Fill in the form below and we'll notify you the moment we open — plus first access to launch offers. Direct billing available for most insurers.</p>
     <div class="booking-shell reveal">
       <div class="book-contact-bar">
         <a href="tel:+14030000000" class="book-contact-item">
@@ -214,13 +334,13 @@
           <div><div class="book-contact-lbl">Call Us</div><div class="book-contact-val">403-000-0000</div></div>
         </a>
         <div class="book-contact-divider"></div>
-        <a href="mailto:hello@apexphysio.ca" class="book-contact-item">
+        <a href="mailto:hello@apex-physio.ca" class="book-contact-item">
           <span class="book-contact-icon">✉️</span>
-          <div><div class="book-contact-lbl">Email Us</div><div class="book-contact-val">hello@apexphysio.ca</div></div>
+          <div><div class="book-contact-lbl">Email Us</div><div class="book-contact-val">hello@apex-physio.ca</div></div>
         </a>
       </div>
-      <div class="book-or"><span>or request a callback below</span></div>
-      <form name="booking-request" method="POST" action="booking.php" class="book-form" id="bookForm">
+      <div class="book-or"><span>or join the waitlist below</span></div>
+      <form name="booking-request" method="POST" action="send-booking.php" class="book-form" id="bookForm">
         <p class="book-honeypot"><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="book-row">
           <div class="book-field">
@@ -255,12 +375,12 @@
           <label for="bf-msg">Briefly describe your concern (optional)</label>
           <textarea id="bf-msg" name="message" rows="3" placeholder="e.g. Lower back pain from a car accident 3 weeks ago…"></textarea>
         </div>
-        <button type="submit" class="btn-primary book-submit">📅 Request My Appointment →</button>
+        <button type="submit" class="btn-primary book-submit">🔔 Notify Me When You Open →</button>
       </form>
       <div class="book-success" id="bookSuccess">
         <div class="book-success-icon">🎉</div>
-        <h3>Request Received!</h3>
-        <p>We'll call you within 1 business hour to confirm your slot.<br>Can't wait? Call us at <a href="tel:+14030000000">403-000-0000</a>.</p>
+        <h3>You're on the List!</h3>
+        <p>We'll email you as soon as we open our doors — plus early-access offers.<br>Questions in the meantime? Call us at <a href="tel:+14030000000">403-000-0000</a>.</p>
       </div>
     </div>
   </div>
@@ -280,7 +400,7 @@
     </div>
     <div class="foot-col">
       <h5>Services</h5>
-      <a href="#services">Physiotherapy</a><a href="#services">Massage Therapy</a><a href="#services">Chiropractic</a><a href="#services">Kinesiology</a><a href="#services">Acupuncture</a>
+      <a href="services/physiotherapy.html">Physiotherapy</a><a href="services/massage-therapy.html">Massage Therapy</a><a href="services/chiropractic.html">Chiropractic</a><a href="services/kinesiology.html">Kinesiology</a><a href="services/acupuncture-ims.html">Acupuncture</a>
     </div>
     <div class="foot-col">
       <h5>Clinic</h5>
@@ -289,7 +409,7 @@
     <div class="foot-col">
       <h5>Contact</h5>
       <a href="tel:+14030000000">403-000-0000</a>
-      <a href="mailto:hello@apexphysio.ca">hello@apexphysio.ca</a>
+      <a href="mailto:hello@apex-physio.ca">hello@apex-physio.ca</a>
       <a href="#location">Unit 150, 246 Nolanridge Cres NW</a>
     </div>
   </div>
@@ -304,7 +424,7 @@
     <div class="chat-head"><div class="nm">Apex Physio</div><div class="st">Typically replies within minutes</div></div>
     <div class="chat-msgs"><div class="chat-msg">👋 Hi! How can we help you today?</div></div>
     <div class="chat-actions">
-      <button class="chat-act" data-msg="I'd like to book an appointment">📅 Book an appointment</button>
+      <button class="chat-act" data-msg="I'd like to join the waitlist">🔔 Join the waitlist</button>
       <button class="chat-act" data-msg="Do you direct bill my insurance?">💳 Ask about direct billing</button>
       <button class="chat-act" data-msg="I have a question about my injury">🩺 Ask about an injury</button>
     </div>
@@ -317,13 +437,14 @@
     <button class="modal-x" id="modalX">✕</button>
     <h3 id="modalTitle"></h3>
     <p id="modalBody"></p>
-    <a href="#book" class="btn-primary" id="modalCta" style="margin-top:20px;display:inline-flex" onclick="document.getElementById('modalBack').classList.remove('open')">Book This Service →</a>
+    <a href="#book" class="btn-primary" id="modalCta" style="margin-top:20px;display:inline-flex" onclick="document.getElementById('modalBack').classList.remove('open')">Join the Waitlist →</a>
   </div>
 </div>
 
 <script src="motion-bg.js"></script>
 <script src="interactions.js"></script>
 <script src="booking.js"></script>
+<script src="painmap-prefill.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>

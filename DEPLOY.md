@@ -3,9 +3,7 @@
 > **Read first (Sep 29, 2026).** apex-physio.ca is an addon domain on the **remedypills.ca** hosting plan.
 > Its folder is **`~/apex-physio.ca`**, not `public_html` (that is the pharmacy site). Never upload Apex files to `public_html`.
 >
-> The live site in `~/apex-physio.ca` (waitlist mode, services pages, `send-booking.php`, `waitlist-count.php`) is **newer than `apexphysio/` in this repo**. Do not replace the live `index.html`, `site.css`, `booking.js` or PHP files with the repo copies. The 3D muscle map was added to the live site on Sep 29 without overwriting anything; a full backup from before that change is in `~/apex-physio-backups/2026-09-29/`.
->
-> The sections below describe the original full-site setup and are kept for reference. `booking.php` in this repo is **not** used live (the server uses `send-booking.php`).
+> As of Sep 30, 2026 `apexphysio/` in this repo matches the live site in `~/apex-physio.ca` (waitlist mode, services pages, `send-booking.php`, `waitlist-count.php`, embedded 3D muscle map, `.htaccess`). Backups from before the Sep 29 and Sep 30 changes are in `~/apex-physio-backups/`.
 
 The live website is the **`apexphysio/`** folder. It is a static site (HTML, CSS, JS) plus one PHP file for the booking form, so it runs on any WHC cPanel plan with no WordPress or database.
 
@@ -19,7 +17,9 @@ Everything else in this repo (design system, `ui_kits/`, `guidelines/`, `marketi
 ├── index.html         home page
 ├── site.css
 ├── booking.js         form logic; pre-fills from the 3D map
-├── booking.php        emails each request and saves it to ~/booking-requests.csv
+├── send-booking.php   emails each waitlist signup to hello@apex-physio.ca
+├── waitlist-count.php returns the signup count shown on the site
+├── services/          one page per service
 ├── interactions.js, motion-bg.js, gsap-lottie.js
 ├── assets/            logo, favicons, animation JSON
 └── pain-map/          3D muscle map (index.html + body.glb, about 4 MB)
@@ -29,7 +29,7 @@ Everything else in this repo (design system, `ui_kits/`, `guidelines/`, `marketi
 
 | Where | Placeholder | Replace with |
 |---|---|---|
-| `apexphysio/booking.php` line 14 | `hello@apexphysio.ca` | The inbox that should receive booking requests |
+| `apexphysio/send-booking.php` line 48 | `hello@apex-physio.ca` | The inbox that should receive waitlist signups |
 | `apexphysio/index.html`, `booking.js` | `403-000-0000` / `+14030000000` | Clinic phone number |
 | `apexphysio/index.html` | `hello@apexphysio.ca` | Clinic email |
 

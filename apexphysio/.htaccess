@@ -1,47 +1,19 @@
-# Apex Physio & Wellness: Apache settings for WHC (cPanel)
+# apex-physio.ca only (added Sep 30, 2026).
+# Makes browsers check for a newer version of pages, styles and scripts,
+# so site updates show up right away instead of an old saved copy.
 
-Options -Indexes
-DirectoryIndex index.html
-
-# ── Force HTTPS (turn on AutoSSL in cPanel first) ──
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{HTTPS} !=on
-  RewriteCond %{HTTP:X-Forwarded-Proto} !https
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-</IfModule>
-
-# ── Keep internal files private ──
-<IfModule mod_rewrite.c>
-  RewriteRule ^marketing(/|$) - [F,L]
-  RewriteRule (^|/)\.(?!well-known) - [F,L]
-</IfModule>
-<FilesMatch "\.(md|csv|yml|log|zip|docx)$">
-  Require all denied
-</FilesMatch>
-
-# ── File types for the 3D model ──
-AddType model/gltf-binary .glb
-AddType application/json .json
-
-# ── Compression ──
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript application/json image/svg+xml model/gltf-binary
-</IfModule>
-
-# ── Caching: pages revalidate, assets cache for a month, the 3D model for a year ──
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresDefault "access plus 1 month"
-  ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType model/gltf-binary "access plus 1 year"
-  ExpiresByType image/x-icon "access plus 1 year"
-</IfModule>
-
-# ── Security headers ──
 <IfModule mod_headers.c>
+  <FilesMatch "\.(html|htm|css|js|json|php)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(png|jpg|jpeg|webp|svg|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  <FilesMatch "\.glb$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
   Header always set X-Content-Type-Options "nosniff"
-  Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
+
+# 3D muscle model file type
+AddType model/gltf-binary .glb

@@ -4,10 +4,8 @@
 #   apex-physio.ca  ->  ~/apex-physio.ca     (THIS site)
 #   remedypills.ca  ->  ~/public_html        (pharmacy site: never deploy here)
 #
-# The live home page, services pages and PHP handlers in ~/apex-physio.ca are newer
-# than apexphysio/ in this repo (they were edited directly on the server on Sep 18).
-# So this deploy only adds the 3D muscle map and its form pre-fill script. It does not
-# overwrite index.html, site.css, booking.js or any PHP file.
+# apexphysio/ matches the live site as of Sep 30, 2026. This deploy still only copies
+# the 3D muscle map files; other pages are updated one file at a time in File Manager.
 ---
 deployment:
   tasks:
