@@ -55,6 +55,7 @@
   - Tested live: home → 3D map → pick area → waitlist form pre-filled (service + "From the 3D muscle map: …")
 - [x] `.cpanel.yml` now deploys only pain-map files to `~/apex-physio.ca` (never `public_html`)
 - [x] **Sep 30:** added `~/apex-physio.ca/.htaccess` so browsers re-check pages/CSS/JS for updates (`Cache-Control: no-cache`); images cache 7 days, the 3D model 30 days. Fixes visitors seeing an old saved copy after edits. remedypills.ca unaffected.
+- [x] **Sep 30:** replaced the old 2D body-map figure on the home page with the real 3D model, embedded in the "Click Where It Hurts" section (`pain-map/?embed=1` in a lazy-loaded iframe). The old figure is hidden (`hidden style="display:none"`), not deleted, because the live `interactions.js` still references its elements (`bodySvgFront`, `bmPanel`); deleting them would break the quiz/services scripts. Backup before this change: `~/apex-physio-backups/2026-09-30/`.
 
 ### ⚠️ Repo vs live server
 The live site was edited directly on the server on Sep 16–18 (waitlist mode, `services/` pages, `service-page.js`, `send-booking.php`, `waitlist-count.php`, bigger `index.html`/`site.css`). Those are **not in this repo**. Do not deploy `apexphysio/index.html`, `site.css` or `booking.js` from the repo over the live site. Next step: download the live folder and commit it here so GitHub matches the live site again.
