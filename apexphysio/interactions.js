@@ -14,20 +14,20 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ── services ── */
 const SERVICES = [
-  { icon: '🦴', name: 'Physiotherapy', desc: 'Back/neck pain, whiplash, shoulder injuries and post-surgical rehab.', body: 'Hands-on manual therapy, exercise prescription and education — one-on-one, full sessions with the same physiotherapist every visit.', slug: 'physiotherapy' },
+  { icon: '🦴', name: 'Physiotherapy', desc: 'Back/neck pain, whiplash, shoulder injuries and post-surgical rehab.', body: 'Hands-on manual therapy, exercise prescription and education — one-on-one, full-length sessions with continuity of care.', slug: 'physiotherapy' },
   { icon: '💆', name: 'Massage Therapy', desc: 'Deep tissue, sports, therapeutic and relaxation massage.', body: 'Registered massage therapists targeting muscle tension, recovery and stress — direct billing available.', slug: 'massage-therapy' },
-  { icon: '🩻', name: 'Chiropractic', desc: 'Spinal adjustments, joint mobilization and posture correction.', body: 'Evidence-based chiropractic care coordinated with your physio plan for faster results.', slug: 'chiropractic' },
+  { icon: '🩻', name: 'Chiropractic', desc: 'Spinal adjustments, joint mobilization and posture correction.', body: 'Evidence-based chiropractic care coordinated with your physio plan.', slug: 'chiropractic' },
   { icon: '🏃', name: 'Kinesiology', desc: 'Active rehab, exercise therapy and return-to-work conditioning.', body: 'Movement specialists building strength and function after injury, MVA or surgery.', slug: 'kinesiology' },
-  { icon: '📌', name: 'Acupuncture & IMS', desc: 'Dry needling and acupuncture for pain and muscle release.', body: 'Certified practitioners using needling techniques to release trigger points and calm chronic pain.', slug: 'acupuncture-ims' },
-  { icon: '🚗', name: 'MVA Rehab', desc: 'Motor vehicle accident recovery with direct insurer billing.', body: 'We handle the paperwork with your insurer under Alberta DTPR — you focus on recovery.', slug: 'mva-rehab' },
-  { icon: '👷', name: 'WCB Injuries', desc: 'Workplace injury rehab and return-to-work programs.', body: 'WCB-authorized treatment with progress reporting and modified-duty planning.', slug: 'wcb-injuries' },
+  { icon: '📌', name: 'Acupuncture & IMS', desc: 'Dry needling and acupuncture for pain and muscle release.', body: 'Trained practitioners using needling as part of a broader treatment plan.', slug: 'acupuncture-ims' },
+  { icon: '🚗', name: 'MVA Rehab', desc: 'Motor vehicle accident recovery with direct insurer billing.', body: 'We help with your insurer paperwork and direct bill wherever possible.', slug: 'mva-rehab' },
+  { icon: '👷', name: 'WCB Injuries', desc: 'Workplace injury rehab and return-to-work programs.', body: 'Treatment with progress reporting and modified-duty planning for WCB claims.', slug: 'wcb-injuries' },
   { icon: '🧘', name: 'Wellness Programs', desc: 'Posture clinics, ergonomics and injury prevention.', body: 'Stay at your peak — preventative programs for desk workers, athletes and seniors.', slug: 'wellness-programs' },
 ];
 document.getElementById('servicesGrid').innerHTML = SERVICES.map((s, i) => `
-  <div class="service-card reveal d${(i % 6) + 1}" data-svc="${i}">
+  <a class="service-card reveal d${(i % 6) + 1}" data-svc="${i}" href="services/${s.slug}.html">
     <div class="s-icon">${s.icon}</div><h3>${s.name}</h3><p>${s.desc}</p>
     <div class="learn-more">Explore →</div>
-  </div>`).join('');
+  </a>`).join('');
 document.querySelectorAll('.service-card').forEach(el => {
   io.observe(el);
   el.style.cursor = 'pointer';
