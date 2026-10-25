@@ -45,7 +45,7 @@ if (!empty($errors)) {
     exit;
 }
 
-$to_email   = 'hello@apex-physio.ca';
+$to_email   = 'info@apex-physio.ca';
 $subject    = 'New Waitlist Signup — Apex Physio & Wellness Clinic';
 $body       = "New waitlist / booking-interest signup from apex-physio.ca\n\n"
             . "Name: {$name}\n"
@@ -72,5 +72,5 @@ if ($sent) {
     echo json_encode(['ok' => true, 'count' => $count]);
 } else {
     http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'Could not send email. Please call us directly at 403-000-0000.']);
+    echo json_encode(['ok' => false, 'error' => 'Could not send email. Please call us directly at 825-509-7141.']);
 }

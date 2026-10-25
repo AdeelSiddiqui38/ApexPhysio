@@ -43,7 +43,7 @@
       .catch(function () {
         btn.disabled = false;
         btn.textContent = '🔔 Notify Me When You Open →';
-        alert('Something went wrong — please call us directly at 403-000-0000.');
+        alert('Something went wrong — please call us directly at 825-509-7141.');
       });
   });
 })();
