@@ -190,7 +190,7 @@ const chatToggle = document.getElementById('chatToggle');
 const chatPanel = document.getElementById('chatPanel');
 chatToggle.addEventListener('click', () => chatPanel.classList.toggle('open'));
 document.querySelectorAll('.chat-act').forEach(b => b.addEventListener('click', () => {
-  window.open('https://wa.me/14030000000?text=' + encodeURIComponent(b.dataset.msg), '_blank');
+  window.open('https://wa.me/18255097141?text=' + encodeURIComponent(b.dataset.msg), '_blank');
 }));
 
 /* ── mobile nav ── */

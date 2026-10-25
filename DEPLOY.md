@@ -29,9 +29,9 @@ Everything else in this repo (design system, `ui_kits/`, `guidelines/`, `marketi
 
 | Where | Placeholder | Replace with |
 |---|---|---|
-| `apexphysio/send-booking.php` line 48 | `hello@apex-physio.ca` | The inbox that should receive waitlist signups |
-| `apexphysio/index.html`, `booking.js` | `403-000-0000` / `+14030000000` | Clinic phone number |
-| `apexphysio/index.html` | `hello@apexphysio.ca` | Clinic email |
+| `apexphysio/send-booking.php` line 48 | ~~`hello@apex-physio.ca`~~ | Done Oct 25, 2026: `info@apex-physio.ca` (make sure this inbox exists) |
+| `apexphysio/index.html`, `booking.js`, `services/*.html` | ~~`403-000-0000`~~ | Done Oct 25, 2026: phone 825-509-7141, fax 825-509-7158 |
+| `apexphysio/index.html` | ~~`hello@apexphysio.ca`~~ | Done Oct 25, 2026: `info@apex-physio.ca` |
 
 The booking inbox should be on the same domain as the site (for example `bookings@apexphysio.ca`, created in cPanel > Email Accounts). Mail sent from the server to an outside address like Gmail is more likely to land in spam.
 

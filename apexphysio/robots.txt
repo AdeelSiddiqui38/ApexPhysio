@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /send-booking.php
+Disallow: /waitlist-count.php
+
+Sitemap: https://www.apex-physio.ca/sitemap.xml
