@@ -69,6 +69,31 @@ if ($sent) {
     $count++;
     @file_put_contents($counterFile, (string) $count, LOCK_EX);
 
+    // Optional: add to MailerLite list — only with explicit email consent (CASL).
+    // Needs mailerlite-config.php on the server (NOT in git): returns ['api_key'=>..., 'group_id'=>...]
+    $cfgFile = __DIR__ . '/mailerlite-config.php';
+    if (($_POST['consent_email'] ?? '') === 'yes' && is_file($cfgFile)) {
+        $cfg = include $cfgFile;
+        if (!empty($cfg['api_key'])) {
+            $parts  = preg_split('/\s+/', $name, 2);
+            $payload = [
+                'email'  => $email,
+                'fields' => ['name' => $parts[0], 'last_name' => $parts[1] ?? '', 'phone' => $phone],
+                'ip_address' => $_SERVER['REMOTE_ADDR'] ?? null,
+            ];
+            if (!empty($cfg['group_id'])) $payload['groups'] = [(string) $cfg['group_id']];
+            $ch = curl_init('https://connect.mailerlite.com/api/subscribers');
+            curl_setopt_array($ch, [
+                CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 8,
+                CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'Accept: application/json',
+                                       'Authorization: Bearer ' . $cfg['api_key']],
+                CURLOPT_POSTFIELDS => json_encode($payload),
+            ]);
+            @curl_exec($ch); // failure never blocks the signup; email alert above is the backup
+            curl_close($ch);
+        }
+    }
+
     echo json_encode(['ok' => true, 'count' => $count]);
 } else {
     http_response_code(500);
