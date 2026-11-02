@@ -76,3 +76,17 @@ Each request is saved to `~/booking-requests.csv` (outside the public website, r
 ## Credits
 
 The 3D model is "Male Full Body Ecorche" by Diego Luján García, licensed CC BY 4.0. The credit line at the bottom of the 3D map page is required by the license; keep it.
+
+## Waitlist → MailerLite (set up 2026-10-25)
+
+- Form: index.html #bookForm → send-booking.php. Every sign-up emails info@apex-physio.ca and increments waitlist-count.txt.
+- Sign-ups that tick the consent checkbox (`consent_email=yes`, CASL) are also pushed to MailerLite via API (connect.mailerlite.com/api/subscribers).
+- MailerLite account: info@apex-physio.ca, group **Waitlist** (ID 202355881969452130). 14-day trial, then free plan (250 subscribers).
+- Server-only config: `/home/remedypills/apex-physio.ca/mailerlite-config.php` (api_key + group_id). Gitignored; template at `apexphysio/mailerlite-config.php.example`. Never commit the real key.
+- If the API call fails, the sign-up still succeeds (email alert is the backup).
+- Backups before deploy: /home/remedypills/apex-physio-backups/2026-10-25-waitlist/
+- DNS (WHC Zone Editor) for MailerLite sending-domain auth, added 2026-10-25:
+  - SPF TXT @: `v=spf1 include:_spf.mlsend.com +a +mx +ip4:68.168.124.130 include:spf.web-dns1.com ~all`
+  - CNAME `litesrv._domainkey` → `litesrv._domainkey.mlsend.com`
+  - TXT @: `mailerlite-domain-verification=…` (see MailerLite → Account settings → Domains)
+- Launch: MailerLite → Campaigns → send to Waitlist group with Jane booking link.
