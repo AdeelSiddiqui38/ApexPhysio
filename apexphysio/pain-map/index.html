@@ -254,7 +254,7 @@
       <p class="note">General information, not a diagnosis. A physiotherapist will assess what's going on for you.</p>
     </div>
     <div class="card-foot">
-      <a class="btn btn-book" id="cBook" href="../#book" target="_top">Request an appointment</a>
+      <a class="btn btn-book" id="cBook" href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener">Request an appointment</a>
       <button class="btn btn-ghost" id="cBack">Explore another area</button>
     </div>
   </aside>
@@ -270,7 +270,7 @@
       <div class="bar"><i id="barFill"></i></div>
       <p id="loadText">Loading anatomy</p>
     </div>
-    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book" target="_top">request an appointment</a>.</div>
+    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener">request an appointment</a>.</div>
   </div>
 </main>
 
@@ -285,7 +285,7 @@ const CONFIG = {
   model: 'body.glb',
   // 'waitlist' while the clinic is opening soon; change to 'booking' once appointments open.
   mode: 'booking',
-  bookingUrl: '../'   // home page; the booking form lives at #book and reads ?area=<id>
+  janeUrl: 'https://apex-physio.janeapp.com/'   // Jane App online booking (opens in a new tab)
 };
 
 /* Coordinates are in the model's own units (≈68 tall, feet at y≈-43, facing +z).
@@ -559,7 +559,7 @@ function fillCard(m){
     ul.appendChild(li);
   });
   updateVerdict(m);
-  $('cBook').href = CONFIG.bookingUrl + '?area=' + encodeURIComponent(m.id) + '#book';
+  $('cBook').href = CONFIG.janeUrl;
   card.querySelector('.card-scroll').scrollTop = 0;
 }
 
