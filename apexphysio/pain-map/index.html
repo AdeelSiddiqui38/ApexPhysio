@@ -254,7 +254,7 @@
       <p class="note">General information, not a diagnosis. A physiotherapist will assess what's going on for you.</p>
     </div>
     <div class="card-foot">
-      <a class="btn btn-book" id="cBook" href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener">Request an appointment</a>
+      <a class="btn btn-book" id="cBook" href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener">Book online</a>
       <button class="btn btn-ghost" id="cBack">Explore another area</button>
     </div>
   </aside>
@@ -270,7 +270,7 @@
       <div class="bar"><i id="barFill"></i></div>
       <p id="loadText">Loading anatomy</p>
     </div>
-    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener">request an appointment</a>.</div>
+    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener">book online</a>.</div>
   </div>
 </main>
 
@@ -568,7 +568,7 @@ function updateVerdict(m){
   const v = $('cVerdict'), book = $('cBook');
   book.classList.toggle('hot', n>=2);
   const wait = CONFIG.mode === 'waitlist';
-  const base = wait ? 'Request an appointment' : 'Book an assessment';
+  const base = wait ? 'Book online' : 'Book an assessment';
   if(n===0){ v.textContent = 'Tick anything that sounds like you.'; book.textContent = base; }
   else if(n===1){ v.innerHTML = '<strong>One sign.</strong> Worth keeping an eye on, especially if it keeps coming back.'; book.textContent = base; }
   else {
