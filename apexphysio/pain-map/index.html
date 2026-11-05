@@ -254,7 +254,7 @@
       <p class="note">General information, not a diagnosis. A physiotherapist will assess what's going on for you.</p>
     </div>
     <div class="card-foot">
-      <a class="btn btn-book" id="cBook" href="../#book" target="_top">Join the opening waitlist</a>
+      <a class="btn btn-book" id="cBook" href="../#book" target="_top">Request an appointment</a>
       <button class="btn btn-ghost" id="cBack">Explore another area</button>
     </div>
   </aside>
@@ -270,7 +270,7 @@
       <div class="bar"><i id="barFill"></i></div>
       <p id="loadText">Loading anatomy</p>
     </div>
-    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book" target="_top">join our opening waitlist</a>.</div>
+    <div class="fail" id="fail">The 3D model couldn't load in this browser. Try a recent version of Chrome, Safari or Edge, or <a href="../#book" target="_top">request an appointment</a>.</div>
   </div>
 </main>
 
@@ -284,7 +284,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const CONFIG = {
   model: 'body.glb',
   // 'waitlist' while the clinic is opening soon; change to 'booking' once appointments open.
-  mode: 'waitlist',
+  mode: 'booking',
   bookingUrl: '../'   // home page; the booking form lives at #book and reads ?area=<id>
 };
 
@@ -568,7 +568,7 @@ function updateVerdict(m){
   const v = $('cVerdict'), book = $('cBook');
   book.classList.toggle('hot', n>=2);
   const wait = CONFIG.mode === 'waitlist';
-  const base = wait ? 'Join the opening waitlist' : 'Book an assessment';
+  const base = wait ? 'Request an appointment' : 'Book an assessment';
   if(n===0){ v.textContent = 'Tick anything that sounds like you.'; book.textContent = base; }
   else if(n===1){ v.innerHTML = '<strong>One sign.</strong> Worth keeping an eye on, especially if it keeps coming back.'; book.textContent = base; }
   else {
