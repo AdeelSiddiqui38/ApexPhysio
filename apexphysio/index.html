@@ -21,7 +21,81 @@
 <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":["MedicalBusiness","PhysicalTherapy"],"name":"Apex Physio & Wellness Clinic","url":"https://www.apex-physio.ca/","image":"https://www.apex-physio.ca/assets/apex-logo-full.png","telephone":"+1-825-509-7141","faxNumber":"+1-825-509-7158","email":"info@apex-physio.ca","address":{"@type":"PostalAddress","streetAddress":"Unit 150, 246 Nolanridge Crescent NW","addressLocality":"Calgary","addressRegion":"AB","postalCode":"T3R 1W9","addressCountry":"CA"},"areaServed":["Nolan Hill","Sage Hill","Evanston","Carrington","Livingston","Sherwood","Kincora","Glacier Ridge","Ambleton","NW Calgary"],"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"19:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":"10:00","closes":"17:00"}],"medicalSpecialty":"PhysicalTherapy"}
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "MedicalBusiness",
+    "PhysicalTherapy"
+  ],
+  "name": "Apex Physio & Wellness Clinic",
+  "url": "https://www.apex-physio.ca/",
+  "image": "https://www.apex-physio.ca/assets/apex-logo-full.png",
+  "telephone": "+1-825-509-7141",
+  "faxNumber": "+1-825-509-7158",
+  "email": "info@apex-physio.ca",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Unit 150, 246 Nolanridge Crescent NW",
+    "addressLocality": "Calgary",
+    "addressRegion": "AB",
+    "postalCode": "T3R 1W9",
+    "addressCountry": "CA"
+  },
+  "areaServed": [
+    "Nolan Hill",
+    "Sage Hill",
+    "Evanston",
+    "Carrington",
+    "Livingston",
+    "Sherwood",
+    "Kincora",
+    "Glacier Ridge",
+    "Ambleton",
+    "NW Calgary"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "19:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "10:00",
+      "closes": "17:00"
+    }
+  ],
+  "medicalSpecialty": "PhysicalTherapy",
+  "potentialAction": {
+    "@type": "ReserveAction",
+    "name": "Book Online",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://apex-physio.janeapp.com/",
+      "inLanguage": "en-CA",
+      "actionPlatform": [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/MobileWebPlatform"
+      ]
+    },
+    "result": {
+      "@type": "Reservation",
+      "name": "Appointment"
+    }
+  },
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=Apex+Physio+%26+Wellness+Clinic+246+Nolanridge+Crescent+NW+Calgary"
+}
 </script>
 </head>
 <body>
