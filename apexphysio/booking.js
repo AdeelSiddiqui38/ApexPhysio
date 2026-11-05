@@ -10,7 +10,8 @@
     if (!momentumLine || !count || count < 5) return; // don't show tiny/early numbers
     momentumLine.textContent = '🔥 ' + count + ' people have already joined our waitlist';
   }
-  if (momentumLine) {
+  // Clinic is open (Nov 9, 2026): keep the static "Now open" line, no waitlist count.
+  if (momentumLine && false) {
     fetch('waitlist-count.php', { cache: 'no-store' })
       .then(function (res) { return res.json(); })
       .then(function (data) { setMomentumCount(data && data.count); })

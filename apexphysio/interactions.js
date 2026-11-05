@@ -78,7 +78,7 @@ function renderSpots(view) {
       document.getElementById('bmPanel').innerHTML = `
         <div class="area">${s.area}</div><h3>${s.title}</h3><p>${s.desc}</p>
         <div class="bm-tags">${s.tags.map(t => `<span class="bm-tag">${t}</span>`).join('')}</div>
-        <a href="#book" class="btn-primary" style="padding:12px 22px;font-size:.9rem">Join the Waitlist →</a>`;
+        <a href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener" class="btn-primary" style="padding:12px 22px;font-size:.9rem">Book Online →</a>`;
     });
     svg.appendChild(g);
   });
@@ -135,7 +135,7 @@ function renderQuiz() {
       <div class="quiz-result">
         <div style="font-size:2.6rem;margin-bottom:10px">🎯</div>
         <h3>Recommended: ${r.title}</h3><p>${r.desc}</p>
-        <a href="#book" class="btn-primary" style="padding:13px 26px;font-size:.92rem">Join the Waitlist →</a>
+        <a href="https://apex-physio.janeapp.com/" target="_blank" rel="noopener" class="btn-primary" style="padding:13px 26px;font-size:.92rem">Book Online →</a>
         <br><button class="quiz-restart">↺ Retake quiz</button>
       </div>`;
     card.querySelector('.quiz-restart').onclick = () => { qStep = 0; qAns = []; renderQuiz(); };
