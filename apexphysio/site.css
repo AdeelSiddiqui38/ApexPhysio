@@ -213,7 +213,7 @@ section{padding:clamp(56px,7vw,88px) 5%}
 .lib-body h4{font-family:var(--font-display);font-size:.95rem;font-weight:700;color:var(--navy);margin-top:5px}
 
 /* ── LOCATION ── */
-.local-section{background:var(--white)}
+.local-section{background:var(--light)}
 .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
 .hours-list{list-style:none;margin-top:22px}
 .hours-list li{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border);font-size:.9rem;transition:padding .2s,background .2s}
@@ -233,7 +233,7 @@ section{padding:clamp(56px,7vw,88px) 5%}
 .comm-tag:hover{background:rgba(154,222,27,.08);border-color:var(--teal-deep);transform:scale(1.05)}
 
 /* ── BOOKING ── */
-.booking-section{background:var(--light)}
+.booking-section{background:var(--white)}
 .booking-shell{max-width:860px;margin:0 auto;background:var(--white);border-radius:22px;border:1px solid var(--border);overflow:hidden;box-shadow:0 16px 56px rgba(20,22,24,.1)}
 .jane-head{background:linear-gradient(90deg,var(--tint),var(--light));color:var(--navy);padding:18px 28px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .jane-head .jh-brand{display:flex;align-items:center;gap:10px;font-weight:800;font-family:var(--font-display)}

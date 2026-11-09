@@ -171,7 +171,8 @@ const LIB = [
   { cat: 'Ankle', name: 'Ankle Sprain Rebuild', dur: '4:38', icon: '🦶' },
   { cat: 'Posture', name: '5-Minute Posture Break', dur: '5:00', icon: '🧘' },
 ];
-document.getElementById('libGrid').innerHTML = LIB.map((v, i) => `
+const libGrid = document.getElementById('libGrid');
+if (libGrid) libGrid.innerHTML = LIB.map((v, i) => `
   <div class="lib-card reveal d${(i % 6) + 1}">
     <div class="lib-thumb"><div class="bg"></div><span class="ex-icon">${v.icon}</span><div class="play">▶</div><span class="dur">${v.dur}</span></div>
     <div class="lib-body"><div class="lib-cat">${v.cat}</div><h4>${v.name}</h4></div>
