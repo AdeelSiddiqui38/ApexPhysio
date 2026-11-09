@@ -61,7 +61,7 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.88);backdrop
 .nav-drop-panel .nav-drop-all{border-top:1px solid var(--border);margin-top:6px;padding-top:14px;color:var(--teal-deep)}
 
 /* ── HERO ── */
-.hero{position:relative;min-height:92vh;background:linear-gradient(160deg,#ffffff 0%,#F7FBEF 55%,#EFFBE0 100%);display:flex;align-items:center;padding:70px 5%;overflow:hidden}
+.hero{position:relative;min-height:80vh;background:linear-gradient(160deg,#ffffff 0%,#F7FBEF 55%,#EFFBE0 100%);display:flex;align-items:center;padding:70px 5%;overflow:hidden}
 #motionCanvas{position:absolute;inset:0;width:100%;height:100%}
 .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.72) 80%);pointer-events:none}
 .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;max-width:1220px;margin:0 auto;width:100%}
@@ -107,11 +107,11 @@ nav{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.88);backdrop
 .t-lbl{font-size:.68rem;color:var(--muted);letter-spacing:.5px}
 
 /* ── SHARED ── */
-section{padding:130px 5%}
+section{padding:clamp(56px,7vw,88px) 5%}
 .container{max-width:1200px;margin:0 auto}
 .s-label{font-size:.72rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--teal-deep);margin-bottom:14px}
 .s-title{font-family:var(--font-display);font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:800;color:var(--navy);line-height:1.16;letter-spacing:-1px;margin-bottom:20px}
-.s-sub{color:var(--muted);font-size:1.02rem;line-height:1.85;max-width:580px;margin-bottom:64px}
+.s-sub{color:var(--muted);font-size:1.02rem;line-height:1.85;max-width:580px;margin-bottom:40px}
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease}
 .reveal.visible{opacity:1;transform:none}
 .d1{transition-delay:.05s}.d2{transition-delay:.12s}.d3{transition-delay:.19s}.d4{transition-delay:.26s}.d5{transition-delay:.33s}.d6{transition-delay:.4s}
@@ -146,7 +146,7 @@ section{padding:130px 5%}
 .service-card:hover .learn-more{gap:10px}
 
 /* ── BODY MAP ── */
-.bodymap-section{background:var(--light);position:relative;overflow:hidden}
+.bodymap-section{background:var(--white);position:relative;overflow:hidden}
 .bodymap-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(20,23,26,.05) 1px,transparent 1px);background-size:30px 30px}
 .bodymap-section .s-title{color:var(--navy)}
 .bodymap-section .s-sub{color:var(--muted)}
