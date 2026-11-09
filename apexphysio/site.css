@@ -286,6 +286,9 @@ footer{background:var(--light);padding:52px 5% 28px;border-top:1px solid var(--b
 .soc:hover{background:var(--teal);transform:translateY(-3px)}
 .foot-col h5{font-size:.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--teal-deep);margin-bottom:14px}
 .foot-col a{display:block;color:var(--muted);font-size:.82rem;margin-bottom:9px;transition:color .2s,transform .2s;transform-origin:left}
+.foot-bottom a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.foot-bottom a:hover{color:var(--teal-deep)}
+.foot-col .foot-txt{display:block;color:var(--muted);font-size:.82rem;margin-bottom:9px}
 .foot-col a:hover{color:var(--teal-deep);transform:translateX(4px)}
 .foot-bottom{border-top:1px solid var(--border);padding-top:22px;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
 .foot-bottom p{font-size:.76rem;color:var(--muted)}
